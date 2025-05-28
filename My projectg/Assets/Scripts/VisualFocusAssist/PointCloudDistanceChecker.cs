@@ -5,7 +5,7 @@ public class PointCloudDistanceChecker : MonoBehaviour
 {
     public PointCloudRenderer pointCloudRenderer;
     public OutlineOnView outlineOnView;
-    
+
     public TextMeshPro distanceText;
 
     public float checkInterval = 0.2f;
@@ -14,14 +14,13 @@ public class PointCloudDistanceChecker : MonoBehaviour
     private int previousClosestIndex = -1; // ← 前回赤くしたインデックスを記録
 
     public GameObject linePrefab;  // ← Prefab をアサイン
-
     private LineRenderer lineRenderer;
+
     private Color currentGradColor = Color.white;
     public Color GetCurrentGradientColor() => currentGradColor;
 
     public GameObject glowSpherePrefab;
     private GameObject glowSphereInstance;
-
 
     void Start()
     {
@@ -32,24 +31,16 @@ public class PointCloudDistanceChecker : MonoBehaviour
         }
     }
 
-
     void Update()
     {
+        // インターバル制御
         timer += Time.deltaTime;
         if (timer < checkInterval) return;
         timer = 0f;
 
+        // UI の表示状態をチェック
         var targetUI = outlineOnView?.GetTargetUI();
         if (targetUI == null || !targetUI.activeSelf)
-        {
-            if (lineRenderer != null) lineRenderer.enabled = false;
-            if (distanceText != null) distanceText.text = "";
-            ResetPreviousPointColor(); // ← UI非表示時に赤を戻す
-            return;
-        }
-
-        GameObject target = outlineOnView.hitObject;
-        if (target == null || !target.CompareTag("bottle"))
         {
             if (lineRenderer != null) lineRenderer.enabled = false;
             if (distanceText != null) distanceText.text = "";
@@ -57,56 +48,56 @@ public class PointCloudDistanceChecker : MonoBehaviour
             return;
         }
 
-        Vector3[] points = pointCloudRenderer?.GetPointCloud();
-        if (points == null || points.Length == 0) return;
+        // ターゲットオブジェクト取得
+        GameObject target = outlineOnView.hitObject;
+        if (target == null) return;
 
-        Vector3 targetPos = target.transform.position;
+        // ① 点群のローカル位置を取得
+        Vector3[] localPoints = pointCloudRenderer?.GetPointCloud();
+        if (localPoints == null || localPoints.Length == 0) return;
 
+        // ② ターゲット位置をローカル座標に変換
+        Vector3 localTarget = pointCloudRenderer.transform.InverseTransformPoint(target.transform.position);
+
+        // ③ ローカル座標で最短点を探索
         float minDistSqr = float.MaxValue;
-        Vector3 closestPoint = Vector3.zero;
-
-        foreach (var p in points)
+        int closestIndex = -1;
+        for (int i = 0; i < localPoints.Length; i++)
         {
-            float d = (p - targetPos).sqrMagnitude;
-            if (d < minDistSqr)
+            float d2 = (localPoints[i] - localTarget).sqrMagnitude;
+            if (d2 < minDistSqr)
             {
-                minDistSqr = d;
-                closestPoint = p;
+                minDistSqr = d2;
+                closestIndex = i;
             }
         }
+        if (closestIndex < 0) return;
 
+        // ④ 距離とグラデーション色を計算
         float distance = Mathf.Sqrt(minDistSqr);
         float distanceCm = distance * 100f;
-
-        // ★ ここで t, gradColor を1回だけ宣言・計算して共通利用
         float t = Mathf.Clamp01(1.0f - (distance / 0.20f));
-        Color gradColor = Color.Lerp(Color.white, Color.red, t);
+        currentGradColor = Color.Lerp(Color.white, Color.red, t);
 
+        // UI 更新
         if (distanceText != null)
         {
-            if (distanceCm <= 20f)
-            {
-                distanceText.text = $"Dist: {distanceCm:F1} cm";
-                distanceText.color = gradColor;
-            }
-            else
-            {
-                distanceText.text = "";
-            }
+            distanceText.text = $"{distanceCm:F1} cm";
+            distanceText.color = currentGradColor;
         }
 
-        Vector3 closestWorldPoint = pointCloudRenderer.transform.TransformPoint(closestPoint);
-
+        // ワールド座標に復元してライン描画
+        Vector3 closestWorldPoint = pointCloudRenderer.transform.TransformPoint(localPoints[closestIndex]);
         if (lineRenderer != null)
         {
             if (distanceCm <= 20f)
             {
                 lineRenderer.enabled = true;
                 lineRenderer.positionCount = 2;
-                lineRenderer.SetPosition(0, targetPos);
+                lineRenderer.SetPosition(0, target.transform.position);
                 lineRenderer.SetPosition(1, closestWorldPoint);
-                lineRenderer.startColor = gradColor;
-                lineRenderer.endColor = gradColor;
+                lineRenderer.startColor = currentGradColor;
+                lineRenderer.endColor = currentGradColor;
             }
             else
             {
@@ -114,56 +105,44 @@ public class PointCloudDistanceChecker : MonoBehaviour
             }
         }
 
-        // 最近傍点のインデックス取得
-        int closestIndex = pointCloudRenderer.GetClosestPointIndex(targetPos);
-        if (closestIndex >= 0)
+        // 点群カラー更新（ハイライト）
+        var colors = pointCloudRenderer.GetColors();
+        if (colors != null)
         {
-            var colors = pointCloudRenderer.GetColors();
             if (previousClosestIndex >= 0 && previousClosestIndex < colors.Length)
-            {
                 colors[previousClosestIndex] = Color.white;
-            }
-
-            colors[closestIndex] = gradColor;
+            colors[closestIndex] = currentGradColor;
             pointCloudRenderer.UpdateColors(colors);
             previousClosestIndex = closestIndex;
         }
 
-        // 発光球の処理（Glow Sphere を表示）
+        // Glow Sphere 表示
         if (distanceCm <= 20f)
         {
             if (glowSphereInstance == null && glowSpherePrefab != null)
             {
                 glowSphereInstance = Instantiate(glowSpherePrefab);
-                //glowSphereInstance.transform.localScale = Vector3.one * 0.01f;
             }
-
             if (glowSphereInstance != null)
             {
                 glowSphereInstance.transform.position = closestWorldPoint;
-
                 var glowRenderer = glowSphereInstance.GetComponent<Renderer>();
                 if (glowRenderer != null)
                 {
                     Material mat = glowRenderer.material;
-                    Color emissionColor = gradColor * 0.5f;
+                    Color emissionColor = currentGradColor * 0.5f;
                     mat.SetColor("_EmissionColor", emissionColor);
                 }
-
-                glowSphereInstance.SetActive(true);
             }
         }
-        else
+        else if (glowSphereInstance != null)
         {
-            if (glowSphereInstance != null)
-            {
-                glowSphereInstance.SetActive(false);
-            }
+            Destroy(glowSphereInstance);
+            glowSphereInstance = null;
         }
     }
 
-
-    // UIが非表示になったときに赤い点を元に戻す
+    // UI 非表示時に前回ハイライトをリセット
     void ResetPreviousPointColor()
     {
         if (previousClosestIndex < 0) return;

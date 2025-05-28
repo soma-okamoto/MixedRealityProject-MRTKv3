@@ -124,17 +124,17 @@ public class BottleSync : MonoBehaviour
     {
         List<GameObject> result = new List<GameObject>();
 
-        foreach (Transform child in parent)
+        foreach (Transform child in parent.GetComponentsInChildren<Transform>())
         {
-            if (child.CompareTag(tag))
+            if (child != parent && child.CompareTag(tag))  // 自分自身は除く
             {
                 result.Add(child.gameObject);
             }
         }
 
-        // Hierarchy 上の順番は Transform 順（for ループ通り）なのでソート不要
         return result;
     }
+
     public bool TryGetSubFromMaster(GameObject master, out GameObject sub)
     {
         return masterToSubMapping.TryGetValue(master, out sub);
