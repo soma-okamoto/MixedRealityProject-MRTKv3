@@ -55,6 +55,7 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<RosSharp.RosBridgeClient.handPosePublisher>().enabled = true;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = true;
         rosConnector.GetComponent<Float32MultiSubscriber>().enabled = true;
+        rosConnector.GetComponent<RosSharp.RosBridgeClient.ZRotationPublisher>().enabled = true;
 
         if (BBox != null)
         {

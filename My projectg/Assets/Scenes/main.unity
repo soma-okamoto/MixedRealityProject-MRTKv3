@@ -1455,6 +1455,10 @@ PrefabInstance:
       propertyPath: m_ModelPrefab
       value: 
       objectReference: {fileID: 1768293572455847265, guid: 2b468cc4fe6d2b44ebc53b958b38b91a, type: 3}
+    - target: {fileID: 2304670408713330098, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
+      propertyPath: m_AnimateModel
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2351505566771328527, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -2871,6 +2875,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abfaad578d05e4a09838223134c41c46, type: 3}
+--- !u!4 &289221155 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5870931076965904816, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
+  m_PrefabInstance: {fileID: 173134765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &295051849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,7 +3235,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1005112911}
+  - {fileID: 453844062}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4198,6 +4207,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bindingProfile: {fileID: 11400000, guid: c2554c7933796464c965ae0c4acf9561, type: 2}
+--- !u!21 &453844062
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!4 &483889640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 191803139578741389, guid: b7b55b04f2004024fba97cc25b2cde3e, type: 3}
@@ -5525,6 +5562,7 @@ GameObject:
   - component: {fileID: 555286884}
   - component: {fileID: 555286883}
   - component: {fileID: 555286885}
+  - component: {fileID: 555286886}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -5888,6 +5926,20 @@ MonoBehaviour:
   EnsureThreadSafety: 0
   OriginObject: {fileID: 1455497433}
   BaseMovePosition: {x: 0, y: 0, z: 0}
+--- !u!114 &555286886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3106c8780924f9d409e3be412a64a374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /z_rotation
+  targetObject: {fileID: 289221155}
 --- !u!1 &555674797 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5145485273924157123, guid: a8df832ff62941c40b056cce151ff315, type: 3}
@@ -6013,6 +6065,7 @@ GameObject:
   - component: {fileID: 556539728}
   - component: {fileID: 556539727}
   - component: {fileID: 556539726}
+  - component: {fileID: 556539730}
   m_Layer: 0
   m_Name: HandTrackingController
   m_TagString: Untagged
@@ -6083,6 +6136,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &556539730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556539725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32abd2df70d06404cb832bff7369dcb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sphereMarker: {fileID: 7950680816761361652, guid: 0f5f76cbead6bf242a542e43205e608c, type: 3}
+  palmMarker: {fileID: 7950680816761361652, guid: 0f5f76cbead6bf242a542e43205e608c, type: 3}
+  wristMarkerPrefab: {fileID: 7950680816761361652, guid: 0f5f76cbead6bf242a542e43205e608c, type: 3}
+  enableMidMarker: 0
+  enablePalmMarker: 1
+  enableWristMarker: 0
+  midEulerAngles: {x: 0, y: 0, z: 0}
+  palmEulerAngles: {x: 0, y: 0, z: 0}
+  wristEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &561762492
 GameObject:
   m_ObjectHideFlags: 0
@@ -11809,34 +11883,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6b351a67ceb69140b199996bbbea156, type: 3}
---- !u!21 &1005112911
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1021831648
 GameObject:
   m_ObjectHideFlags: 0
