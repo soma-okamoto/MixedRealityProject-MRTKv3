@@ -50,9 +50,9 @@ public class PalmRollTracker : MonoBehaviour
         var agg = XRSubsystemHelpers.HandsAggregator;
         if (agg == null) { return; }
 
-        // „Ÿ„Ÿ MiddleMetacarpal „Ÿ„Ÿ
+        // „Ÿ„Ÿ MiddleMiddleProximal „Ÿ„Ÿ
         if (enableMidMarker && middleObject != null &&
-            agg.TryGetJoint(TrackedHandJoint.MiddleMetacarpal, XRNode.LeftHand, out HandJointPose midPose))
+            agg.TryGetJoint(TrackedHandJoint.MiddleProximal, XRNode.LeftHand, out HandJointPose midPose))
         {
             middleObject.SetActive(true);
             middleObject.transform.position = midPose.Position;
