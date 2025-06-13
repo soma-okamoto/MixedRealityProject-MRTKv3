@@ -12,6 +12,7 @@ namespace RosSharp.RosBridgeClient
     public class RecoveryFlagPublisher : UnityPublisher<std_msgs.Bool>
     {
         private std_msgs.Bool message;
+        [SerializeField]  // Inspector ‚É•\Ž¦‚³‚ê‚é‚æ‚¤‚É‚·‚é
         private bool currentState = false;
 
         /// <summary>

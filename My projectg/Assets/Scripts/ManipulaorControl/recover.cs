@@ -1,22 +1,23 @@
 using UnityEngine;
 using RosSharp.RosBridgeClient;
 
-using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
-
-
 public class recover : MonoBehaviour
 {
-   /* [Tooltip("RecoveryFlagPublisher コンポーネントをアタッチした同じ GameObject")]
-    public RecoveryFlagPublisher recoveryPublisher;
+    [SerializeField] private GameObject rosConnector;
 
-  
-
-    public void Recoverry()
+    // GameObject がアクティブになったときに呼ばれる
+    private void OnEnable()
     {
-        if (recoveryPublisher != null)
-        {
-            recoveryPublisher.PublishRecoveryFlag();
-            UnityEngine.Debug.Log("RecoveryFlagPublisher.PublishRecoveryFlag() called");
-        }
-    }*/
+        if (rosConnector == null) return;
+
+        var handPose = rosConnector.GetComponent<handPosePublisher>();
+        var airTap = rosConnector.GetComponent<airTapPublisher>();
+        var floatSub = rosConnector.GetComponent<Float32MultiSubscriber>();
+
+        if (handPose != null) handPose.enabled = false;
+        if (airTap != null) airTap.enabled = false;
+        if (floatSub != null) floatSub.enabled = false;
+
+        UnityEngine.Debug.Log("Recover triggered: HansdTracking disabled.");
+    }
 }
