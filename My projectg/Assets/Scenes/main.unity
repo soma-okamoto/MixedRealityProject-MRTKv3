@@ -6275,7 +6275,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1083505549}
+  - {fileID: 1059890908}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8391,6 +8391,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 508999148}
+  - component: {fileID: 508999149}
   m_Layer: 0
   m_Name: ManipulatorControlManager
   m_TagString: Untagged
@@ -8415,6 +8416,18 @@ Transform:
   - {fileID: 1334506948}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &508999149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508999147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ab870dea761fd498c503bf5a2b8ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &514705855
 GameObject:
   m_ObjectHideFlags: 0
@@ -9791,7 +9804,20 @@ MonoBehaviour:
         m_Calls: []
   <OnClicked>k__BackingField:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 555286887}
+        m_TargetAssemblyTypeName: RosSharp.RosBridgeClient.RecoveryFlagPublisher,
+          Assembly-CSharp
+        m_MethodName: ToggleRecoveryFlag
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <OnEnabled>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -10168,6 +10194,7 @@ GameObject:
   - component: {fileID: 555286883}
   - component: {fileID: 555286885}
   - component: {fileID: 555286886}
+  - component: {fileID: 555286887}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -10545,6 +10572,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /z_rotation
   targetObject: {fileID: 289221155}
+--- !u!114 &555286887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13719290ea79a4c4f8ff982134be0150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /recovery_flag
 --- !u!1001 &555887933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18873,7 +18913,7 @@ Transform:
   - {fileID: 1232712610}
   m_Father: {fileID: 218233501}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1083505549
+--- !u!21 &1059890908
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -35239,7 +35279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6711942131762734424
 MonoBehaviour:
   m_ObjectHideFlags: 0
