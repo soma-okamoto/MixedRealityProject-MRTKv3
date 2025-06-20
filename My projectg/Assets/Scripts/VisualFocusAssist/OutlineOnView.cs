@@ -1,5 +1,5 @@
 
-using UnityEngine;
+/*using UnityEngine;
 using MixedReality.Toolkit.SpatialManipulation;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ using MixedReality.Toolkit.Input;
 public class OutlineOnView : MonoBehaviour
 {
     public Camera playerCamera;
-    [SerializeField]private float maxRaycastDistance = 0.75f;
+    [SerializeField] private float maxRaycastDistance = 0.75f;
     private RaycastHit hitObj;
 
     [SerializeField, Tooltip("掴んだときに表示するオブジェクト")]
@@ -42,7 +42,7 @@ public class OutlineOnView : MonoBehaviour
         }
 
 
-        
+
 
 
 
@@ -84,5 +84,133 @@ public class OutlineOnView : MonoBehaviour
         return targetUI;
     }
 
+
+}*/
+
+using UnityEngine;
+using MixedReality.Toolkit.SpatialManipulation;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Collections;
+public class OutlineOnView : MonoBehaviour
+{
+    public Camera playerCamera;
+    [SerializeField] private float maxRaycastDistance = 0.75f;
+    private RaycastHit hitObj;
+    [SerializeField] private GameObject targetUI;
+    public BottleSync bottleSync;
+    public GameObject ReachabilityFullObject; // InspectorでMeshColliderオブジェクトを指定
+
+    public GameObject hitObject { get; private set; }
+    private List<GameObject> outsideBottles = new List<GameObject>();
+
+    private Collider reachabilityCollider;
+
+    void Start()
+    {
+        if (ReachabilityFullObject != null)
+            reachabilityCollider = ReachabilityFullObject.GetComponent<Collider>();
+
+        StartCoroutine(UpdateOutsideBottlesLoop());
+    }
+
+    private bool IsInsideArea(GameObject obj)
+    {
+        if (reachabilityCollider == null || obj == null) return false;
+
+        if (reachabilityCollider is SphereCollider sc)
+        {
+            Vector3 center = sc.transform.TransformPoint(sc.center); // ワールド座標に変換された球の中心
+            float radius = sc.radius * sc.transform.lossyScale.x;    // ワールドスケールを考慮した半径
+
+            float distance = Vector3.Distance(center, obj.transform.position);
+
+            return distance <= radius;
+        }
+
+        return false;
+    }
+
+
+
+
+    private GameObject GetCurrentlyGrabbedObject()
+    {
+        var manipulators = FindObjectsOfType<ObjectManipulator>();
+        foreach (var manipulator in manipulators)
+        {
+            if (manipulator.interactorsSelecting != null && manipulator.interactorsSelecting.Count > 0)
+                return manipulator.gameObject;
+        }
+        return null;
+    }
+
+    void Update()
+    {
+        GameObject grabbed = GetCurrentlyGrabbedObject();
+        GameObject raycasted = null;
+
+        if (Physics.Raycast(new Ray(playerCamera.transform.position, playerCamera.transform.forward), out hitObj, maxRaycastDistance))
+        {
+            raycasted = hitObj.collider.gameObject;
+        }
+
+        hitObject = null; // ← 初期化
+        
+
+        // 優先順位1: 掴んでいて、タグがbottle、かつエリア内
+        if (grabbed != null && grabbed.CompareTag("bottle") && IsInsideArea(grabbed))
+        {
+            hitObject = grabbed;
+            //UnityEngine.Debug.Log("aria grab");
+        }
+        // 優先順位2: 掴んでいない場合にRaycast判定、タグbottleでエリア内
+        else if (grabbed == null && raycasted != null && raycasted.CompareTag("bottle") && IsInsideArea(raycasted))
+        {
+            hitObject = raycasted;
+            //UnityEngine.Debug.Log("aria ray");
+        }
+        
+        // UI表示のON/OFF（hitObjectがnullかどうかで判定）
+        if (targetUI != null)
+        {
+            targetUI.SetActive(hitObject != null);
+        }
+
+        // BottleSyncに共有
+        if (hitObject != null && bottleSync != null)
+        {
+            bottleSync.SetCurrentHitObject(hitObject);
+        }
+    }
+
+    public GameObject GetTargetUI() => targetUI;
+    public List<GameObject> GetOutsideBottles()
+    {
+        return outsideBottles;
+    }
+
+    private IEnumerator UpdateOutsideBottlesLoop()
+    {
+        while (true)
+        {
+            UpdateOutsideBottles();
+            yield return new WaitForSeconds(1f); // 1秒ごとに更新
+        }
+    }
+
+    private void UpdateOutsideBottles()
+    {
+        outsideBottles.Clear();
+        GameObject[] allBottles = GameObject.FindGameObjectsWithTag("bottle");
+
+        foreach (var bottle in allBottles)
+        {
+            if (!IsInsideArea(bottle))
+            {
+                outsideBottles.Add(bottle);
+            }
+        }
+    }
 
 }

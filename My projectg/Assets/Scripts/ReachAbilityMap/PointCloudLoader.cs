@@ -51,7 +51,7 @@ public class PointCloudLoader : MonoBehaviour
             float rz = float.Parse(parts[2])+baseOffsetZ;
             float score = float.Parse(parts[3]);
 
-            // オフセットを引く！（アーム根本基準に）
+   
             vertices.Add(new Vector3(
                 -rx,
                  rz,
@@ -72,7 +72,7 @@ public class PointCloudLoader : MonoBehaviour
         mf.mesh = mesh;
 
         var mr = gameObject.AddComponent<MeshRenderer>();
-        mr.material = new Material(Shader.Find("Sprites/Default"));
+        mr.material = new Material(Shader.Find("Custom/PointCloudShader1"));
         yield return null;
     }
 }
