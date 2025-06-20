@@ -16,11 +16,7 @@ public class GameUI : MonoBehaviour
     private int currentCount;
     private float timer;
 
-    // Start → 一度だけの処理に限定する
-    private void Start()
-    {
-        // 最初の一度だけ実行されるが、以降は OnEnable を使う
-    }
+  
 
     // アクティブになるたびにタイマー初期化
     private void OnEnable()
@@ -36,9 +32,9 @@ public class GameUI : MonoBehaviour
     {
         if (currentCount <= 0)
         {
-            rosConnector.GetComponent<handPosePublisher>().enabled = true;
+            /*rosConnector.GetComponent<handPosePublisher>().enabled = true;
             rosConnector.GetComponent<airTapPublisher>().enabled = true;
-            rosConnector.GetComponent<Float32MultiSubscriber>().enabled = true;
+            rosConnector.GetComponent<Float32MultiSubscriber>().enabled = true;*/
             gameObject.SetActive(false);
             return;
         }
