@@ -6462,34 +6462,6 @@ Transform:
   - {fileID: 1345482285}
   m_Father: {fileID: 491878469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &313694319
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &314616093
 GameObject:
   m_ObjectHideFlags: 0
@@ -6854,7 +6826,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 313694319}
+  - {fileID: 1724056925}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29720,6 +29692,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7047676844597515174, guid: abfaad578d05e4a09838223134c41c46, type: 3}
   m_PrefabInstance: {fileID: 277807517}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &1724056925
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!224 &1724219275 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8110664055982005406, guid: f443144a6d408c34bb8a7d70a73644c4, type: 3}
