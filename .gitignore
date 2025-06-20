@@ -19,7 +19,7 @@
 *.pidb
 *.booproj
 *.svd
-
+*.apk
 # Visual Studio
 .vscode/
 .vs/
