@@ -8,6 +8,8 @@ public class SelectObject : MonoBehaviour
     [SerializeField] RosSharp.RosBridgeClient.BeforeObjectFloat32Publisher beforeObjectFloat32;
     [SerializeField] RosSharp.RosBridgeClient.CalibrationFloat32Publisher calibrationFloat32Publisher;
     [SerializeField] CalibrationFloat32Subscriber calibrationFloat32Subscriber;
+    [SerializeField] RosSharp.RosBridgeClient.IRM_SerectObjectPublisher irmSelectPublisher;  // 追加: IRM Select Publisher
+
     public List<GameObject> ObjectList;
     public List<float> beforeList;
     public List<float> afterList;
@@ -130,5 +132,26 @@ public class SelectObject : MonoBehaviour
         beforeData = PickObjectPositionList.ToArray();
 
         return beforeData;
+    }
+
+    public float[] IRM_SelectMessage()
+    {
+        var selectCoords = new List<float>();
+        if (Origin == null)
+        {
+            UnityEngine.Debug.LogError("Origin が設定されていません！");
+            return selectCoords.ToArray();
+        }
+
+        // World 空間の座標を Origin のローカル座標に変換
+        foreach (GameObject obj in ObjectList)
+        {
+            Vector3 worldPos = obj.transform.position;
+            Vector3 localPos = Origin.transform.InverseTransformPoint(worldPos);
+            selectCoords.Add(localPos.x);
+            selectCoords.Add(localPos.y);
+            selectCoords.Add(localPos.z);
+        }
+        return selectCoords.ToArray();
     }
 }
