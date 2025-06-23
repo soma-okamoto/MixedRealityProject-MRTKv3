@@ -1,13 +1,15 @@
-
+ï»¿
 using UnityEngine;
 using System.Collections.Generic;
 
 public class BottleSync : MonoBehaviour
 {
-    public Transform parentA; // ƒ}ƒXƒ^[bottle‚ÌeƒIƒuƒWƒFƒNƒg (ParentA)
-    public Transform parentB; // ƒTƒubottle‚ÌeƒIƒuƒWƒFƒNƒg (ParentB)
+    public Transform parentA; // ãƒã‚¹ã‚¿ãƒ¼bottleã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ (ParentA)
+    public Transform parentB; // ã‚µãƒ–bottleã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ (ParentB)
 
     private Dictionary<GameObject, GameObject> masterToSubMapping = new Dictionary<GameObject, GameObject>();
+
+
     private Dictionary<GameObject, Color> masterColors = new Dictionary<GameObject, Color>();
     private Dictionary<GameObject, Color> originalColors = new Dictionary<GameObject, Color>();
     private Dictionary<PointCloudRenderer, PointCloudRenderer> masterPCLToSubPCL = new();
@@ -17,13 +19,15 @@ public class BottleSync : MonoBehaviour
     {
         if (parentA == null || parentB == null)
         {
-            //UnityEngine.Debug.Log("ParentA‚Ü‚½‚ÍParentB‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI");
+            UnityEngine.Debug.Log("ParentAã¾ãŸã¯ParentBãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ï¼");
             return;
         }
 
         List<GameObject> masterList = GetOrderedChildrenWithTag(parentA, "bottle");
         List<GameObject> subList = GetOrderedChildrenWithTag(parentB, "SubBottle");
-        // PointCloudRenderer “¯m‚à‡˜‘Î‰‚ÅƒyƒAƒŠƒ“ƒO
+
+
+        // PointCloudRenderer åŒå£«ã‚‚é †åºå¯¾å¿œã§ãƒšã‚¢ãƒªãƒ³ã‚°
         PointCloudRenderer[] masterPCLs = parentA.GetComponentsInChildren<PointCloudRenderer>();
         PointCloudRenderer[] subPCLs = parentB.GetComponentsInChildren<PointCloudRenderer>();
 
@@ -41,11 +45,13 @@ public class BottleSync : MonoBehaviour
     {
         parentB = newParentB;
 
-        // •À‚Ñ‡‚É]‚Á‚Äæ“¾
+        // ä¸¦ã³é †ã«å¾“ã£ã¦å–å¾—
         List<GameObject> masterList = GetOrderedChildrenWithTag(parentA, "bottle");
         List<GameObject> subList = GetOrderedChildrenWithTag(parentB, "SubBottle");
 
+
         masterToSubMapping.Clear();
+
         originalColors.Clear();
 
         int pairCount = Mathf.Min(masterList.Count, subList.Count);
@@ -62,7 +68,9 @@ public class BottleSync : MonoBehaviour
                 originalColors[sub] = subRenderer.material.color;
             }
         }
-        // SetParentB ‚Ì––”ö‚É‚±‚ê‚ª‚ ‚é‚©
+
+
+        // SetParentB ã®æœ«å°¾ã«ã“ã‚ŒãŒã‚ã‚‹ã‹
         PointCloudRenderer[] masterPCLs = parentA.GetComponentsInChildren<PointCloudRenderer>();
         PointCloudRenderer[] subPCLs = parentB.GetComponentsInChildren<PointCloudRenderer>();
         masterPCLToSubPCL.Clear();
@@ -83,7 +91,7 @@ public class BottleSync : MonoBehaviour
 
     void Update()
     {
-        // ƒ}ƒXƒ^[bottle‚ÌF‚âƒAƒEƒgƒ‰ƒCƒ“‚ğƒTƒubottle‚É”½‰f
+        // ãƒã‚¹ã‚¿ãƒ¼bottleã®è‰²ã‚„ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã‚’ã‚µãƒ–bottleã«åæ˜ 
         foreach (var entry in masterToSubMapping)
         {
             GameObject masterBottle = entry.Key;
@@ -94,14 +102,14 @@ public class BottleSync : MonoBehaviour
                 Renderer masterRenderer = masterBottle.GetComponent<Renderer>();
                 Renderer subRenderer = subBottle.GetComponent<Renderer>();
 
-        
 
-                // ƒ}ƒXƒ^[‚ÌˆÊ’u‚Æ‰ñ“]‚ğƒTƒu‚É”½‰f
+
+                // ãƒã‚¹ã‚¿ãƒ¼ã®ä½ç½®ã¨å›è»¢ã‚’ã‚µãƒ–ã«åæ˜ 
                 Transform masterParent = masterBottle.transform.parent;
                 Vector3 masterLocalPosition = masterParent.InverseTransformPoint(masterBottle.transform.position);
                 Quaternion masterLocalRotation = Quaternion.Inverse(masterParent.rotation) * masterBottle.transform.rotation;
 
-                // ƒTƒu‚ÌˆÊ’u‚Æ‰ñ“]‚ğ“¯Šú
+                // ã‚µãƒ–ã®ä½ç½®ã¨å›è»¢ã‚’åŒæœŸ
                 subBottle.transform.localPosition = masterLocalPosition;
                 subBottle.transform.localRotation = masterLocalRotation;
             }
@@ -119,14 +127,14 @@ public class BottleSync : MonoBehaviour
     }
 
 
-    // w’è‚³‚ê‚½eƒIƒuƒWƒFƒNƒg‚ÌqƒIƒuƒWƒFƒNƒg‚Ì’†‚©‚ç“Á’è‚Ìƒ^ƒO‚ğ‚Â‚à‚Ì‚ğæ“¾
+    // æŒ‡å®šã•ã‚ŒãŸè¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä¸­ã‹ã‚‰ç‰¹å®šã®ã‚¿ã‚°ã‚’æŒã¤ã‚‚ã®ã‚’å–å¾—
     private List<GameObject> GetOrderedChildrenWithTag(Transform parent, string tag)
     {
         List<GameObject> result = new List<GameObject>();
 
         foreach (Transform child in parent.GetComponentsInChildren<Transform>())
         {
-            if (child != parent && child.CompareTag(tag))  // ©•ª©g‚Íœ‚­
+            if (child != parent && child.CompareTag(tag))  // è‡ªåˆ†è‡ªèº«ã¯é™¤ã
             {
                 result.Add(child.gameObject);
             }
@@ -155,7 +163,7 @@ public class BottleSync : MonoBehaviour
         }
         return null;
     }
-    // SubBottlei‚±‚ÌƒXƒNƒŠƒvƒg‚ª‚Â‚¢‚Ä‚éGameObjectj ¨ ‘Î‰‚·‚é Sub ‚Ì PointCloudRenderer ‚ğæ“¾
+    // SubBottleï¼ˆï¼ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒã¤ã„ã¦ã‚‹GameObjectï¼‰ â†’ å¯¾å¿œã™ã‚‹ Sub ã® PointCloudRenderer ã‚’å–å¾—
     public PointCloudRenderer GetSubPointCloudFromSubBottle(GameObject subBottle)
     {
         return subBottle.GetComponentInChildren<PointCloudRenderer>();

@@ -92,6 +92,17 @@ public class ObjectDuplicator : MonoBehaviour
                     //UnityEngine.Debug.Log($"タグ変更: {child.name} → SubBottle");
                 }
             }
+
+            foreach (Transform child in duplicatedObject.GetComponentsInChildren<Transform>(true))
+            {
+                if (child.CompareTag("Origin"))
+                {
+                    child.tag = "SubOrigin";
+                    //Debug.Log($"子オブジェクトタグ変更: {child.name} → SubOrigin");
+                }
+            }
+
+
             // RadialView制御スクリプトを追加
             var toggleScript = duplicatedObject.AddComponent<RadialViewToggleOnManipulation>();
             var manipulator = duplicatedObject.GetComponent<ObjectManipulator>();
@@ -109,6 +120,12 @@ public class ObjectDuplicator : MonoBehaviour
           {
                 bottleSync.SetParentB(duplicatedObject.transform); // ←親として登録
            }
+
+        var OriginSync = FindObjectOfType<OriginSync>();
+        if (OriginSync != null)
+        {
+            OriginSync.SetParentB(duplicatedObject.transform); // ←親として登録
+        }
 
 
     }
