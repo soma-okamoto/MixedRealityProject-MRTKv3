@@ -139,18 +139,23 @@ public class SelectObject : MonoBehaviour
         var selectCoords = new List<float>();
         if (Origin == null)
         {
-            UnityEngine.Debug.LogError("Origin が設定されていません！");
+            Debug.LogError("Origin が設定されていません！");
             return selectCoords.ToArray();
         }
 
-        // World 空間の座標を Origin のローカル座標に変換
+        // アーム根本から見た原点座標オフセット
+        Vector3 offset = new Vector3(0.123f, 0f, 0.056f);
+
+        // World 空間の座標を Origin のローカル座標に変換し、オフセット適用
         foreach (GameObject obj in ObjectList)
         {
             Vector3 worldPos = obj.transform.position;
             Vector3 localPos = Origin.transform.InverseTransformPoint(worldPos);
-            selectCoords.Add(localPos.x);
-            selectCoords.Add(localPos.y);
-            selectCoords.Add(localPos.z);
+            Vector3 adjusted = localPos + offset;
+
+            selectCoords.Add(-adjusted.x);
+            selectCoords.Add(adjusted.y);
+            selectCoords.Add(adjusted.z);
         }
         return selectCoords.ToArray();
     }
