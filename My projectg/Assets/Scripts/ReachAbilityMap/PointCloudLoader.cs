@@ -9,6 +9,10 @@ public class PointCloudLoader : MonoBehaviour
     public string fileName = "reachability_pointcloud.csv";
     public Gradient colorByScore;
 
+    [Header("点サイズ")]
+    [Range(1, 200)]
+    public float pointSize = 20f;
+
     // アーム根本基準のオフセット
     const float baseOffsetX = -0.123f;
     const float baseOffsetY = 0.0f;
@@ -72,7 +76,14 @@ public class PointCloudLoader : MonoBehaviour
         mf.mesh = mesh;
 
         var mr = gameObject.AddComponent<MeshRenderer>();
-        mr.material = new Material(Shader.Find("Custom/PointCloudShader1"));
+        //mr.material = new Material(Shader.Find("Custom/PointCloudShader1"));
+
+        var mat = new Material(Shader.Find("Custom/PointCloudShader1"));
+        //var mat = new Material(Shader.Find("Custom/PointCloud"));
+
+
+        mat.SetFloat("_PointSize", pointSize);
+        mr.material = mat;
         yield return null;
     }
 }

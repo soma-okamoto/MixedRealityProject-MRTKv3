@@ -12,6 +12,9 @@ public class bottle_color : MonoBehaviour
     [ColorUsage(false, true)] public Color OriginalColor;   // 選択なし
 
     public float fadeSpeed = 15f;            // フェード速度（大きいほど速い）
+    public GameObject targetUIPrefab;
+    private GameObject currentTargetBottle = null;
+    private GameObject currentTargetUI = null;
 
     private Dictionary<GameObject, Color> originalColors = new Dictionary<GameObject, Color>();
     private Dictionary<GameObject, Material> materials = new Dictionary<GameObject, Material>();
@@ -69,6 +72,50 @@ public class bottle_color : MonoBehaviour
     void Update()
     {
         GameObject hit = _rayManager.hitObject;
+        if (hit != currentTargetBottle)
+        {
+            // 古いカーソルを消す
+            if (currentTargetUI != null)
+            {
+                Destroy(currentTargetUI);
+                currentTargetUI = null;
+            }
+
+            currentTargetBottle = hit;
+
+            // 新しいターゲットがあれば UI を生成
+            if (currentTargetBottle != null && targetUIPrefab != null)
+            {
+                // ボトルのワールド位置
+                Vector3 bottlePos = currentTargetBottle.transform.position;
+                // カメラ位置
+                Transform camT = Camera.main.transform;
+
+                // カメラ方向ベクトル（ボトル→カメラ）
+                Vector3 dirToCam = (camT.position - bottlePos).normalized;
+
+                // 前方オフセット距離（お好みで調整）
+                float forwardOffset = 0.1f;  // 10cm 手前に
+                                          
+                float heightOffset = 0.1f;   // 10cm 上に
+                                             // 最終的な UI 配置位置
+                Vector3 uiPos = bottlePos
+                              + dirToCam * forwardOffset
+                              + Vector3.up * heightOffset;
+
+                // カメラ常向き回転は変わらず
+                Vector3 toCamFlat = camT.position - uiPos;
+                toCamFlat.y = 0;
+                Quaternion uiRot = Quaternion.LookRotation(toCamFlat.normalized, Vector3.up);
+
+                currentTargetUI = Instantiate(
+                    targetUIPrefab,
+                    uiPos,
+                    uiRot,
+                    currentTargetBottle.transform
+                );
+            }
+        }
         List<GameObject> outsideBottles = _rayManager.GetOutsideBottles();
         // マスター-サブの対応リストが有効なボトルのみ対象
         foreach (var bottle in bottles)

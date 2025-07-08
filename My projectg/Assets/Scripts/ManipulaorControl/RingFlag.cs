@@ -1,9 +1,13 @@
-using UnityEngine;
+/*using UnityEngine;
 using RosSharp.RosBridgeClient;
-using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 using MixedReality.Toolkit.Subsystems;
 using MixedReality.Toolkit;
 using UnityEngine.XR;
+
+using RosSharp.RosBridgeClient.MessageTypes.Std;
+
+namespace RosSharp.RosBridgeClient
+{
 
 public class RingFlag : UnityPublisher<std_msgs.Bool>
 {
@@ -16,7 +20,6 @@ public class RingFlag : UnityPublisher<std_msgs.Bool>
 
     [Header("Activate Target On Close")]
     public GameObject toggleTarget;
-    [SerializeField] private GameObject rosConnector;
 
     private GameObject thumbMarker;
     private GameObject littleMarker;
@@ -77,7 +80,7 @@ public class RingFlag : UnityPublisher<std_msgs.Bool>
             littleMarker.GetComponent<Renderer>().material.color = isClose ? Color.red : defaultColorRing;
 
             // まだ false なら一度だけ true に切り替えて Publish & ターゲットをアクティブ化
-            if (message.data==false)
+            if (message.data == false)
             {
                 var handPose = rosConnector.GetComponent<handPosePublisher>();
                 var airTap = rosConnector.GetComponent<airTapPublisher>();
@@ -96,3 +99,6 @@ public class RingFlag : UnityPublisher<std_msgs.Bool>
         }
     }
 }
+
+
+}*/

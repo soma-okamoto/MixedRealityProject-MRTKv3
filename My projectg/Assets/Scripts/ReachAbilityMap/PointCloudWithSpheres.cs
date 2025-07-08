@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.Rendering;
 
 public class PointCloudWithSpheres : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PointCloudWithSpheres : MonoBehaviour
     [Header("表示設定")]
     public GameObject pointPrefab;           // 球体プレハブ（Sphere）
     public Gradient colorByScore;            // スコア → 色変換
-    public float sphereScale = 0.02f;        // 球体サイズ（固定）
+    public float sphereScale = 0.02f;        // 球体サイズ
 
     [Header("処理制御")]
     public int batchSize = 1000;             // フレーム分割描画
@@ -75,7 +76,7 @@ public class PointCloudWithSpheres : MonoBehaviour
             {
                 renderer.material.color = colorByScore.Evaluate(t);
             }
-
+    
 
             if (i % batchSize == 0)
                 yield return null;
