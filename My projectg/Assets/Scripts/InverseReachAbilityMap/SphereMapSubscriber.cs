@@ -14,9 +14,15 @@ namespace RosSharp.RosBridgeClient
         public float sphereScale = 0.02f; // 球体サイズ
         public int batchSize = 1000;      // フレーム分割数
 
-        const float baseOffsetX = -0.123f;
+   /*     const float baseOffsetX = -0.123f;
         const float baseOffsetY = 0.0f;
-        const float baseOffsetZ =-0.056f;
+        const float baseOffsetZ = -0.056f;*/
+
+        const float baseOffsetX = 0.0f;
+        const float baseOffsetY = 0.0f;
+        const float baseOffsetZ = 0.0f;
+
+
 
         private float[] latestData;
         private bool dataReceived = false;

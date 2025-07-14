@@ -143,7 +143,9 @@ public class SelectObject : MonoBehaviour
         }
 
         // YouBot 向けに追加したいオフセット
-        Vector3 axisOffset = new Vector3(-0.123f, 0.056f, 0f);
+       /* Vector3 axisOffset = new Vector3(-0.123f, 0.056f, 0f);*/
+
+        Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
 
         // １度だけ取得しておく Origin のワールド座標
         Vector3 originWorld = Origin.transform.position;
