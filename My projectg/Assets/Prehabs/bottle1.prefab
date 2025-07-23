@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8746166477251094140}
   - component: {fileID: -7542038300002869051}
   - component: {fileID: -4405595048168629000}
+  - component: {fileID: 1068656408643193716}
   m_Layer: 0
   m_Name: bottle1
   m_TagString: bottle
@@ -457,3 +458,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e2ee063dcbae94e92ee02d284b858c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1068656408643193716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5942948548269898092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b7a320f8982e094aba1173f0da7ef1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsInside>k__BackingField: 0
+  ObjectHit: {fileID: 0}
+  PickColor: {r: 2.2238746, g: 1.7811602, b: 0.23286647, a: 0}
+  OtherColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 0}
+  fadeSpeed: 5
+  targetUIPrefab: {fileID: 8514141613584619500, guid: c5f26304378c8fa47ba7fdb6e5c0e167, type: 3}
+  isHitted: 0
+  otherAlpha: 0.2

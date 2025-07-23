@@ -229,6 +229,8 @@ GameObject:
   - component: {fileID: 1175877097798059369}
   - component: {fileID: 5708893764827309141}
   - component: {fileID: 5538061752527675181}
+  - component: {fileID: -227344837964713587}
+  - component: {fileID: 1186615789251245701}
   m_Layer: 0
   m_Name: WayPoint6
   m_TagString: Untagged
@@ -710,6 +712,30 @@ MonoBehaviour:
       reference: MixedReality.Toolkit.SpatialManipulation.RotateLogic, MixedReality.Toolkit.SpatialManipulation
     scaleLogicType:
       reference: MixedReality.Toolkit.SpatialManipulation.ScaleLogic, MixedReality.Toolkit.SpatialManipulation
+--- !u!114 &-227344837964713587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713624555172788177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fc915d3769a564a85fae9ed9098651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1186615789251245701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713624555172788177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e2ee063dcbae94e92ee02d284b858c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8085779263748730105
 GameObject:
   m_ObjectHideFlags: 0

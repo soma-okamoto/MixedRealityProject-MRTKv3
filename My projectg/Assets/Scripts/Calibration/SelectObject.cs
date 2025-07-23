@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+
 
 public class SelectObject : MonoBehaviour
 {
@@ -48,6 +50,9 @@ public class SelectObject : MonoBehaviour
                 if (!ObjectList.Contains(other.gameObject))
                 {
                     other.gameObject.GetComponent<MeshRenderer>().material.color = SelectColor;
+                    var rend = other.GetComponent<Renderer>();
+                    SetOpaque(rend.material);
+
                     beforeList.Add(other.gameObject.transform.localPosition.x);
                     beforeList.Add(other.gameObject.transform.localPosition.y);
                     beforeList.Add(other.gameObject.transform.localPosition.z);
@@ -174,5 +179,17 @@ public class SelectObject : MonoBehaviour
 
         return selectCoords.ToArray();
     }
+    private void SetOpaque(Material m)
+   {
+       m.SetFloat("_Surface", 0f);
+       m.SetOverrideTag("RenderType", "Opaque");
+       m.SetInt("_SrcBlend",  (int) BlendMode.One);
+       m.SetInt("_DstBlend",  (int) BlendMode.Zero);
+       m.SetInt("_ZWrite",    1);
+       m.DisableKeyword("_ALPHATEST_ON");
+       m.DisableKeyword("_ALPHABLEND_ON");
+       m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+       m.renderQueue = (int) RenderQueue.Geometry;
+   }
 
 }
