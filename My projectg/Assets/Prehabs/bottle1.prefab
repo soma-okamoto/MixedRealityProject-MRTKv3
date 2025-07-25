@@ -472,9 +472,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsInside>k__BackingField: 0
   ObjectHit: {fileID: 0}
+  BottleHitMapper: {fileID: 0}
   PickColor: {r: 2.2238746, g: 1.7811602, b: 0.23286647, a: 0}
   OtherColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 0}
+  OutSideSerectColor: {r: 1.1173185, g: 4.552756, b: 6.4669046, a: 0}
   fadeSpeed: 5
   targetUIPrefab: {fileID: 8514141613584619500, guid: c5f26304378c8fa47ba7fdb6e5c0e167, type: 3}
   isHitted: 0
   otherAlpha: 0.2
+  BorrowOrigin: {fileID: 0}

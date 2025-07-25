@@ -192,7 +192,12 @@
 
 // }
 
+using RosSharp.RosBridgeClient;
+using RosSharp.Urdf;
+using System.Collections.Generic;
 using UnityEngine;
+using RosSharp.RosBridgeClient.MessageTypes.Std;   // Float32MultiArray
+
 public class BottleAreaState : MonoBehaviour
 {
     // 現在の inside / outside の状態
@@ -201,9 +206,12 @@ public class BottleAreaState : MonoBehaviour
     public bool IsHit { get; private set; }
     public ObjectHit ObjectHit;
     public BottleHitMapper BottleHitMapper;
+    private IRM_SerectObjectPublisher irmPublisher;
 
-    [ColorUsage(false, true)] public Color PickColor;      // Inside ＆ Hit
-    [ColorUsage(false, true)] public Color OtherColor;     // Outside
+    [ColorUsage(false, true)] public Color PickColor;      // Inside ＆ ROS同定
+    [ColorUsage(false, true)] public Color OtherColor;     //  !inside　または　他にPickあるとき
+    [ColorUsage(false, true)] public Color OutSideSerectColor;     // !insideかつROS同定
+
     private Color originalColor;
 
     public float fadeSpeed = 5f;
@@ -215,12 +223,15 @@ public class BottleAreaState : MonoBehaviour
     private GameObject currentTargetUI = null;
     public bool isHitted = false;
     private bool isTransparent = false;
+    private bool hasPublished = false;   // 送信済みフラグ
 
     [Range(0f, 1f)] public float otherAlpha = 0.2f;
     // SelectObject から「この色で Override してほしい」と言われたときに使う
      bool manualOverride = false;
      Color manualColor;
-     public void OverrideColor(Color c)
+   public GameObject BorrowOrigin;
+
+    public void OverrideColor(Color c)
      {
          manualOverride = true;
          manualColor     = c;
@@ -248,6 +259,17 @@ public class BottleAreaState : MonoBehaviour
             ObjectHit = FindObjectOfType<ObjectHit>();
         if (BottleHitMapper == null)
                 BottleHitMapper = FindObjectOfType<BottleHitMapper>();
+        if (irmPublisher == null)
+            irmPublisher = FindObjectOfType<IRM_SerectObjectPublisher>();
+        if (BorrowOrigin == null)
+        {
+            BorrowOrigin = GameObject.Find("BorrowOrigin");
+            if (BorrowOrigin == null)
+            {
+                Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"BorrowOrigin\" の GameObject が見つかりません。");
+            }
+        }
+
         IsInside = true;
     }
 
@@ -264,23 +286,14 @@ public class BottleAreaState : MonoBehaviour
 
     public void Update()
     {
-        // GameObject globalHit = ObjectHit != null ? ObjectHit.hitObject : null;
-        // bool anyOtherHit = (globalHit != null) && !IsHit;
-
-        // // Hitされたら必ず不透明、それ以外でOutsideか他オブジェクトHitなら透明
-        // bool shouldBeTransparent = (!IsInside && !IsHit) || anyOtherHit;
-        // if (shouldBeTransparent != isTransparent)
-        // {
-        //     if (shouldBeTransparent) SetMaterialTransparent(mat);
-        //     else                   SetMaterialOpaque(mat);
-        //     isTransparent = shouldBeTransparent;
-        // }
 
         GameObject globalHit = BottleHitMapper != null ? BottleHitMapper.hitObject : null;
         bool isThisHit = (globalHit == this.gameObject);
         bool anyOtherHit = (globalHit != null && !isThisHit);
-        
-         // Outside かつ 自分が Roshit されていない場合、または他オブジェクトが Roshit の場合は透明
+
+
+
+        // Outside かつ 自分が Roshit されていない場合、または他オブジェクトが Roshit の場合は透明
         bool shouldBeTransparent = (!IsInside && !isThisHit) || anyOtherHit;
         if (shouldBeTransparent != isTransparent)
         {
@@ -289,72 +302,92 @@ public class BottleAreaState : MonoBehaviour
             isTransparent = shouldBeTransparent;
         }
 
-
-
-
-
         Color targetColor;
 
 
-        // ── 色変更ロジック ──
-        // if (IsHit)
-        // {
-        //     // Hit → 常に PickColor ＆ UI 表示
-        //     targetColor = PickColor;
-        //     if (!isHitted)
-        //     {
-        //         UIset();
-        //         isHitted = true;
-        //     }
-        // }
-        // else if (!IsInside || anyOtherHit)
-        // {
-        //         // Outside かつ Hit なし／他のオブジェクトが Hit → OtherColor
-        //         targetColor = new Color(
-        //         OtherColor.r,
-        //         OtherColor.g,
-        //         OtherColor.b,
-        //         otherAlpha
-        //     );
-        //     DestroyUI();
-        // }
-        // else
-        // {
-        //     // Inside かつ Hit なし → 元色
-        //     targetColor = originalColor;
-        //     DestroyUI();
-        // }
-        if (isThisHit)
+
+        //if (isThisHit && IsInside)
+        //{
+        //    // 1) 自分だけが同定中＆Inside → PickColor + UI 表示
+        //    targetColor = PickColor;
+        //    if (!isHitted)
+        //    {
+        //        UIset();
+        //        isHitted = true;
+        //    }
+        //}
+        //else if (!IsInside || anyOtherHit)
+        //{
+        //    // 2) Outside または 他オブジェクト同定中 → OtherColor (透明)
+        //    targetColor = new Color(OtherColor.r, OtherColor.g, OtherColor.b, otherAlpha);
+        //    DestroyUI();
+        //    isHitted = false;
+        //}
+        //else
+        //{
+        //    // 3) Inside だけれど同定されていない → 元色
+        //    targetColor = originalColor;
+        //    DestroyUI();
+        //    isHitted = false;
+        //}
+
+
+
+
+        // 送信条件：ROS同定かつOutside
+        bool shouldPublish = isThisHit && !IsInside;
+  
+
+        if (shouldPublish)
         {
-            // ROS → 常に PickColor ＆ UI 表示
-            targetColor = PickColor;
-            if (!isHitted)
+            // A) ROS同定かつOutside のとき
+            if (!hasPublished)
             {
-                UIset();
-                isHitted = true;
+                // 初回だけ IRM に座標送信
+                float[] coords = IRM_ROS_SelectMessage();
+                irmPublisher?.SetCoords(coords);
+                
             }
-        }
-        else if (!IsInside || anyOtherHit)
-        {
-            // Outside かつ ROS なし／他のオブジェクトが ROS → OtherColor
-            targetColor = new Color(
-            OtherColor.r,
-            OtherColor.g,
-            OtherColor.b,
-            otherAlpha
-        );
+            // このときは常にこの色
+            targetColor = OutSideSerectColor;
             DestroyUI();
             isHitted = false;
         }
         else
         {
-            // Inside かつ ROS なし → 元色
-            targetColor = originalColor;
-            DestroyUI();
-            isHitted = false;
+            // リセット：次のターゲット変更で再度 Publish できるように
+            hasPublished = false;
+
+            if (isThisHit && IsInside)
+            {
+                // B) ROS同定かつInside
+                targetColor = PickColor;
+                if (!isHitted)
+                {
+                    UIset();
+                    isHitted = true;
+                }
+            }
+            else if (!IsInside || anyOtherHit)
+            {
+                // C) Outside または 他オブジェクト同定中
+                targetColor = new Color(OtherColor.r, OtherColor.g, OtherColor.b, otherAlpha);
+                DestroyUI();
+                isHitted = false;
+            }
+            else
+            {
+                // D) Inside かつ非同定
+                targetColor = originalColor;
+                DestroyUI();
+                isHitted = false;
+            }
         }
+
+
+
         Color current = mat.GetColor(colorProp);
-        Color next = Color.Lerp(current, targetColor, Time.deltaTime * fadeSpeed);
+        Color next = Color.Lerp(current, targetColor, UnityEngine.Time.deltaTime * fadeSpeed);
         mat.SetColor(colorProp, next);
 
     }
@@ -400,8 +433,54 @@ public class BottleAreaState : MonoBehaviour
         }
         isHitted = false;
     }
+
+    public float[] IRM_ROS_SelectMessage()
+    {
+        var selectCoords = new List<float>();
+        if (BorrowOrigin == null)
+        {
+            Debug.LogError("Origin が設定されていません！");
+            return selectCoords.ToArray();
+        }
+
+        // YouBot 向けに追加したいオフセット
+        /* Vector3 axisOffset = new Vector3(-0.123f, 0.056f, 0f);*/
+
+        Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
+
+        // １度だけ取得しておく Origin のワールド座標
+        Vector3 originWorld = BorrowOrigin.transform.position;
+
     
-      // ─────────────────────────────────────────────────
+        // 1) ボトルのワールド座標
+        Vector3 bottleWorld = this.transform.position;
+
+        // 2) ワールド差分で相対位置を計算
+        Vector3 relative = bottleWorld - originWorld;
+
+        // 3) オフセットを加算
+        Vector3 adjusted = relative + axisOffset;
+
+        // 4) YouBot 向けに軸反転・入れ替え
+        float youbot_x = -adjusted.x;
+        float youbot_y = -adjusted.z;
+        float youbot_z = adjusted.y;
+
+        // 5) 追加
+        selectCoords.Add(youbot_x);
+        selectCoords.Add(youbot_y);
+        selectCoords.Add(youbot_z);
+        
+
+        return selectCoords.ToArray();
+    }
+    public void OnUserConfirmSelection()
+    {
+        irmPublisher?.PublishSelectData();
+        hasPublished = true;
+    }
+
+    // ─────────────────────────────────────────────────
     void SetMaterialTransparent(Material m)
     {
         m.SetFloat("_Surface", 1);

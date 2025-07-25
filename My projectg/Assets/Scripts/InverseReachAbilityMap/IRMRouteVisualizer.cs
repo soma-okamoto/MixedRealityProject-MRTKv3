@@ -13,7 +13,7 @@ public class IRMRouteVisual : MonoBehaviour
     [Header("References")]
     public IRMRouteSubscriber    subscriber;    // 経路購読
     public IRMRoutePathPublisher publisher;     // 経路再配信
-
+    public Transform waypointsContainer;  // ← 追加
     [Header("Prefabs & Transforms")]
     [Tooltip("編集可能ウェイポイント用プレハブ(ObjectManipulator付き)")]
     public GameObject waypointPrefab;
@@ -32,14 +32,24 @@ public class IRMRouteVisual : MonoBehaviour
     private List<GameObject> waypoints     = new List<GameObject>();
     private LineRenderer     lineRenderer;
     private bool             hasVisualized = false;
+   
 
     void Start()
     {
         subscriber = subscriber ?? GetComponent<IRMRouteSubscriber>();
         publisher  = publisher  ?? GetComponent<IRMRoutePathPublisher>();
 
-        // LineRenderer 準備
-        var lrObj = Instantiate(lineRendererPrefab, transform);
+ 
+
+        // LineRenderer を Waypoints コンテナの下に生成
+        // (1) parent だけ指定してインスタンス化
+        var lrObj = Instantiate(lineRendererPrefab, waypointsContainer);
+
+        // (2) 親基準のローカル原点にリセット
+        lrObj.transform.localPosition = Vector3.zero;
+        lrObj.transform.localRotation = Quaternion.identity;
+
+        // (3) LineRenderer コンポーネント取得＋初期化
         lineRenderer = lrObj.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
 
@@ -56,27 +66,43 @@ public class IRMRouteVisual : MonoBehaviour
             hasVisualized = true;
         }
     }
+    public void ResetVisualization()
+    {
+
+        // 再描画を許可
+        hasVisualized = false;
+    }
+    public void ClearAllChildren()
+    {
+
+
+        // 子をまとめて消すので、一度リスト化してからループ
+        var toDestroy = new List<Transform>();
+        foreach (Transform child in waypointsContainer)
+            toDestroy.Add(child);
+
+        foreach (var t in toDestroy)
+            Destroy(t.gameObject);
+        //ResetVisualization();
+    }
 
     private void Visualize(Path path)
     {
         Clear();  // マーカーも publisher.WayPointObjectList もクリア済み
 
-        // ① ROS の最初の Pose の地上座標を取得（Unity座標系に合わせて符号を反転）
-        var first = path.poses[0].pose.position;
-        Vector3 rosStart = new Vector3(-(float)first.x, 0f, -(float)first.y);
-        // ② startTransform.position を rosStart にマッチさせるオフセット
-        Vector3 offset = startTransform.position - rosStart;
+
+        // (A) 頂点数を start＋waypoints 数に合わせる
+        int n = path.poses.Length;
+        lineRenderer.positionCount = n + 1;
+
+        // (B) １点目は startTransform
+        lineRenderer.SetPosition(0, startTransform.position);
 
 
         for (int i = 0; i < path.poses.Length; i++)
     {
         var ps = path.poses[i];
-            /*// ROS→Unity 座標変換
-            Vector3 wp = new Vector3(
-                -(float)ps.pose.position.x,
-                originTransform.position.y,
-                -(float)ps.pose.position.y
-            );*/
+
 
             // ROS→Unity 座標変換（地面XZのみ）
             Vector3 rosPt = new Vector3(
@@ -84,20 +110,21 @@ public class IRMRouteVisual : MonoBehaviour
             0f,
             -(float)ps.pose.position.y
                         );
-            // ③ オフセットを適用
-            Vector3 worldPt = new Vector3(
-            rosPt.x + offset.x,
-            startTransform.position.y,
-            rosPt.z + offset.z
-                        );
-
-            var go = Instantiate(waypointPrefab, worldPt, Quaternion.identity, transform);
 
 
-            /*
-                        var go = Instantiate(waypointPrefab, startTransform);
-                        go.transform.localPosition = rosPt;
-                        go.transform.localRotation = Quaternion.identity;*/
+            // (1) ROS→Unity のローカル座標に変換（地面XZのみ）
+            Vector3 rosLocal = new Vector3(
+                -(float)ps.pose.position.x,  // ROS の x → Unity の -X
+                0f,                          // 地面に固定
+                -(float)ps.pose.position.y   // ROS の y → Unity の -Z
+            );
+
+            // (2) 親だけ指定してインスタンス化
+            var go = Instantiate(waypointPrefab, waypointsContainer);
+
+            // (3) ローカル座標・回転を設定
+            go.transform.localPosition = rosLocal;
+            go.transform.localRotation = Quaternion.identity;
 
             waypoints.Add(go);
 
@@ -107,21 +134,23 @@ public class IRMRouteVisual : MonoBehaviour
         int idx = i; // クロージャ対策
         manip.lastSelectExited.AddListener(_ => OnWaypointMoved(go, idx));
 
-        // ライン頂点追加
-        lineRenderer.positionCount++;
-        lineRenderer.SetPosition(idx, go.transform.position);
+            // (D) そのワールド位置を頂点 i+1 にセット
+            Vector3 worldPos = go.transform.position;
+            lineRenderer.SetPosition(i + 1, worldPos);
 
-        // Publisher 登録
-        publisher.WayPointObjectList.Add(go);
+
+            // Publisher 登録
+            publisher.WayPointObjectList.Add(go);
     }
 }
 
 
     private void OnWaypointMoved(GameObject movedWaypoint, int index)
     {
-        // ライン更新
-        if (index < lineRenderer.positionCount)
-            lineRenderer.SetPosition(index, movedWaypoint.transform.position);
+        // index は Waypoint のループインデックス → Line 上では index+1
+        int lineIdx = index + 1;
+        if (lineIdx < lineRenderer.positionCount)
+            lineRenderer.SetPosition(lineIdx, movedWaypoint.transform.position);
     }
 
     private void Clear()

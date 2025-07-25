@@ -22,7 +22,7 @@ namespace RosSharp.RosBridgeClient
         {
             // Int32 型メッセージのデータは message.data に入っている
             bottle_id = message.data;
-            Debug.Log($"[DetectBottleSubscriber] Received bottle_id = {bottle_id}");
+            //Debug.Log($"[DetectBottleSubscriber] Received bottle_id = {bottle_id}");
         }
     }
 }
