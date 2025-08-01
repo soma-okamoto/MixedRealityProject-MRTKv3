@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class AlignToTarget : MonoBehaviour
 {
-    [Tooltip("‚±‚ÌƒIƒuƒWƒFƒNƒgiAj‚ÌˆÊ’u‚ğ‡‚í‚¹‚½‚¢‘ÎÛ (B)")]
+    [Tooltip("ï¿½ï¿½ï¿½ÌƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½iAï¿½jï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½í‚¹ï¿½ï¿½ï¿½ï¿½ï¿½Îï¿½ (B)")]
     public Transform targetTransform;
 
     void Update()
     {
         if (targetTransform != null)
         {
-            // ƒ[ƒ‹ƒhÀ•W‚ğŠÛ‚²‚ÆƒRƒs[
-            transform.position = targetTransform.position;
+            // ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Û‚ï¿½ï¿½ÆƒRï¿½sï¿½[
 
-            // ‚à‚µŒü‚«‚à‘µ‚¦‚½‚¢‚È‚ç‚±‚¿‚ç‚à
+            transform.position = targetTransform.position;
+            // Debug.Log($"{gameObject.name} target: {targetTransform.position}");
+            // Debug.Log($"{gameObject.name} this  : {transform.position}");
+
+
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ç‚±ï¿½ï¿½ï¿½ï¿½ï¿½
             // transform.rotation = targetTransform.rotation;
         }
     }

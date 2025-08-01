@@ -23,29 +23,30 @@ public class BoundsControlHider : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("ObjectManipulator ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñI");
+            Debug.LogWarning("ObjectManipulator ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½I");
         }
     }
 
     private void OnGrabStarted(SelectEnterEventArgs args)
     {
         SetAllBoundsHandlesActive(false);
-        //Debug.Log("’Í‚ñ‚¾‚Ì‚Å‘SBoundsControl‚ÌHandles‚ğ”ñ•\¦‚É‚µ‚Ü‚µ‚½");
+        //Debug.Log("ï¿½Í‚ñ‚¾‚Ì‚Å‘SBoundsControlï¿½ï¿½Handlesï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½É‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
     }
 
     private void OnGrabEnded(SelectExitEventArgs args)
     {
         SetAllBoundsHandlesActive(true);
-        //Debug.Log("—£‚µ‚½‚Ì‚Å‘SBoundsControl‚ÌHandles‚ğÄ•\¦‚µ‚Ü‚µ‚½");
+        //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Å‘SBoundsControlï¿½ï¿½Handlesï¿½ï¿½ï¿½Ä•\ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
     }
 
     private void SetAllBoundsHandlesActive(bool active)
     {
-        // MRTK3‚Å‚Í BoundsControlRuntime ‚ªg‚í‚ê‚Ä‚¢‚é‰Â”\«‚ª‚ ‚é
+        // MRTK3ï¿½Å‚ï¿½ BoundsControlRuntime ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var boundsControls = FindObjectsOfType<BoundsControl>(true);
         foreach (var bounds in boundsControls)
         {
             bounds.HandlesActive = active;
+            
         }
     }
 }
