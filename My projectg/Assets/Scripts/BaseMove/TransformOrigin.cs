@@ -4,66 +4,68 @@ using UnityEngine;
 
 public class TransformOrigin : MonoBehaviour
 {
-    [Header("ƒgƒ‰ƒbƒLƒ“ƒOQÆ")]
-    [SerializeField] private Transform head;        // ƒ†[ƒU[‚Ì“ªŠî€i—áFCamera.main.transformj
+    [Header("ï¿½gï¿½ï¿½ï¿½bï¿½Lï¿½ï¿½ï¿½Oï¿½Qï¿½ï¿½")]
+    [SerializeField] private Transform head;        // ï¿½ï¿½ï¿½[ï¿½Uï¿½[ï¿½Ì“ï¿½ï¿½î€ï¿½iï¿½ï¿½FCamera.main.transformï¿½j
 
-    [Header("ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“‘ÎÛ")]
-    [SerializeField] private Transform origin;      // ˆÊ’uE‰ñ“]‚ğ“®‚©‚·ãˆÊƒIƒuƒWƒFƒNƒg
-    [SerializeField] private Transform boundingBox; // ’†ŠÔƒm[ƒh
-    [SerializeField] private Transform child;       // ÀÛ‚É‰ºˆÊ‚Å“®‚©‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg
+    [Header("ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Îï¿½")]
+    [SerializeField] private Transform origin;      // ï¿½Ê’uï¿½Eï¿½ï¿½]ï¿½ğ“®‚ï¿½ï¿½ï¿½ï¿½ï¿½ÊƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½g
+    [SerializeField] private Transform boundingBox; // ï¿½ï¿½ï¿½Ôƒmï¿½[ï¿½h
+    [SerializeField] private Transform child;       // ï¿½ï¿½ï¿½Û‚É‰ï¿½ï¿½Ê‚Å“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
+    // [SerializeField] private RM_follow_toggle RM_follow_toggle;
 
-    // Start ‚É‹L˜^‚µ‚Ä‚¨‚­u‰Šú‚Ìƒ[ƒJƒ‹ƒIƒtƒZƒbƒgv
+    // Start ï¿½ï¿½ï¿½É‹Lï¿½^ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½Ìƒï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½Iï¿½tï¿½Zï¿½bï¿½gï¿½v
     private Vector3 defaultOriginLocal;
     private Vector3 defaultBoundingLocal;
     private Vector3 defaultChildLocal;
-    private Vector3 defaultOffsetTotal;  // head ‚ğ‹N“_‚Æ‚µ‚½‰Šú child ‚Ìƒ[ƒ‹ƒhƒIƒtƒZƒbƒg
+    private Vector3 defaultOffsetTotal;  // head ï¿½ï¿½ï¿½Nï¿½_ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ child ï¿½Ìƒï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½Iï¿½tï¿½Zï¿½bï¿½g
 
     void Start()
     {
-        // Hierarchy ã‚ÌŠeƒ[ƒJƒ‹’l‚ğƒLƒƒƒvƒ`ƒƒ
+        // Hierarchy ï¿½ï¿½ÌŠeï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½lï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½
         defaultOriginLocal = origin.localPosition;
         defaultBoundingLocal = boundingBox.localPosition;
         defaultChildLocal = child.localPosition;
 
-        // head ƒ[ƒJƒ‹‹óŠÔ‚Å‚ÌƒIƒtƒZƒbƒg‘˜a‚ğŒvZ
+        // head ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½Ô‚Å‚ÌƒIï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½aï¿½ï¿½ï¿½vï¿½Z
         defaultOffsetTotal = defaultOriginLocal
                            + defaultBoundingLocal
                            + defaultChildLocal;
     }
 
     /// <summary>
-    /// ”CˆÓƒ^ƒCƒ~ƒ“ƒO‚ÅŒÄ‚Ô‚ÆA
-    /// uŒ»İ child ‚ª‚Ç‚±‚É‚ ‚Á‚Ä‚àvA
-    /// child ‚Ìƒ[ƒJƒ‹ Transform ‚ğ•Ï‚¦‚¸‚É
-    /// origin ‚Ì‚İ“®‚©‚µ‚Ä child ‚ğ‰ŠúˆÊ’u‚É‡‚í‚¹‚Ş
+    /// ï¿½Cï¿½Óƒ^ï¿½Cï¿½~ï¿½ï¿½ï¿½Oï¿½ÅŒÄ‚Ô‚ÆA
+    /// ï¿½uï¿½ï¿½ï¿½ï¿½ child ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½vï¿½A
+    /// child ï¿½Ìƒï¿½ï¿½[ï¿½Jï¿½ï¿½ Transform ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½ï¿½ï¿½
+    /// origin ï¿½Ì‚İ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ child ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê’uï¿½Éï¿½ï¿½í‚¹ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void CalibrateNow()
     {
-        // ‚PjboundingBox¨child ‚ÌŒ»İƒ[ƒJƒ‹‡¬ Transform ‚ğæ“¾
+
+        // ï¿½Pï¿½jboundingBoxï¿½ï¿½child ï¿½ÌŒï¿½ï¿½İƒï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Transform ï¿½ï¿½ï¿½æ“¾
         Vector3 combinedLocalPos = boundingBox.localPosition
                                 + boundingBox.localRotation * child.localPosition;
         Quaternion combinedLocalRot = boundingBox.localRotation * child.localRotation;
 
-        // ‚Qj“ª‚ğŠî€‚Æ‚µ‚½u‰Šú child ‚Ìƒ[ƒ‹ƒhˆÊ’uv
+        // ï¿½Qï¿½jï¿½ï¿½ï¿½ï¿½ï¿½î€ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ child ï¿½Ìƒï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½Ê’uï¿½v
         Vector3 desiredChildWorldPos = head.TransformPoint(defaultOffsetTotal);
 
-        // ‚Rj“ª‚Ì Y ²‰ñ“]iƒˆ[j‚Ì‚İ‚ğæ‚èo‚·
+        // ï¿½Rï¿½jï¿½ï¿½ï¿½ï¿½ Y ï¿½ï¿½ï¿½ï¿½]ï¿½iï¿½ï¿½ï¿½[ï¿½jï¿½Ì‚İ‚ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
         float headYaw = head.eulerAngles.y;
         Quaternion headYawOnly = Quaternion.Euler(0f, headYaw, 0f);
 
-        // ‚Sjdesired ‚Ì‰ñ“]‚Íƒsƒbƒ`^ƒ[ƒ‹‚O‚Åƒˆ[‚Ì‚İ”½‰f
+        // ï¿½Sï¿½jdesired ï¿½Ì‰ï¿½]ï¿½Íƒsï¿½bï¿½`ï¿½^ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Oï¿½Åƒï¿½ï¿½[ï¿½Ì‚İ”ï¿½ï¿½f
         Quaternion desiredChildWorldRot = headYawOnly;
 
-        // ‚TjOrigin ‚Ì world ‰ñ“]‚ğ‹tZ
+        // ï¿½Tï¿½jOrigin ï¿½ï¿½ world ï¿½ï¿½]ï¿½ï¿½ï¿½tï¿½Z
         //    origin.worldRot * combinedLocalRot = desiredChildWorldRot
         Quaternion newOriginWorldRot = desiredChildWorldRot * Quaternion.Inverse(combinedLocalRot);
 
-        // ‚UjOrigin ‚Ì world ˆÊ’u‚ğ‹tZ
+        // ï¿½Uï¿½jOrigin ï¿½ï¿½ world ï¿½Ê’uï¿½ï¿½ï¿½tï¿½Z
         //    origin.worldPos + newOriginWorldRot * combinedLocalPos = desiredChildWorldPos
         Vector3 newOriginWorldPos = desiredChildWorldPos
                                  - newOriginWorldRot * combinedLocalPos;
 
-        // ‚VjOrigin ‚Éˆê”­ƒZƒbƒg
+        // ï¿½Vï¿½jOrigin ï¿½Éˆê”­ï¿½Zï¿½bï¿½g
         origin.SetPositionAndRotation(newOriginWorldPos, newOriginWorldRot);
     }
 }

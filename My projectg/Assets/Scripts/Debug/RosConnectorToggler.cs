@@ -4,20 +4,21 @@ using System.Diagnostics;
 
 public class YoubotOffsetToggler : MonoBehaviour
 {
-    [Tooltip("ƒgƒOƒ‹‚µ‚½‚¢ YoubotOffsetSubscriber ƒRƒ“ƒ|[ƒlƒ“ƒg")]
+    [Tooltip("ï¿½gï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ YoubotOffsetSubscriber ï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½g")]
     [SerializeField] private YoubotOffsetSubscriber subscriber;
+    // [SerializeField] private RM_follow_toggle RM_follow_toggle;
+
+
+
 
     /// <summary>
-    /// ƒ{ƒ^ƒ“‚Ì OnClicked ‚ÖƒAƒ^ƒbƒ`
+    /// ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ OnClicked ï¿½ÖƒAï¿½^ï¿½bï¿½`
     /// </summary>
     public void ToggleSubscriber()
     {
-        if (subscriber == null)
-        {
-            UnityEngine.Debug.LogWarning("subscriber ‚ªƒAƒTƒCƒ“‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
-            return;
-        }
+        // RM_follow_toggle.ActiveTrue();
         subscriber.enabled = !subscriber.enabled;
         UnityEngine.Debug.Log($"YoubotOffsetSubscriber is now {(subscriber.enabled ? "Enabled" : "Disabled")}");
+
     }
 }

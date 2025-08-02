@@ -10,28 +10,33 @@ public class PointCloudWithSpheres : MonoBehaviour
     [Header("CSV")]
     public string fileName = "reachability_pointcloud.csv";
 
-    [Header("•\¦İ’è")]
-    public GameObject pointPrefab;           // ‹…‘ÌƒvƒŒƒnƒuiSpherej
-    public Gradient colorByScore;            // ƒXƒRƒA ¨ F•ÏŠ·
-    public float sphereScale = 0.02f;        // ‹…‘ÌƒTƒCƒY
 
-    [Header("ˆ—§Œä")]
-    public int batchSize = 1000;             // ƒtƒŒ[ƒ€•ªŠ„•`‰æ
+    public GameObject pointPrefab;           // ï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½uï¿½iSphereï¿½j
+    public Gradient colorByScore;            // ï¿½Xï¿½Rï¿½A ï¿½ï¿½ ï¿½Fï¿½ÏŠï¿½
+    public float sphereScale = 0.02f;        // ï¿½ï¿½ï¿½ÌƒTï¿½Cï¿½Y
 
-    // ƒA[ƒ€ª–{Šî€‚ÌƒIƒtƒZƒbƒg
-    const float baseOffsetX = -0.123f;
+    [Header("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    public int batchSize = 1000;             // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½
+
+    // ï¿½Aï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½î€ï¿½ÌƒIï¿½tï¿½Zï¿½bï¿½g
+    // const float baseOffsetX = -0.123f;
+    // const float baseOffsetY = 0.0f;
+    // const float baseOffsetZ = -0.056f;
+
+    const float baseOffsetX = -0f;
     const float baseOffsetY = 0.0f;
-    const float baseOffsetZ = -0.056f;
+    const float baseOffsetZ = -0.0f;
+
 
     IEnumerator Start()
     {
         if (pointPrefab == null)
         {
-            UnityEngine.Debug.LogError("pointPrefabi‹…‘ÌƒvƒŒƒnƒuj‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+            UnityEngine.Debug.LogError("pointPrefabï¿½iï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½uï¿½jï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B");
             yield break;
         }
 
-        // CSV“Ç‚İ‚İ
+        // CSVï¿½Ç‚İï¿½ï¿½ï¿½
         string path = Path.Combine(Application.streamingAssetsPath, fileName);
         string csv = "";
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -48,14 +53,14 @@ public class PointCloudWithSpheres : MonoBehaviour
         float minS = lines.Min(l => float.Parse(l.Split(',')[3]));
         float maxS = lines.Max(l => float.Parse(l.Split(',')[3]));
 
-        // eƒIƒuƒWƒFƒNƒg
+        // ï¿½eï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
         GameObject parent = new GameObject("PointCloudSpheres");
         parent.transform.SetParent(this.transform);
 
         for (int i = 0; i < lines.Length; i++)
         {
             var parts = lines[i].Split(',');
-            float rx = float.Parse(parts[0]) + baseOffsetX;
+            float rx = float.Parse(parts[0]) + baseOffsedtX;
             float ry = float.Parse(parts[1]) + baseOffsetY;
             float rz = float.Parse(parts[2]) + baseOffsetZ;
             float score = float.Parse(parts[3]);
@@ -67,7 +72,7 @@ public class PointCloudWithSpheres : MonoBehaviour
             var go = Instantiate(pointPrefab, Vector3.zero, Quaternion.identity, parent.transform);
             go.transform.localScale = Vector3.one * sphereScale;
 
-            //  ’†S‚ğ‡‚í‚¹‚é‚½‚ßA”¼Œa•ª‚¾‚¯‰º‚É•â³
+            //  ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½í‚¹ï¿½é‚½ï¿½ßAï¿½ï¿½ï¿½aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É•â³
             float radius = sphereScale * 0.5f;
             go.transform.position = pos - Vector3.up * radius;
 
@@ -82,8 +87,8 @@ public class PointCloudWithSpheres : MonoBehaviour
                 yield return null;
         }
 
-        UnityEngine.Debug.Log($"{lines.Length}ŒÂ‚Ì‹…‚ğ¶¬‚µ‚Ü‚µ‚½B");
-        //  ÅŒã‚É‹­§“I‚É localPosition ‚ğƒ[ƒ‚Éİ’è
+        UnityEngine.Debug.Log($"{lines.Length}ï¿½Â‚Ì‹ï¿½ï¿½ğ¶ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B");
+        //  ï¿½ÅŒï¿½É‹ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ localPosition ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Éİ’ï¿½
         Transform parentTransform = transform.Find("PointCloudSpheres");
         if (parentTransform != null)
         {
