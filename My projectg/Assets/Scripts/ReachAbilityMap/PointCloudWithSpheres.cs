@@ -60,7 +60,7 @@ public class PointCloudWithSpheres : MonoBehaviour
         for (int i = 0; i < lines.Length; i++)
         {
             var parts = lines[i].Split(',');
-            float rx = float.Parse(parts[0]) + baseOffsedtX;
+            float rx = float.Parse(parts[0]) + baseOffsetX;
             float ry = float.Parse(parts[1]) + baseOffsetY;
             float rz = float.Parse(parts[2]) + baseOffsetZ;
             float score = float.Parse(parts[3]);
