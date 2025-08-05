@@ -72,7 +72,7 @@ public class BottleAreaState : MonoBehaviour
             irmPublisher = FindObjectOfType<IRM_SerectObjectPublisher>();
         if (BorrowOrigin == null)
         {
-            BorrowOrigin = GameObject.Find("BorrowOrigin");
+            BorrowOrigin = GameObject.Find("origin_central");
             if (BorrowOrigin == null)
             {
                 Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"BorrowOrigin\" の GameObject が見つかりません。");
