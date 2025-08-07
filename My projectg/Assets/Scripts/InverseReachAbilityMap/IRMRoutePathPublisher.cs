@@ -63,7 +63,7 @@ public class IRMRoutePathPublisher : UnityPublisher<Path>
         {
             /* RosSharp.RosBridgeClient.MessageTypes.Geometry.Point position = GetPosition(WayPointObjectList[i].transform.localPosition);
  */
-            // ① ワールド座標を取得
+            // ① ワールド座標を取得xxxx
             UnityEngine.Vector3 worldPos = WayPointObjectList[i].transform.position;
                         // ② startTransform が指定されていれば、そこからの相対位置に変換
             UnityEngine.Vector3 relPos = startTransform != null
