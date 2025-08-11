@@ -1,28 +1,31 @@
 using UnityEngine;
 using TMPro;
-using RosSharp.RosBridgeClient; 
-
+using RosSharp.RosBridgeClient;
 using RosSharp.Urdf;
 using System.Collections.Generic;
-
-using RosSharp.RosBridgeClient.MessageTypes.Std;   
+using RosSharp.RosBridgeClient.MessageTypes.Std;
 
 public class ShowDetectScore : MonoBehaviour
 {
     [Header("References")]
-    public TMP_Text text;  
-    private DetectBottle_score_subscriber scoreSubscriber ;
+    public TMP_Text text;
+    private DetectBottle_score_subscriber scoreSubscriber;
 
     [Header("Display")]
     public bool showUnits = false;
-    public string units = ""; 
-    public string numberFormat = "F3"; // 小数2桁
+    public string units = "";
+    public string numberFormat = "F3";
 
     [Header("Color (optional)")]
-    public Color staticColor = Color.white;     // 単色
-    public bool useGradient = false;            // グラデ使用ON/OFF
-    public Gradient gradient;                   // スコア→色
-    public float minScore = 0f, maxScore = 1f;  // グラデのレンジ
+    public Color staticColor = Color.white;
+    public bool useGradient = false;
+    public Gradient gradient;
+    public float minScore = 0f, maxScore = 1f;
+
+    //  公開プロパティ（GameUI1 から読む）
+    public float RawScore { get; private set; } = float.NaN;
+    public float NormalizedScore { get; private set; } = 0f; // 0..1
+    public Color CurrentColor { get; private set; } = Color.white;
 
     void Awake()
     {
@@ -30,31 +33,35 @@ public class ShowDetectScore : MonoBehaviour
             scoreSubscriber = FindObjectOfType<DetectBottle_score_subscriber>();
 
         if (text == null)
-            text = GetComponent<TMP_Text>(); // 同じオブジェクトにTextがあれば自動取得
+            text = GetComponent<TMP_Text>();
     }
 
     void Update()
     {
-        if (text == null || scoreSubscriber == null) return;
+        if (scoreSubscriber == null) return;
 
-        float score = scoreSubscriber.bottle_score; // 購読側で更新される前提
+        float score = scoreSubscriber.bottle_score;
         if (float.IsNaN(score)) return;
 
-        // 表示テキスト
-        if (showUnits && !string.IsNullOrEmpty(units))
-            text.text = $"{score.ToString(numberFormat)} {units}";
-        else
-            text.text = score.ToString(numberFormat);
+        RawScore = score;
 
-        // 色
-        if (useGradient && gradient != null)
+        // 0..1 に正規化（min==max でも InverseLerp は0を返す）
+        float t = Mathf.InverseLerp(minScore, maxScore, score);
+        NormalizedScore = Mathf.Clamp01(t);
+
+        // 色を決定して保持
+        Color c = (useGradient && gradient != null)
+                    ? gradient.Evaluate(NormalizedScore)
+                    : staticColor;
+        CurrentColor = c;
+
+        // テキスト表示
+        if (text != null)
         {
-            float t = Mathf.InverseLerp(minScore, maxScore, score);
-            text.color = gradient.Evaluate(t);
-        }
-        else
-        {
-            text.color = staticColor;
+            text.text = showUnits && !string.IsNullOrEmpty(units)
+                        ? $"{score.ToString(numberFormat)} {units}"
+                        : score.ToString(numberFormat);
+            text.color = c;
         }
     }
 }
