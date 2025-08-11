@@ -477,7 +477,7 @@ MonoBehaviour:
   OtherColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 0}
   OutSideSerectColor: {r: 1.1173185, g: 4.552756, b: 6.4669046, a: 0}
   fadeSpeed: 5
-  targetUIPrefab: {fileID: 8514141613584619500, guid: c5f26304378c8fa47ba7fdb6e5c0e167, type: 3}
+  targetUIPrefab: {fileID: 7756165730154345501, guid: 7fa255ef640ebe0499406365c304b866, type: 3}
   isHitted: 0
   otherAlpha: 0.8
   BorrowOrigin: {fileID: 0}

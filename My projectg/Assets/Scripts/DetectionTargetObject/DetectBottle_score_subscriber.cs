@@ -7,10 +7,10 @@ using RosSharp.RosBridgeClient.MessageTypes.Std;
 namespace RosSharp.RosBridgeClient
 {
     // Int32 メッセージを受け取って bottle_id フィールドに格納するサブスクライバ
-    public class DetectBottleSubscriber : UnitySubscriber<Int32>
+    public class DetectBottle_score_subscriber : UnitySubscriber<Float32>
     {
         // 受信したボトルIDを格納する変数
-        public int bottle_id =-1;
+        public float bottle_score ;
     
 
         protected override void Start()
@@ -19,11 +19,10 @@ namespace RosSharp.RosBridgeClient
         }
 
         // メッセージ受信時に呼ばれるコールバック
-        protected override void ReceiveMessage(Int32 message)
+        protected override void ReceiveMessage(Float32 message)
         {
-            // Int32 型メッセージのデータは message.data に入っている
-            bottle_id = message.data;
-            //Debug.Log($"[DetectBottleSubscriber] Received bottle_id = {bottle_id}");
+            bottle_score = message.data;
+            
         }
     }
 }

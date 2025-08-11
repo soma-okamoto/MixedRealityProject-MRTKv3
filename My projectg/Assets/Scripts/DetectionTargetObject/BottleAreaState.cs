@@ -14,6 +14,7 @@ public class BottleAreaState : MonoBehaviour
     public ObjectHit ObjectHit;
     public BottleHitMapper BottleHitMapper;
     private IRM_SerectObjectPublisher irmPublisher;
+    
 
     [ColorUsage(false, true)] public Color PickColor;      // Inside ＆ ROS同定
     [ColorUsage(false, true)] public Color OtherColor;     //  !inside　または　他にPickあるとき
@@ -70,6 +71,9 @@ public class BottleAreaState : MonoBehaviour
                 BottleHitMapper = FindObjectOfType<BottleHitMapper>();
         if (irmPublisher == null)
             irmPublisher = FindObjectOfType<IRM_SerectObjectPublisher>();
+
+
+        
         if (BorrowOrigin == null)
         {
             BorrowOrigin = GameObject.Find("origin_central");
@@ -130,8 +134,15 @@ public class BottleAreaState : MonoBehaviour
             }
             // このときは常にこの色
             targetColor = OutSideSerectColor;
-            DestroyUI();
-            isHitted = true;
+            // DestroyUI();
+          
+            if (!isHitted)
+                {
+                    UIset();
+                    isHitted = true;
+                    
+                
+                }
         }
         else
         {
@@ -146,6 +157,8 @@ public class BottleAreaState : MonoBehaviour
                 {
                     UIset();
                     isHitted = true;
+                    
+                
                 }
             }
             else if (!IsInside || anyOtherHit)
