@@ -5,18 +5,18 @@ using RosSharp.RosBridgeClient;
 using RosSharp.Urdf;
 using System.Collections.Generic;
 
-using RosSharp.RosBridgeClient.MessageTypes.Std;   // Float32MultiArray
+using RosSharp.RosBridgeClient.MessageTypes.Std;   
 
 public class ShowDetectScore : MonoBehaviour
 {
     [Header("References")]
-    public TMP_Text text;  // TextMeshPro or TextMeshProUGUI どちらでもOK
+    public TMP_Text text;  
     private DetectBottle_score_subscriber scoreSubscriber ;
 
     [Header("Display")]
     public bool showUnits = false;
-    public string units = ""; // 単位が不要なら空に
-    public string numberFormat = "F2"; // 小数2桁
+    public string units = ""; 
+    public string numberFormat = "F3"; // 小数2桁
 
     [Header("Color (optional)")]
     public Color staticColor = Color.white;     // 単色

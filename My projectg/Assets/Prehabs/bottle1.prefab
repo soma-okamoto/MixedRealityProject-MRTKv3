@@ -475,7 +475,7 @@ MonoBehaviour:
   BottleHitMapper: {fileID: 0}
   PickColor: {r: 4.4477496, g: 3.562321, b: 0.465733, a: 0}
   OtherColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 0}
-  OutSideSerectColor: {r: 1.1173185, g: 4.552756, b: 6.4669046, a: 0}
+  OutSideSerectColor: {r: 1.1173183, g: 6.466903, b: 1.3751982, a: 0}
   fadeSpeed: 5
   targetUIPrefab: {fileID: 7756165730154345501, guid: 7fa255ef640ebe0499406365c304b866, type: 3}
   isHitted: 0
