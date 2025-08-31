@@ -90,7 +90,7 @@ public class handTracking : MonoBehaviour
             // �_B��_A����minDistance�������ꂽ�ʒu�ɒ���
             pose = origin.transform.localPosition + direction * minDistance;
         }
-        print(pose);
+        // print(pose);
         return pose;
     }
 

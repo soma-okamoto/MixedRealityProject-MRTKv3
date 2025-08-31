@@ -28,6 +28,8 @@ public class BottleAreaState : MonoBehaviour
     private string colorProp;
     private Coroutine fadeRoutine;
     public GameObject targetUIPrefab;
+    public GameObject targetUIPrefab_outside;
+    
     private GameObject currentTargetUI = null;
     public bool isHitted = false;
     private bool isTransparent = false;
@@ -138,7 +140,7 @@ public class BottleAreaState : MonoBehaviour
           
             if (!isHitted)
                 {
-                    UIset();
+                    UIset_outside();
                     isHitted = true;
                     
                 
@@ -217,6 +219,40 @@ public class BottleAreaState : MonoBehaviour
         currentTargetUI.transform.LookAt(camT.position, Vector3.up);
 
     }
+
+    public void UIset_outside()
+    {
+        if (currentTargetUI != null)
+        {
+            Destroy(currentTargetUI);
+            currentTargetUI = null;
+        }
+
+        Vector3 bottlePos = transform.position;
+        Transform camT = Camera.main.transform;
+        Vector3 dirToCam = (camT.position - bottlePos).normalized;
+
+        float forwardOffset = 0.15f;  // 10cm ��O��                                      
+        float heightOffset = 0.1f;   // 10cm ���
+
+        Vector3 uiPos = bottlePos
+                        + dirToCam * forwardOffset
+                        + Vector3.up * heightOffset;
+
+
+        Vector3 toCamFlat = camT.position - uiPos;
+        toCamFlat.y = 0;
+        Quaternion uiRot = Quaternion.LookRotation(toCamFlat.normalized, Vector3.up);
+        currentTargetUI = Instantiate(
+                                        targetUIPrefab_outside,
+                                        uiPos,
+                                        uiRot,
+                                        this.transform
+                                    );
+        currentTargetUI.transform.LookAt(camT.position, Vector3.up);
+
+    }
+
     public void DestroyUI()
     {
         if (currentTargetUI != null)
