@@ -15,6 +15,7 @@ public class OperationController : MonoBehaviour
     [SerializeField] private ObjectGenerationTest objectGenerationTest;
     //[SerializeField] private TextMeshPro OperationUI;
     [SerializeField] private GameObject BBox;
+    [SerializeField] public GameObject Phasename_UI;
 
     
     private bool prevBoundsControlState = true;
@@ -56,6 +57,7 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = true;
         rosConnector.GetComponent<Float32MultiSubscriber>().enabled = true;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.ZRotationPublisher>().enabled = true;
+        rosConnector.GetComponent<RosSharp.RosBridgeClient.Phase_name_Subscriber>().enabled = true;
 
         if (BBox != null)
         {
@@ -90,6 +92,7 @@ public class OperationController : MonoBehaviour
         target.SetActive(false);
 
         Debug.Log("=== OPERATION END ===");
+        Phasename_UI.SetActive(true);
 
         // 最後に自分を非アクティブに
         this.gameObject.SetActive(false);
