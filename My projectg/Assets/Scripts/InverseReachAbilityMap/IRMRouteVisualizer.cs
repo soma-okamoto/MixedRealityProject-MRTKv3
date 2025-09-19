@@ -59,11 +59,12 @@ public class IRMRouteVisual : MonoBehaviour
 
     void Update()
     {
-        if (subscriber.messagePath != null && !hasVisualized)
+        if (subscriber.messagePath != null && subscriber.isDirty)
         {
             Visualize(subscriber.messagePath);
             ShowSuggestionMessage();
             hasVisualized = true;
+            subscriber.isDirty = false;
         }
     }
     public void ResetVisualization()

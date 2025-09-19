@@ -8,6 +8,7 @@ namespace RosSharp.RosBridgeClient
     public class IRMRouteSubscriber : UnitySubscriber<Path>
     {
         public Path messagePath;
+        public bool isDirty = false;
 
         private List<GameObject> instantiatedObjects = new List<GameObject>(); // ���������I�u�W�F�N�g���Ǘ�
 
@@ -20,6 +21,7 @@ namespace RosSharp.RosBridgeClient
         {
             messagePath = message;
             Debug.Log("Received IRMPath Message");
+            isDirty = true; // ← 新規受信の印
 
         }
 
