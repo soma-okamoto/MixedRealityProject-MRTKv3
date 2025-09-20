@@ -8,7 +8,7 @@
 //    {
 //        float[] data = new float[0];
 //        [SerializeField] private SelectObject select;
-//        [SerializeField] private float[] lastPublishedData;  // ÅŒã‚É Publish ‚µ‚½ƒf[ƒ^
+//        [SerializeField] private float[] lastPublishedData;  // ï¿½ÅŒï¿½ï¿½ Publish ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^
 
 //        protected override void Start()
 //        {
@@ -39,22 +39,24 @@ namespace RosSharp.RosBridgeClient
     {
         [SerializeField] private float[] pendingCoords = new float[0];
         [SerializeField] private float[] lastPublishedData;
+        public GameObject Aligin;
 
         protected override void Start()
         {
             base.Start();
         }
 
-        /// <summary>Ÿ‚É‘—‚éÀ•W‚ğ•Û‚·‚éiPublish ‚Í‚µ‚È‚¢j</summary>
+        /// <summary>ï¿½ï¿½ï¿½É‘ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½Ûï¿½ï¿½ï¿½ï¿½ï¿½iPublish ï¿½Í‚ï¿½ï¿½È‚ï¿½ï¿½j</summary>
         public void SetCoords(float[] coords)
         {
             pendingCoords = coords;
         }
 
-        /// <summary>•Û’†‚ÌÀ•W‚ğˆê“x‚¾‚¯‘—M‚·‚é</summary>
+        /// <summary>ï¿½Ûï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Mï¿½ï¿½ï¿½ï¿½</summary>
         public void PublishSelectData()
         {
             var message = new Float32MultiArray { data = pendingCoords };
+            Aligin.GetComponent<AlignToTarget>().enabled = true;
             Publish(message);
             lastPublishedData = pendingCoords;
         }

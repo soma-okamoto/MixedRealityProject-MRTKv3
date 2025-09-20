@@ -63,9 +63,10 @@ public class IRMRouteVisual : MonoBehaviour
     {
         if (subscriber.messagePath != null && subscriber.isDirty)
         {
-            Aligin.GetComponent<AlignToTarget>().enabled = true;
+            
             Visualize(subscriber.messagePath);
             ShowSuggestionMessage();
+            
             hasVisualized = true;
             subscriber.isDirty = false;
         }
@@ -88,8 +89,7 @@ public class IRMRouteVisual : MonoBehaviour
     private void Visualize(Path path)
     {
         Clear();  // マーカーも publisher.WayPointObjectList もクリア済み
-        Aligin.GetComponent<AlignToTarget>().enabled = true;
-        Invoke("wait", 1f);
+        
 
         // (A) 頂点数を start＋waypoints 数に合わせる
         int n = path.poses.Length;
@@ -142,6 +142,8 @@ public class IRMRouteVisual : MonoBehaviour
             // Publisher 登録
             publisher.WayPointObjectList.Add(go);
     }
+    
+        
 }
 
 
