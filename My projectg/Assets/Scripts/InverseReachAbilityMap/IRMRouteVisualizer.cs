@@ -14,6 +14,8 @@ public class IRMRouteVisual : MonoBehaviour
     public IRMRouteSubscriber    subscriber;    // 経路購読
     public IRMRoutePathPublisher publisher;     // 経路再配信
     public Transform waypointsContainer;  // ← 追加
+    public GameObject Aligin;
+
     [Header("Prefabs & Transforms")]
     [Tooltip("編集可能ウェイポイント用プレハブ(ObjectManipulator付き)")]
     public GameObject waypointPrefab;
@@ -61,36 +63,33 @@ public class IRMRouteVisual : MonoBehaviour
     {
         if (subscriber.messagePath != null && subscriber.isDirty)
         {
+            Aligin.GetComponent<AlignToTarget>().enabled = true;
             Visualize(subscriber.messagePath);
             ShowSuggestionMessage();
             hasVisualized = true;
             subscriber.isDirty = false;
         }
     }
-    public void ResetVisualization()
+
+    public void DisvisualWaypoint()
     {
+        // 1) ウェイポイント群
+        if (waypointPrefab)
+            waypointPrefab.SetActive(false);   // 子もまとめて非アクティブ
 
-        // 再描画を許可
-        hasVisualized = false;
+        // 2) ライン描画を消す
+        if (lineRendererPrefab)
+        {
+            lineRendererPrefab.SetActive(false);
+        }
     }
-    public void ClearAllChildren()
-    {
-
-
-        // 子をまとめて消すので、一度リスト化してからループ
-        var toDestroy = new List<Transform>();
-        foreach (Transform child in waypointsContainer)
-            toDestroy.Add(child);
-
-        foreach (var t in toDestroy)
-            Destroy(t.gameObject);
-        //ResetVisualization();
-    }
+    
 
     private void Visualize(Path path)
     {
         Clear();  // マーカーも publisher.WayPointObjectList もクリア済み
-
+        Aligin.GetComponent<AlignToTarget>().enabled = true;
+        Invoke("wait", 1f);
 
         // (A) 頂点数を start＋waypoints 数に合わせる
         int n = path.poses.Length;
@@ -178,6 +177,9 @@ public class IRMRouteVisual : MonoBehaviour
     /// </summary>
     public void PublishEditedRoute()
     {
+        
+        Aligin.GetComponent<AlignToTarget>().enabled = false;
         publisher.PublishStatus = true;
+
     }
 }

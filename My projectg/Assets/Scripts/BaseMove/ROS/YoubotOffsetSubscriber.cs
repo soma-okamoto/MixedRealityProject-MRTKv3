@@ -15,6 +15,7 @@ public class YoubotOffsetSubscriber : UnitySubscriber<Vector3Stamped>
 
     [Tooltip("移動量を適用する Origin オブジェクト")]
     public GameObject OriginObject;
+  
 
     // Unity 上で最初に設定されていた OriginObject のローカル位置
     private UnityEngine.Vector3 unityStartPos;

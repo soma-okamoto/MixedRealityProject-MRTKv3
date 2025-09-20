@@ -2,40 +2,44 @@ using System.Diagnostics;
 using UnityEngine;
 
 /// <summary>
-/// YoubotOffsetSubscriber ‚Ì BaseMovePosition ‚ğg‚Á‚Ä
-/// w’è‚µ‚½ƒIƒuƒWƒFƒNƒg‚ğ‰Šú”z’u‚©‚ç‚Ì‘Š‘ÎˆÚ“®‚Æ‚µ‚Ä“®‚©‚·ƒRƒ“ƒ|[ƒlƒ“ƒg
+/// YoubotOffsetSubscriber ï¿½ï¿½ BaseMovePosition ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½
+/// ï¿½wï¿½è‚µï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½zï¿½uï¿½ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ÎˆÚ“ï¿½ï¿½Æ‚ï¿½ï¿½Ä“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½|ï¿½[ï¿½lï¿½ï¿½ï¿½g
 /// </summary>
 public class BasePositionMover : MonoBehaviour
 {
-    [Tooltip("BaseMovePosition ‚ğŒvZ‚µ‚Ä‚¢‚é Subscriber")]
+    [Tooltip("BaseMovePosition ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ Subscriber")]
     [SerializeField] private YoubotOffsetSubscriber offsetSubscriber;
 
-    [Tooltip("ˆÚ“®‘ÎÛ‚Ì Transform")]
+    [Tooltip("ï¿½Ú“ï¿½ï¿½ÎÛ‚ï¿½ Transform")]
     [SerializeField] private Transform targetTransform;
+    [SerializeField] private Transform targetTransform1;
 
-    // ƒV[ƒ“ã‚ÌÅ‰‚Ìƒ[ƒJƒ‹ˆÊ’u‚ğ‹L‰¯
+    // ï¿½Vï¿½[ï¿½ï¿½ï¿½ï¿½ÌÅï¿½ï¿½Ìƒï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½Ê’uï¿½ï¿½ï¿½Lï¿½ï¿½
     private Vector3 initialLocalPos;
+    private Vector3 initialLocalPos1;
 
     void Start()
     {
         if (offsetSubscriber == null || targetTransform == null)
         {
-            UnityEngine.Debug.LogError("OffsetSubscriber ‚Ü‚½‚Í TargetTransform ‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB");
+            UnityEngine.Debug.LogError("OffsetSubscriber ï¿½Ü‚ï¿½ï¿½ï¿½ TargetTransform ï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B");
             enabled = false;
             return;
         }
-        // Å‰‚Ìƒ[ƒJƒ‹ˆÊ’u‚ğƒLƒƒƒvƒ`ƒƒ
+        // ï¿½Åï¿½ï¿½Ìƒï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½Ê’uï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½
         initialLocalPos = targetTransform.localPosition;
+        initialLocalPos1 = targetTransform1.localPosition;
     }
 
     void Update()
     {
-        // Subscriber ‚ÅŒvZ‚³‚ê‚½ BaseMovePosition ‚Í
-        // uŒ´“_(0,0,0) ‚©‚ç‚Ìâ‘ÎˆÊ’uv‚Å‚Í‚È‚­uÅ‰‚ÌƒIƒtƒZƒbƒg‚©‚ç‚Ì‘Š‘ÎˆÊ’uv
-        // ‚É‚È‚Á‚Ä‚¢‚é‘z’è‚Å‚·B‚à‚µâ‘ÎÀ•W‚È‚ç position ‚ğg‚Á‚Ä‚­‚¾‚³‚¢B
+        // Subscriber ï¿½ÅŒvï¿½Zï¿½ï¿½ï¿½ê‚½ BaseMovePosition ï¿½ï¿½
+        // ï¿½uï¿½ï¿½ï¿½_(0,0,0) ï¿½ï¿½ï¿½ï¿½Ìï¿½ÎˆÊ’uï¿½vï¿½Å‚Í‚È‚ï¿½ï¿½uï¿½Åï¿½ï¿½ÌƒIï¿½tï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½ÎˆÊ’uï¿½v
+        // ï¿½É‚È‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½zï¿½ï¿½Å‚ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îï¿½ï¿½Wï¿½È‚ï¿½ position ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
 
-        // ‚±‚±‚Å‚Í initialLocalPos ‚É‘Š‘ÎƒIƒtƒZƒbƒg‚ğ‘«‚µ‚Ä‚â‚è‚Ü‚·B
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ initialLocalPos ï¿½É‘ï¿½ï¿½ÎƒIï¿½tï¿½Zï¿½bï¿½gï¿½ğ‘«‚ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½B
         Vector3 relativeOffset = offsetSubscriber.BaseMovePosition;
         targetTransform.localPosition = initialLocalPos + relativeOffset;
+        targetTransform1.localPosition = initialLocalPos1 + relativeOffset;
     }
 }
