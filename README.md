@@ -65,7 +65,7 @@ cd MixedRealityProject-MRTKv3
 #   Open:  My projectg/  (then open the scene used for demo)
 
 ```
-![Unity](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/Unity.png?raw=true)
+![Unity](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/unity.png?raw=true)
 
 ## Related Repositories
 
