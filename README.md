@@ -14,7 +14,7 @@ Meijo University, Sekiyama Laboratory
 
 ---
 
-![System](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/画像4.png?raw=true)
+![System](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
 
 
 ---
