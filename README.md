@@ -11,9 +11,9 @@ Meijo University, Sekiyama Laboratory
 - Skills: Unity (C#), ROS, Python, Docker, Git, Meta Quest SDK  
 <!-- - [LinkedIn](#) | [Portfolio Site](#) -->
 
+
 ## 🎥 Demo Video
-## 🎥 Demo Video
-[![Watch the Demo](https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/blob/NotFX/Images/画像6.png?raw=true)](https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/raw/NotFX/Images/movie.mp4)
+▶️ [Watch on Google Drive](https://drive.google.com/file/d/1LDW_AyfaWdDkLWr9CyFJ_fM9CxGnJM3n/view?usp=sharing)
 
 ---
 ## Visual Abstract
