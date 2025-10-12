@@ -14,14 +14,14 @@ Meijo University, Sekiyama Laboratory
 ---
 
 ## BaseMove System
-A module for **base position suggestion and relocation** using Inverse Reachability Map (IRM).  
-It visualizes feasible robot base positions in MR space, allowing users to intuitively guide the robot’s movement.  
+A module for **base position suggestion and relocation** utilizing the **Inverse Reachability Map (IRM)**.  
+It visualizes feasible robot base positions in the MR space, enabling users to intuitively guide and optimize robot placement for task execution.
 
 ![BaseMove](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/画像4.png?raw=true)
 
-## Aim Assist with ManipulationSystem and UserTarget DetectionSystem
-Implements **aim-assist control** that aligns the robot end-effector with the user’s intended target in real time.  
-The **UserTarget Detection System** infers the grasp target based on hand posture and gaze direction.
+## Aim Assist with ManipulationSystem and UserTarget Detection
+Implements **aim-assist control** that dynamically aligns the robot end-effector with the user’s intended target in real time.  
+The **User Target Detection System** estimates the grasp target based on **hand posture** and **gaze direction**, providing a seamless interaction experience between the user and the robot.
 
 ![AimAssist Teleoperation](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/画像6.png?raw=true)
 
@@ -31,10 +31,9 @@ The **UserTarget Detection System** infers the grasp target based on hand postur
 ## SpacialVisualizationSystem
 A real-time environment visualization module combining **YOLOv5**, **DeepSORT**, and **Point Cloud rendering**.
 
-This system detects and tracks dynamic objects in the scene using YOLOv5 + DeepSORT,  
-and simultaneously reconstructs the surrounding geometry as a **3D point cloud** within the MR environment.  
-By integrating object tracking with spatial mapping, the user can visualize both **terrain structure** and **object motion** intuitively through MR.
-
+This system detects and tracks dynamic objects using YOLOv5 + DeepSORT,  
+while simultaneously reconstructing the surrounding environment as a **3D point cloud** within the MR space.  
+By combining **semantic tracking** and **geometric mapping**, it enables intuitive visualization of both **terrain structures** and **object motion** for enhanced situational awareness.
 
 ![SpatialVisualization](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/画像7.png?raw=true)
 
