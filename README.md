@@ -14,6 +14,9 @@ Meijo University, Sekiyama Laboratory
 
 ---
 ## Visual Abstract
+An overview of **HRI-CAS (Human–Robot Interaction – Cooperative Assist System)**,  
+which integrates **BaseMove**, **Aim Assist**, and **Spatial Visualization** modules into a unified MR–ROS framework.
+
 ![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
 
 
