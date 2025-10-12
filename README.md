@@ -12,9 +12,8 @@ Meijo University, Sekiyama Laboratory
 <!-- - [LinkedIn](#) | [Portfolio Site](#) -->
 
 ## 🎥 Demo Video
-A short demonstration of the **HRI-CAS system** showing BaseMove, Aim Assist, and Spatial Visualization modules.
-
-<video src="https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/raw/NotFX/Images/movie.mp4" controls width="640"></video>
+## 🎥 Demo Video
+[![Watch the Demo](https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/blob/NotFX/Images/画像6.png?raw=true)](https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/raw/NotFX/Images/movie.mp4)
 
 ---
 ## Visual Abstract
