@@ -13,8 +13,8 @@ Meijo University, Sekiyama Laboratory
 
 
 ---
-
-![System](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
+## Visual Abstract
+![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
 
 
 ---
