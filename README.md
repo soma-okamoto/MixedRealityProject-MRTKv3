@@ -11,6 +11,7 @@ Meijo University, Sekiyama Laboratory
 - Skills: Unity (C#), ROS, Python, Docker, Git, Meta Quest SDK  
 <!-- - [LinkedIn](#) | [Portfolio Site](#) -->
 
+---
 
 ## BaseMove System
 A module for **base position suggestion and relocation** using Inverse Reachability Map (IRM).  
@@ -24,6 +25,8 @@ The **UserTarget Detection System** infers the grasp target based on hand postur
 
 ![AimAssist Teleoperation](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/画像6.png?raw=true)
 
+
+---
 
 ## SpacialVisualizationSystem
 A real-time environment visualization module combining **YOLOv5**, **DeepSORT**, and **Point Cloud rendering**.
