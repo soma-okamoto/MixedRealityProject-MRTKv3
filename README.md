@@ -11,6 +11,10 @@ Meijo University, Sekiyama Laboratory
 - Skills: Unity (C#), ROS, Python, Docker, Git, Meta Quest SDK  
 <!-- - [LinkedIn](#) | [Portfolio Site](#) -->
 
+## 🎥 Demo Video
+A short 30-second demonstration of the **HRI-CAS system** in operation (BaseMove, Aim Assist, and Spatial Visualization in MR).
+
+▶️ [Watch Demo](https://github.com/soma-okamoto/MixedRealityProject-MRTKv3/blob/main/Images/movie.mp4?raw=true)
 
 ---
 ## Visual Abstract
