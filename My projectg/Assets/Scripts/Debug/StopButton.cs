@@ -16,6 +16,8 @@ public class StopButton : MonoBehaviour
         rosConnector.GetComponent<Float32MultiSubscriber>().enabled = false;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.CalibrationFloat32Publisher>().enabled = false;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.PointCloudSubscriber>().enabled = false;
+ 
+        rosConnector.GetComponent<BottleStatePublisher>().enabled = true;
 
     }
 
