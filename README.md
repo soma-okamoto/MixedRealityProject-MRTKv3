@@ -52,3 +52,26 @@ By combining **semantic tracking** and **geometric mapping**, it enables intuiti
 
 
 
+## ⚡ Quick Start
+```bash
+# 1) Clone
+git clone https://github.com/soma-okamoto/MixedRealityProject-MRTKv3.git
+cd MixedRealityProject-MRTKv3
+
+# 2) Open Unity project
+#   Unity 2022.3.xx / MRTK3 / Meta XR SDK / OpenXR
+#   Open:  My projectg/  (then open the scene used for demo)
+
+![Unity](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/Unity.png?raw=true)
+
+
+## Related Repositories
+
+https://github.com/soma-okamoto/Docker_Youbot_project_gradient.git
+
+https://github.com/soma-okamoto/Docker_ReachabilityMap.git
+
+https://github.com/soma-okamoto/Docker_youbot_sim.git
+
+
+
