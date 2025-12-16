@@ -41,7 +41,7 @@ public class BottleAreaState : MonoBehaviour
     // SelectObject から「この色で Override してほしい」と言われたときに使う
      bool manualOverride = false;
      Color manualColor;
-   public GameObject BorrowOrigin;
+   public GameObject Origin;
 
     public void OverrideColor(Color c)
      {
@@ -76,12 +76,12 @@ public class BottleAreaState : MonoBehaviour
 
 
         
-        if (BorrowOrigin == null)
+        if (Origin == null)
         {
-            BorrowOrigin = GameObject.Find("origin_central");
-            if (BorrowOrigin == null)
+            Origin = GameObject.Find("origin_arm");
+            if (Origin == null)
             {
-                Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"BorrowOrigin\" の GameObject が見つかりません。");
+                Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");
             }
         }
 
@@ -266,7 +266,7 @@ public class BottleAreaState : MonoBehaviour
     public float[] IRM_ROS_SelectMessage()
     {
         var selectCoords = new List<float>();
-        if (BorrowOrigin == null)
+        if (Origin == null)
         {
             Debug.LogError("Origin が設定されていません！");
             return selectCoords.ToArray();
@@ -278,7 +278,7 @@ public class BottleAreaState : MonoBehaviour
         Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
 
         // １度だけ取得しておく Origin のワールド座標
-        Vector3 originWorld = BorrowOrigin.transform.position;
+        Vector3 originWorld = Origin.transform.position;
 
     
         // 1) ボトルのワールド座標

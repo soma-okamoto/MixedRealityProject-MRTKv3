@@ -138,47 +138,48 @@ public class SelectObject : MonoBehaviour
 
         return beforeData;
     }
-    public float[] IRM_SelectMessage()
-    {
-        var selectCoords = new List<float>();
-        if (Origin == null)
-        {
-            Debug.LogError("Origin が設定されていません！");
-            return selectCoords.ToArray();
-        }
 
-        // YouBot 向けに追加したいオフセット
-       /* Vector3 axisOffset = new Vector3(-0.123f, 0.056f, 0f);*/
+    //public float[] IRM_SelectMessage()
+    //{
+    //    var selectCoords = new List<float>();
+    //    if (Origin == null)
+    //    {
+    //        Debug.LogError("Origin が設定されていません！");
+    //        return selectCoords.ToArray();
+    //    }
 
-        Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
+    //    // YouBot 向けに追加したいオフセット
+    //   /* Vector3 axisOffset = new Vector3(-0.123f, 0.056f, 0f);*/
 
-        // １度だけ取得しておく Origin のワールド座標
-        Vector3 originWorld = Origin.transform.position;
+    //    Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
 
-        foreach (GameObject obj in ObjectList)
-        {
-            // 1) ボトルのワールド座標
-            Vector3 bottleWorld = obj.transform.position;
+    //    // １度だけ取得しておく Origin のワールド座標
+    //    Vector3 originWorld = Origin.transform.position;
 
-            // 2) ワールド差分で相対位置を計算
-            Vector3 relative = bottleWorld - originWorld;
+    //    foreach (GameObject obj in ObjectList)
+    //    {
+    //        // 1) ボトルのワールド座標
+    //        Vector3 bottleWorld = obj.transform.position;
 
-            // 3) オフセットを加算
-            Vector3 adjusted = relative + axisOffset;
+    //        // 2) ワールド差分で相対位置を計算
+    //        Vector3 relative = bottleWorld - originWorld;
 
-            // 4) YouBot 向けに軸反転・入れ替え
-            float youbot_x = -adjusted.x;
-            float youbot_y = -adjusted.z;
-            float youbot_z = adjusted.y;
+    //        // 3) オフセットを加算
+    //        Vector3 adjusted = relative + axisOffset;
 
-            // 5) 配列に追加
-            selectCoords.Add(youbot_x);
-            selectCoords.Add(youbot_y);
-            selectCoords.Add(youbot_z);
-        }
+    //        // 4) YouBot 向けに軸反転・入れ替え
+    //        float youbot_x = -adjusted.x;
+    //        float youbot_y = -adjusted.z;
+    //        float youbot_z = adjusted.y;
 
-        return selectCoords.ToArray();
-    }
+    //        // 5) 配列に追加
+    //        selectCoords.Add(youbot_x);
+    //        selectCoords.Add(youbot_y);
+    //        selectCoords.Add(youbot_z);
+    //    }
+
+    //    return selectCoords.ToArray();
+    //}
     private void SetOpaque(Material m)
    {
        m.SetFloat("_Surface", 0f);
