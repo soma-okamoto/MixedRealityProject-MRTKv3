@@ -11,7 +11,7 @@ public class BottleAreaState : MonoBehaviour
     [field: SerializeField, Tooltip("エリア内かどうか（読み取り専用）")]
     public bool IsInside { get; private set; }
     public bool IsHit { get; private set; }
-    public ObjectHit ObjectHit;
+    // public ObjectHit ObjectHit;
     public BottleHitMapper BottleHitMapper;
     public IRM_SerectObjectPublisher irmPublisher;
     
@@ -67,8 +67,8 @@ public class BottleAreaState : MonoBehaviour
         // 3) 本来の色をマテリアルから取得
         originalColor = mat.GetColor(colorProp);
         // シーン中から ObjectHit を自動取得
-        if (ObjectHit == null)
-            ObjectHit = FindObjectOfType<ObjectHit>();
+        // if (ObjectHit == null)
+        //     ObjectHit = FindObjectOfType<ObjectHit>();
         if (BottleHitMapper == null)
                 BottleHitMapper = FindObjectOfType<BottleHitMapper>();
         if (irmPublisher == null)
@@ -78,7 +78,7 @@ public class BottleAreaState : MonoBehaviour
         
         if (Origin == null)
         {
-            Origin = GameObject.Find("origin_arm");
+            Origin = GameObject.Find("origin_base");
             if (Origin == null)
             {
                 Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");

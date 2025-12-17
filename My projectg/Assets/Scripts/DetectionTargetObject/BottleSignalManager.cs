@@ -24,6 +24,8 @@ public class BottleSignalManager : MonoBehaviour
     private Vector3 prevHandPos;
     private Vector3 prevHandVel;
 
+    public GameObject origin_arm;
+
     void Start()
     {
          // 初期化
@@ -94,10 +96,14 @@ public class BottleSignalManager : MonoBehaviour
             Vector3 d_hand  = (p - handPos).normalized;
             float   s_accel = Mathf.Max(0f, Vector3.Dot(velDir, d_hand));
 
+            // arm根本からのボトル座標
+            Vector3 originWorld = origin_arm.transform.position;
+            Vector3 offset_p=p-originWorld;
+
             signals.Add(new BottleSignal
             {
                 bottleID     = info.id,
-                position   = p,
+                position   = offset_p,
                 insideFlag = inside,
                 s_touch    = s_touch,
                 s_hand     = s_hand,

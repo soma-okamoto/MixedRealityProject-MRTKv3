@@ -6,7 +6,7 @@ public class BottleAreaChecker : MonoBehaviour
     [Header("Area Collider")]
     [Tooltip("Convex MeshCollider defining the reachable area.")]
     public MeshCollider areaCollider;
-    public ObjectHit ObjectHit;
+    public ObjectHit ObjectHit;//hitを保持するためだけのスクリプト
 
     [Header("Threshold (meters)")]
     [Tooltip("Distance tolerance for inside detection.")]

@@ -11,7 +11,7 @@ public class ObjectHit : MonoBehaviour
     [SerializeField] private float maxRaycastDistance = 0.0f;
     public RaycastHit hitObj;
 
-    public GameObject hitObject { get; private set; }
+    public GameObject hitObject { get; private set; }//ここでhitを保持する
 
     void Update()
     {
