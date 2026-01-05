@@ -67,12 +67,20 @@ public class handTracking : MonoBehaviour
     {
         middleObject.SetActive(true);
 
-        float x = handPositionFromOrigin.localPosition.x - origin.transform.localPosition.x;
-        float y = handPositionFromOrigin.localPosition.y - origin.transform.localPosition.y;
-        float z = handPositionFromOrigin.localPosition.z - origin.transform.localPosition.z;
+        float x = handPositionFromOrigin.position.x - origin.transform.position.x;
+        float y = handPositionFromOrigin.position.y - origin.transform.position.y;
+        float z = handPositionFromOrigin.position.z - origin.transform.position.z;
+        Vector3 direction = (handPositionFromOrigin.position - origin.transform.position).normalized;  // �_A����_B�ւ̒P�ʃx�N�g��
+        float distance = Vector2.Distance(new Vector2(handPositionFromOrigin.position.x, handPositionFromOrigin.position.z), new Vector3(origin.transform.position.x, origin.transform.position.z)); // �_A�Ɠ_B�̌��݂̋���
 
-        Vector3 direction = (handPositionFromOrigin.localPosition - origin.transform.localPosition).normalized;  // �_A����_B�ւ̒P�ʃx�N�g��
-        float distance = Vector2.Distance(new Vector2(handPositionFromOrigin.localPosition.x, handPositionFromOrigin.localPosition.z), new Vector3(origin.transform.localPosition.x, origin.transform.localPosition.z)); // �_A�Ɠ_B�̌��݂̋���
+
+        //float x = handPositionFromOrigin.localPosition.x - origin.transform.localPosition.x;
+        //float y = handPositionFromOrigin.localPosition.y - origin.transform.localPosition.y;
+        //float z = handPositionFromOrigin.localPosition.z - origin.transform.localPosition.z;
+        //Vector3 direction = (handPositionFromOrigin.localPosition - origin.transform.localPosition).normalized;  // �_A����_B�ւ̒P�ʃx�N�g��
+        //float distance = Vector2.Distance(new Vector2(handPositionFromOrigin.localPosition.x, handPositionFromOrigin.localPosition.z), new Vector3(origin.transform.localPosition.x, origin.transform.localPosition.z)); // �_A�Ɠ_B�̌��݂̋���
+
+
         Vector3 pose = new Vector3(x, y, z);
 
         if (y < minHight)
