@@ -1,4 +1,4 @@
-# HRI-CAS: Mixed Reality Cooperative Manipulation System
+# MASK: Mixed reality Adaptive Spatial and Kinematic support
 
 **Field**: Mixed Reality (MR) × Robotics × Human–Robot Interaction  
 **Objective**: To develop an MR-based teleoperation system that assists robot control and base relocation by inferring the user’s manipulation intent.  
@@ -17,7 +17,7 @@ Meijo University, Sekiyama Laboratory
 
 ---
 ## Graphical Abstract
-An overview of **HRI-CAS (Human–Robot Interaction – Cooperative Assist System)**,  
+An overview of **MASK: Mixed reality Adaptive Spatial and Kinematic support**,  
 which integrates **BaseMove**, **Aim Assist**, and **Spatial Visualization** modules into a unified MR–ROS framework.
 
 ![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
