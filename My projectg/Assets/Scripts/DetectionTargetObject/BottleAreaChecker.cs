@@ -40,7 +40,13 @@ public class BottleAreaChecker : MonoBehaviour
     void Update()
 {
     // ① ヒット中のボトルを取得
-    GameObject hitBottle = ObjectHit != null ? ObjectHit.hitObject : null;
+    GameObject hitBottle;
+    if (ObjectHit != null) {
+        hitBottle = ObjectHit.hitObject;
+    } else {
+        hitBottle = null;
+    }
+
 
     bottleInfos.Clear();
 

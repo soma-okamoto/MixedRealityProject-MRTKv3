@@ -16,7 +16,7 @@ public class BottleHitMapper : MonoBehaviour
     {
         int id = rosconnector.bottle_id;
 
-        // 1. 全ボトルをまずリセット
+        // 1. 全ボトルのROS判定結果をまずリセット
         hitObject = null;
         foreach (var info in areaChecker.bottleInfos)
         {

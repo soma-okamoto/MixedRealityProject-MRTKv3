@@ -6,12 +6,12 @@ using MixedReality.Toolkit.SpatialManipulation;
 
 public class ObjectHit : MonoBehaviour
 {
-    [Header("Raycast & Grab")]
-    public Camera playerCamera;
-    [SerializeField] private float maxRaycastDistance = 0.0f;
-    public RaycastHit hitObj;
-
+    // [Header("Raycast & Grab")]
+    // public Camera playerCamera;
+    // [SerializeField] private float maxRaycastDistance = 0.0f;
+    // public RaycastHit hitObj;
     public GameObject hitObject { get; private set; }//ここでhitを保持する
+    
 
     void Update()
     {
@@ -26,13 +26,13 @@ public class ObjectHit : MonoBehaviour
             }
         }
 
-        GameObject raycasted = null;
-        if (Physics.Raycast(playerCamera.transform.position,
-                            playerCamera.transform.forward,
-                            out hitObj, maxRaycastDistance))
-        {
-            raycasted = hitObj.collider.gameObject;
-        }
+        // GameObject raycasted = null;
+        // if (Physics.Raycast(playerCamera.transform.position,
+        //                     playerCamera.transform.forward,
+        //                     out hitObj, maxRaycastDistance))
+        // {
+        //     raycasted = hitObj.collider.gameObject;
+        // }
 
         // �A hitObject ������
         hitObject = null;
@@ -43,14 +43,14 @@ public class ObjectHit : MonoBehaviour
         {
             hitObject = grabbed;
         }
-        // �D��2: Raycast�q�b�g�����ǒ͂�ł��Ȃ��E�{�g��������
-        else if (grabbed == null
-                 && raycasted != null
-                 && raycasted.CompareTag("bottle")
-                 )
-        {
-            hitObject = raycasted;
-        }
+        // // �D��2: Raycast�q�b�g�����ǒ͂�ł��Ȃ��E�{�g��������
+        // else if (grabbed == null
+        //          && raycasted != null
+        //          && raycasted.CompareTag("bottle")
+        //          )
+        // {
+        //     hitObject = raycasted;
+        // }
 
 
     }
