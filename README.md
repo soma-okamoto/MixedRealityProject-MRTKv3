@@ -2,7 +2,7 @@
 
 **Field**: Mixed Reality (MR) × Robotics × Human–Robot Interaction  
 **Objective**: To develop an MR-based teleoperation system that assists robot control and base relocation by inferring the user’s manipulation intent.  
-**Technical Stack**: Unity (MRTK3), Meta Quest 3, ROS (Noetic), Python  
+**Technical Stack**: Unity (MRTK3), Meta Quest 3, ROS (Noetic), Python  ,Docker
 
 ## Author
  **Soma Okamoto**  
@@ -13,14 +13,19 @@ Meijo University, Sekiyama Laboratory
 
 
 ## 🎥 Demo Video
-▶️ [Watch on Google Drive](https://drive.google.com/file/d/1LDW_AyfaWdDkLWr9CyFJ_fM9CxGnJM3n/view?usp=sharing)
+▶️ [Watch on Google Drive](https://drive.google.com/file/d/1aXLi1SnfnAiOzHu7YugYYONfN54CpGNZ/view?usp=sharing)
+
 
 ---
 ## Graphical Abstract
+<<<<<<< HEAD
 An overview of **MASK: Mixed reality Adaptive Spatial and Kinematic support**,  
+=======
+An overview of **MASK (Mixed reality Adaptive Spatial and Kinematic support)**,  
+>>>>>>> a173bc9005e0a273eb0b49b042b37878922b9640
 which integrates **BaseMove**, **Aim Assist**, and **Spatial Visualization** modules into a unified MR–ROS framework.
 
-![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/システム.png?raw=true)
+![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/GA.png?raw=true)
 
 
 ---

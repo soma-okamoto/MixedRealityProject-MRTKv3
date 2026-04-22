@@ -94,7 +94,7 @@ public class OperationController : MonoBehaviour
         GameObject target = GameObject.Find("Origin/BoundingBox/BoundingBoxWithTraditionalHandles(Clone)");
         target.SetActive(false);
 
-        Debug.Log("=== OPERATION END ===");
+        Debug.Log("=== OPERATION END =f==");
         Phasename_UI.SetActive(true);
 
         // 最後に自分を非アクティブに
