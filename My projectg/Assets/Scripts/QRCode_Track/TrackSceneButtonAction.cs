@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class TrackSceneButtonAction : MonoBehaviour
 {
-    [SerializeField] private QRCodeAnchorInitializer qrInitializer;
+    [SerializeField] private QRCodeTrackerAndAnchorUpdater qrInitializer;
     [SerializeField] private string nextSceneName = "main";
 
     public void GoToMainScene()

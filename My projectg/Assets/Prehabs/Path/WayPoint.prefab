@@ -412,7 +412,7 @@ MonoBehaviour:
   proximityType: -1
   executionOrder: 0
   constraintOnMovement: 2
-  useLocalSpaceForConstraint: 1
+  useLocalSpaceForConstraint: 0
 --- !u!114 &6182288050322560506
 MonoBehaviour:
   m_ObjectHideFlags: 0
