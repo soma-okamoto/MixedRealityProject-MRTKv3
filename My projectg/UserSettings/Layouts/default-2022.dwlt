@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1037
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Hierarchy
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -322,9 +322,9 @@ MonoBehaviour:
     m_SceneHandles: 
     m_ShowAllHits: 0
     m_SkipHidden: 1
-    m_SearchArea: 0
+    m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Materials
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -332,16 +332,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Materials
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\soma0\Unity\NotFX\MixedRealityProject-MRTKv3\My projectg
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 382}
-    m_SelectedIDs: 88f00000
-    m_LastClickedID: 61576
-    m_ExpandedIDs: 0000000010f0000012f0000016f0000018f000006ef0000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 30}
+    m_SelectedIDs: 5e0a0200
+    m_LastClickedID: 133726
+    m_ExpandedIDs: 0000000050f000007e0a02008e0a0200b669060000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -369,7 +369,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000010f0000012f0000014f0000016f0000018f00000
+    m_ExpandedIDs: 00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -509,9 +509,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 2e190100
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: d48fffff0ac0ffff12fbffff42240100
+      m_ExpandedIDs: e4b9f9ffa0baf9ffd0f5f9ff2a19fafff23cfaffc869fafff48bfaff34c9fafff2c9faff1c05fbff7228fbff2c4cfbfffc78fbff249bfbff8cf0fbff42f1fbff6c2cfcffc24ffcff7c73fcff4ca0fcff74c2fcff40d9fcffd60efdff5e0ffdff884afdffde6dfdff9891fdff68befdff90e0fdffcc8dfeff848efeffb4c9feff12edfeffee10ffffc63dfffff25fffff12fbffff4aae000056ae000082ae0000f2ae0000faae000016af0000a6e90100bce90100ccea010028ec01008c040200440502005e09020048dd04005edd0400cadf040098e304007cec0400dcf80400f6fc040020490600304a06005a4f06009e640600b8680600522f0700623007008c350700d04a0700fa4e07007cce070008e30700eae70700
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -573,7 +573,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: -174, y: -26}
+      snapOffset: {x: -179, y: -26}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
@@ -930,9 +930,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.34149083, y: -0.08846977, z: 1.5444981}
+    m_Target: {x: -0.020650981, y: 0.056071904, z: -0.09066592}
     speed: 2
-    m_Value: {x: -0.34149083, y: -0.08846977, z: 1.5444981}
+    m_Value: {x: -0.020650981, y: 0.056071904, z: -0.09066592}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -978,13 +978,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.06429443, y: 0.12005421, z: -0.0077840076, w: -0.9906501}
+    m_Target: {x: -0.14791673, y: 0.1542051, z: -0.023321314, w: -0.9766293}
     speed: 2
-    m_Value: {x: -0.062808536, y: 0.12006605, z: -0.0076039387, w: -0.9907479}
+    m_Value: {x: -0.14788106, y: 0.15566932, z: -0.023543078, w: -0.9763934}
   m_Size:
-    m_Target: 1.1219857
+    m_Target: 0.0559017
     speed: 2
-    m_Value: 1.0736705
+    m_Value: 0.055901747
   m_Ortho:
     m_Target: 0
     speed: 2

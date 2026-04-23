@@ -5,6 +5,7 @@ public class FollowUserUI : MonoBehaviour
     [SerializeField] private Transform targetCamera;
     [SerializeField] private float distance = 0.45f;
     [SerializeField] private float heightOffset = -0.05f;
+    [SerializeField] private float X_Offset = -0.02f;
     [SerializeField] private float followSpeed = 8f;
     [SerializeField] private bool yawOnly = true;
 
@@ -26,6 +27,7 @@ public class FollowUserUI : MonoBehaviour
 
         Vector3 targetPos = targetCamera.position + forward * distance;
         targetPos.y += heightOffset;
+        targetPos.x += X_Offset;
 
         transform.position = Vector3.Lerp(
             transform.position,

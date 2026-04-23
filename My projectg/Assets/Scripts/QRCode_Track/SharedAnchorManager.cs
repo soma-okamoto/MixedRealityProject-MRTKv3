@@ -44,6 +44,6 @@ public class SharedAnchorManager : MonoBehaviour
         sharedAnchorRoot.rotation = rotation;
         IsInitialized = true;
 
-        Debug.Log("Shared anchor force updated");
+        // Debug.Log("Shared anchor force updated");
     }
 }
