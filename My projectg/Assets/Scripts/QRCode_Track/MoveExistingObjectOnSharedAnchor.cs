@@ -59,14 +59,14 @@ public class MoveExistingObjectOnSharedAnchor : MonoBehaviour
 
     private void MoveTargetObject()
     {
-        Vector3 localPos = qrPositionSubscriber.messagePosition + localOffset;
+        Vector3 localPos = qrPositionSubscriber.messageUnityPosition + localOffset;
         Vector3 worldPos = anchor.TransformPoint(localPos);
 
         Quaternion worldRot;
 
         if (useRosRotation)
         {
-            worldRot = anchor.rotation * qrPositionSubscriber.messageRotation * Quaternion.Euler(localEulerOffset);
+            worldRot = anchor.rotation * qrPositionSubscriber.messageUnityRotation * Quaternion.Euler(localEulerOffset);
         }
         else
         {

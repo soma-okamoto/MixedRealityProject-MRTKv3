@@ -4,8 +4,9 @@ namespace RosSharp.RosBridgeClient
 {
     public class QRPositionSubscriber : UnitySubscriber<MessageTypes.Geometry.PoseStamped>
     {
-        public Vector3 messagePosition;
-        public Quaternion messageRotation;
+        public Vector3 messageUnityPosition;
+        public Vector3 messageRosPosition;
+        public Quaternion messageUnityRotation;
 
         private bool isMessageReceived;
 
@@ -20,9 +21,13 @@ namespace RosSharp.RosBridgeClient
         }
 
         protected override void ReceiveMessage(MessageTypes.Geometry.PoseStamped message)
-        {
-            messagePosition = GetPosition(message);
-            messageRotation = GetRotation(message);
+        { 
+            messageRosPosition.x = (float)message.pose.position.x;
+            messageRosPosition.y = (float)message.pose.position.y;
+            messageRosPosition.z = (float)message.pose.position.z;
+
+            messageUnityPosition = GetPosition(message);
+            messageUnityRotation = GetRotation(message);
 
             isMessageReceived = true;
         }
@@ -32,7 +37,7 @@ namespace RosSharp.RosBridgeClient
             return new Vector3(
                 -(float)message.pose.position.x,
                 (float)message.pose.position.z,
-                -(float)message.pose.position.y
+                (float)message.pose.position.y
             );
         }
 
