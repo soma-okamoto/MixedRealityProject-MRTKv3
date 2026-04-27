@@ -144,4 +144,25 @@ public class QRCodeTrackerAndAnchorUpdater : MonoBehaviour
         float height = r.height;
         Debug.Log($"QR size: width={width:F4}m, height={height:F4}m");
     }
+    public void DebugSetAnchorAsQRCodeRead()
+{
+    if (SharedAnchorManager.Instance == null)
+    {
+        Debug.LogError("SharedAnchorManager が見つかりません");
+        return;
+    }
+
+    Vector3 debugAnchorPosition = transform.position;
+    Quaternion debugAnchorRotation = transform.rotation;
+
+    SharedAnchorManager.Instance.ForceSetAnchor(
+        debugAnchorPosition,
+        debugAnchorRotation
+    );
+
+    IsAnchorReady = true;
+
+    Debug.Log($"Debug QR anchor set. pos={debugAnchorPosition}, rot={debugAnchorRotation.eulerAngles}");
+}
+
 }

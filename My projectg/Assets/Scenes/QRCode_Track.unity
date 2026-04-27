@@ -3529,6 +3529,7 @@ GameObject:
   - component: {fileID: 2109748225}
   - component: {fileID: 2109748227}
   - component: {fileID: 2109748228}
+  - component: {fileID: 2109748229}
   m_Layer: 0
   m_Name: QRCode_Track
   m_TagString: Untagged
@@ -3596,6 +3597,20 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: 1f97cd16011ecde44b969aa64347fdf3, type: 2}
   lineWidth: 0.005
   lineOffset: 0.001
+--- !u!114 &2109748229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109748221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d9a0b52bcd232e4a9bc6f8526768c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  qrTracker: {fileID: 2109748228}
+  targetScript: {fileID: 2109748227}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
