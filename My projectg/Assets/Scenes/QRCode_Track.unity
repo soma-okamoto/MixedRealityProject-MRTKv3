@@ -3597,6 +3597,12 @@ MonoBehaviour:
   lineMaterial: {fileID: 2100000, guid: 1f97cd16011ecde44b969aa64347fdf3, type: 2}
   lineWidth: 0.005
   lineOffset: 0.001
+  axisLength: 0.15
+  axisWidth: 0.01
+  axisZOffset: 0.02
+  xAxisMaterial: {fileID: 2100000, guid: d50db05c4c3458b4bb037bede4fa9b48, type: 2}
+  yAxisMaterial: {fileID: 2100000, guid: 4d19b100176cfc945a31133165d2c64b, type: 2}
+  zAxisMaterial: {fileID: 2100000, guid: 43ef7f60fbd767d4e942d7a716f68b0d, type: 2}
 --- !u!114 &2109748229
 MonoBehaviour:
   m_ObjectHideFlags: 0

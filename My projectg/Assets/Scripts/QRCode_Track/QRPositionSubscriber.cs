@@ -44,10 +44,10 @@ namespace RosSharp.RosBridgeClient
         private Quaternion GetRotation(MessageTypes.Geometry.PoseStamped message)
         {
             return new Quaternion(
-                (float)message.pose.orientation.z,
                 -(float)message.pose.orientation.x,
                 (float)message.pose.orientation.y,
-                -(float)message.pose.orientation.w
+                (float)message.pose.orientation.z,
+                (float)message.pose.orientation.w
             );
         }
     }
