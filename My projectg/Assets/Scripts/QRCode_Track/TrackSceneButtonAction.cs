@@ -3,22 +3,29 @@ using UnityEngine.SceneManagement;
 
 public class TrackSceneButtonAction : MonoBehaviour
 {
-    [SerializeField] private QRCodeTrackerAndAnchorUpdater qrInitializer;
+    // [SerializeField] private QRCodeTrackerAndAnchorUpdater qrInitializer;
+    //  [SerializeField] private TrackblesManager trackablesManager;
     [SerializeField] private string nextSceneName = "main";
 
     public void GoToMainScene()
     {
-        if (qrInitializer == null)
-        {
-            Debug.LogError("QRCodeAnchorInitializer が未設定です");
-            return;
-        }
+        // if (qrInitializer == null)
+        // {
+        //     Debug.LogError("QRCodeAnchorInitializer が未設定です");
+        //     return;
+        // }
 
-        if (!qrInitializer.IsAnchorReady)
-        {
-            Debug.Log("まだQRが読み取れていません");
-            return;
-        }
+        // if (TrackblesManager == null)
+        // {
+        //     Debug.LogError("TrackblesManager が未設定です");
+        //     return;
+        // }
+
+        // if (!qrInitializer.IsAnchorReady)
+        // {
+        //     Debug.Log("まだQRが読み取れていません");
+        //     return;
+        // }
 
         SceneManager.LoadScene(nextSceneName);
     }

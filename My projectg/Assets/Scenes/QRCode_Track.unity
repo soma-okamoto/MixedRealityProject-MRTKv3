@@ -3016,7 +3016,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableRemoved>k__BackingField.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackerConfiguration>k__BackingField.<QRCodeTrackingEnabled>k__BackingField
@@ -3033,11 +3033,11 @@ PrefabInstance:
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2109748228}
+      objectReference: {fileID: 2109748230}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2109748228}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -3092,11 +3092,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: QRCodeTrackerAndAnchorUpdater, Assembly-CSharp
+      value: TrackblesManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: QRCodeAnchorInitializer, Assembly-CSharp
+      value: QRCodeTrackerAndAnchorUpdater, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.<TrackableAdded>k__BackingField.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -3530,6 +3530,7 @@ GameObject:
   - component: {fileID: 2109748227}
   - component: {fileID: 2109748228}
   - component: {fileID: 2109748229}
+  - component: {fileID: 2109748230}
   m_Layer: 0
   m_Name: QRCode_Track
   m_TagString: Untagged
@@ -3591,7 +3592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b54d936e7198b46bda9d4a55866df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 158322116782267161, guid: 78e144ee9f6f99349ae60103c6015446, type: 3}
+  objectPrefab: {fileID: 2925965127134989770, guid: e6fc3759a2767ab4e8187ebfa59c3512, type: 3}
   localOffset: {x: 0, y: 0, z: 0}
   localEulerOffset: {x: 0, y: 0, z: 0}
   lineMaterial: {fileID: 2100000, guid: 1f97cd16011ecde44b969aa64347fdf3, type: 2}
@@ -3617,6 +3618,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   qrTracker: {fileID: 2109748228}
   targetScript: {fileID: 2109748227}
+--- !u!114 &2109748230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109748221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6fb9a996707e7488235098a0902e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPrefab: {fileID: 2925965127134989770, guid: e6fc3759a2767ab4e8187ebfa59c3512, type: 3}
+  subPrefab: {fileID: 1249227352737254681, guid: f3963925e081bdb4e829c3d33353fce8, type: 3}
+  waitFramesBeforeSpawn: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
