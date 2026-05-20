@@ -9,6 +9,7 @@ TagManager:
   - SubBottle
   - Origin
   - SubOrigin
+  - MainAnchor
   layers:
   - Default
   - TransparentFX

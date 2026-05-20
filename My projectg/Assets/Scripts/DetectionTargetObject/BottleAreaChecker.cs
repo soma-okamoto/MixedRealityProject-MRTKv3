@@ -73,15 +73,37 @@ public class BottleAreaChecker : MonoBehaviour
             state.SetHit(hit);
         }
 
-            // List に追加
-            bottleInfos.Add(new BottleAreaInfo
-            {
-                bottle = bottle,
-                id = i,
-                position = pos,
-                isInside = inside,
-                isHit = hit
-            });
+        BottleIdentity identity = bottle.GetComponent<BottleIdentity>();
+
+        int bottleId = -1;
+
+        if (identity != null)
+        {
+            bottleId = identity.Id;
+        }
+        else
+        {
+            Debug.LogWarning($"{bottle.name} に BottleIdentity がありません");
+        }
+
+        bottleInfos.Add(new BottleAreaInfo
+        {
+            bottle = bottle,
+            id = bottleId,
+            position = pos,
+            isInside = inside,
+            isHit = hit
+        });
+
+            // // List に追加
+            // bottleInfos.Add(new BottleAreaInfo
+            // {
+            //     bottle = bottle,
+            //     id = i,
+            //     position = pos,
+            //     isInside = inside,
+            //     isHit = hit
+            // });
     }
 }
 

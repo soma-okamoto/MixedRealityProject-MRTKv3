@@ -14,6 +14,7 @@ public class BottleAreaState : MonoBehaviour
     // public ObjectHit ObjectHit;
     public BottleHitMapper BottleHitMapper;
     public IRM_SerectObjectPublisher irmPublisher;
+
     
 
     [ColorUsage(false, true)] public Color PickColor;      // Inside ＆ ROS同定

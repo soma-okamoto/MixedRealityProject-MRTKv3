@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 138561007}
-  distance: 0.4
+  distance: 0.37
   heightOffset: -0.05
   X_Offset: -0.1
   followSpeed: 8
@@ -3578,7 +3578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7708651aef06874f8d264a1fabc8584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  qrInitializer: {fileID: 2109748228}
   nextSceneName: main
 --- !u!114 &2109748228
 MonoBehaviour:

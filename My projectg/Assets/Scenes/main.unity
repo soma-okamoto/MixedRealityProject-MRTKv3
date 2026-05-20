@@ -4341,34 +4341,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177428141}
   m_Mesh: {fileID: 4300000, guid: fbc47027e54e49848fdfd6d5e20510e7, type: 3}
---- !u!21 &179185223
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &181421713
 GameObject:
   m_ObjectHideFlags: 0
@@ -8603,7 +8575,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 179185223}
+  - {fileID: 566758163}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14456,6 +14428,8 @@ GameObject:
   - component: {fileID: 555286895}
   - component: {fileID: 555286896}
   - component: {fileID: 555286897}
+  - component: {fileID: 555286898}
+  - component: {fileID: 555286899}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -14961,6 +14935,33 @@ MonoBehaviour:
   messageUnityPosition: {x: 0, y: 0, z: 0}
   messageRosPosition: {x: 0, y: 0, z: 0}
   messageUnityRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &555286898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b94286552a9b16241ac4eb1a5d180ca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /P_current
+--- !u!114 &555286899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc4dfd8ba27d58444863c0da2ca95973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /place_command
+  command: Place
 --- !u!1001 &555887933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15201,11 +15202,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphereMarker: {fileID: 4824266056200401083, guid: 3ff69b5c0486d8345ac4df534760897f, type: 3}
-  palmMarker: {fileID: 7950680816761361652, guid: 0f5f76cbead6bf242a542e43205e608c, type: 3}
-  wristMarkerPrefab: {fileID: 7950680816761361652, guid: 0f5f76cbead6bf242a542e43205e608c, type: 3}
+  palmMarker: {fileID: 4824266056200401083, guid: 3ff69b5c0486d8345ac4df534760897f, type: 3}
+  wristMarkerPrefab: {fileID: 4824266056200401083, guid: 3ff69b5c0486d8345ac4df534760897f, type: 3}
   ringMarkerPrefab: {fileID: 4824266056200401083, guid: 3ff69b5c0486d8345ac4df534760897f, type: 3}
   enableMidMarker: 0
-  enablePalmMarker: 1
+  enablePalmMarker: 0
   enableWristMarker: 0
   enableRingMarker: 0
   midEulerAngles: {x: 0, y: 0, z: 0}
@@ -15413,6 +15414,34 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8376646494505211229, guid: c6b351a67ceb69140b199996bbbea156, type: 3}
   m_PrefabInstance: {fileID: 387182931}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &566758163
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &568183147
 GameObject:
   m_ObjectHideFlags: 0
@@ -33709,6 +33738,8 @@ MonoBehaviour:
   targetPrefabSub: {fileID: 1249227352737254681, guid: f3963925e081bdb4e829c3d33353fce8, type: 3}
   localOffset: {x: 0, y: 0, z: 0}
   localEulerOffset: {x: 0, y: 0, z: 0}
+  localOffsetSub: {x: 0, y: 0, z: 0}
+  localEulerOffsetSub: {x: 0, y: 0, z: 0}
 --- !u!4 &1322752567
 Transform:
   m_ObjectHideFlags: 0
@@ -40781,6 +40812,7 @@ GameObject:
   - component: {fileID: 1736839311}
   - component: {fileID: 1736839310}
   - component: {fileID: 1736839309}
+  - component: {fileID: 1736839312}
   m_Layer: 0
   m_Name: DataCollectionManager
   m_TagString: Untagged
@@ -40850,6 +40882,18 @@ MonoBehaviour:
   ObjectHit: {fileID: 1736839309}
   insideEps: 0.01
   bottleInfos: []
+--- !u!114 &1736839312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736839307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e76cd433a54ed3140a8b90d9dc4b25cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1741544530
 GameObject:
   m_ObjectHideFlags: 0

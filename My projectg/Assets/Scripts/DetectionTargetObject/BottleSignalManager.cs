@@ -21,10 +21,14 @@ public class BottleSignalManager : MonoBehaviour
     [Tooltip("各ボトルの生データ＋シグナル")]
     public List<BottleSignal> signals = new List<BottleSignal>();
 
+    // [Header("P_currentSignals")]
+    // public List<P_currentSignal> P_currentSignals = new List<P_currentSignal>();
+
     private Vector3 prevHandPos;
     private Vector3 prevHandVel;
 
     public GameObject origin_arm;
+    // public GameObject origin_base;
 
     void Start()
     {
@@ -76,6 +80,8 @@ public class BottleSignalManager : MonoBehaviour
         var infos = bottleAreaChecker.bottleInfos;
 
         signals.Clear();
+        // P_currentSignals.Clear();
+
         foreach (var info in infos)
         {
             Vector3 p      = info.position;
@@ -100,6 +106,9 @@ public class BottleSignalManager : MonoBehaviour
             Vector3 originWorld = origin_arm.transform.position;
             Vector3 offset_p=p-originWorld;
 
+            // Vector3 baseOriginWorld = origin_base.transform.position;
+            // Vector3 offset_base_p=p-baseOriginWorld;
+
             signals.Add(new BottleSignal
             {
                 bottleID     = info.id,
@@ -110,6 +119,12 @@ public class BottleSignalManager : MonoBehaviour
                 s_head     = s_head,
                 s_accel    = s_accel
             });
+
+            // P_currentSignals.Add(new P_currentSignal
+            // {
+            //     bottleID = info.id,
+            //     position = offset_base_p
+            // });
         }
     }
 
@@ -125,4 +140,11 @@ public class BottleSignalManager : MonoBehaviour
         public float      s_head;     // ヘッドアライメント
         public float      s_accel;    // 加速度アライメント
     }
+
+    // [System.Serializable]
+    // public struct P_currentSignal
+    // {
+    //     public int      bottleID;
+    //     public Vector3    position;
+    // }
 }

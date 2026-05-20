@@ -59,6 +59,8 @@ public class OperationController : MonoBehaviour
         // rosConnector.GetComponent<RosSharp.RosBridgeClient.ZRotationPublisher>().enabled = true;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.Phase_name_Subscriber>().enabled = true;
         rosConnector.GetComponent<BottleStatePublisher>().enabled = true;
+        rosConnector.GetComponent<P_cerrentPublisher>().enabled = true;
+        rosConnector.GetComponent<PlaceCommandPublisher>().enabled = true;
 
         
 

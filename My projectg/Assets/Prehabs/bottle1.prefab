@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -7542038300002869051}
   - component: {fileID: -4405595048168629000}
   - component: {fileID: 1068656408643193716}
+  - component: {fileID: 4690756006604527433}
+  - component: {fileID: -4270638127025069213}
   m_Layer: 0
   m_Name: bottle1
   m_TagString: bottle
@@ -174,7 +176,19 @@ MonoBehaviour:
       m_Calls: []
   m_LastSelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -4270638127025069213}
+        m_TargetAssemblyTypeName: P_currentAndStringPub, Assembly-CSharp
+        m_MethodName: P_currentSignals
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -471,8 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <IsInside>k__BackingField: 0
-  ObjectHit: {fileID: 0}
   BottleHitMapper: {fileID: 0}
+  irmPublisher: {fileID: 0}
   PickColor: {r: 4.4477496, g: 3.562321, b: 0.465733, a: 0}
   OtherColor: {r: 0.21568628, g: 0.21568628, b: 0.21568628, a: 0}
   OutSideSerectColor: {r: 1.1173182, g: 6.4669023, b: 5.704423, a: 0}
@@ -481,4 +495,35 @@ MonoBehaviour:
   targetUIPrefab_outside: {fileID: 8514141613584619500, guid: c5f26304378c8fa47ba7fdb6e5c0e167, type: 3}
   isHitted: 0
   otherAlpha: 0.8
-  BorrowOrigin: {fileID: 0}
+  Origin: {fileID: 0}
+--- !u!114 &4690756006604527433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5942948548269898092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 372f7f71861c54247b1bbeef4ac8eb56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: -1
+--- !u!114 &-4270638127025069213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5942948548269898092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074d4c2c116e2764495355db70eb5709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottleAreaChecker: {fileID: 0}
+  origin_base: {fileID: 0}
+  currentId: -1
+  currentBottle: {fileID: 0}
+  currentWorldPosition: {x: 0, y: 0, z: 0}
+  currentYoubotPosition: []
