@@ -26,10 +26,25 @@ public class TrackblesManager : MonoBehaviour
 
 
     [Header("Spawn Settings")]
-    [SerializeField] private int waitFramesBeforeSpawn = 10;
+    [SerializeField] private int waitFramesBeforeSpawn = 2;
 
     private readonly Dictionary<MRUKTrackable, QRTracker> spawnedTrackers =
         new Dictionary<MRUKTrackable, QRTracker>();
+
+    private readonly HashSet<MRUKTrackable> spawningTrackables =
+    new HashSet<MRUKTrackable>();
+
+    [SerializeField] private float anchorUpdatePositionThreshold = 0.01f; // 1cm
+    [SerializeField] private float anchorUpdateAngleThreshold = 2.0f;     // 2度
+
+    private readonly Dictionary<string, Vector3> lastSubAnchorPositions =
+        new Dictionary<string, Vector3>();
+
+    private readonly Dictionary<string, Quaternion> lastSubAnchorRotations =
+        new Dictionary<string, Quaternion>();
+
+
+
 
     private string CleanQRId(string raw)
     {
@@ -88,36 +103,49 @@ public class TrackblesManager : MonoBehaviour
             return;
         }
 
+        if (spawningTrackables.Contains(trackable))
+        {
+            Debug.Log("This trackable is already waiting for spawn");
+            return;
+        }
+
+        spawningTrackables.Add(trackable);
         StartCoroutine(SpawnAfterTrackableReady(trackable, rawId));
     }
 
-   private IEnumerator SpawnAfterTrackableReady(MRUKTrackable trackable, string rawId)
-{
-    for (int i = 0; i < waitFramesBeforeSpawn; i++)
+    private IEnumerator SpawnAfterTrackableReady(MRUKTrackable trackable, string rawId)
     {
-        yield return null;
+        for (int i = 0; i < waitFramesBeforeSpawn; i++)
+        {
+            yield return null;
+        }
+
+        if (trackable == null)
+        {
+            spawningTrackables.Remove(trackable);
+            yield break;
+        }
+
+        if (spawnedTrackers.ContainsKey(trackable))
+        {
+            Debug.Log("Spawn skipped: already spawned after waiting");
+            spawningTrackables.Remove(trackable);
+            yield break;
+        }
+
+        if (rawId == "Main")
+        {
+            SpawnMain(trackable, rawId);
+        }
+        else if (IsSubId(rawId))
+        {
+            SpawnSub(trackable, rawId);
+        }
+
+        spawningTrackables.Remove(trackable);
     }
 
-    if (trackable == null)
-        yield break;
-
-    if (spawnedTrackers.ContainsKey(trackable))
-    {
-        Debug.Log("Spawn skipped: already spawned after waiting");
-        yield break;
-    }
-
-    if (rawId == "Main")
-    {
-        SpawnMain(trackable, rawId);
-    }
-    else if (IsSubId(rawId))
-    {
-        SpawnSub(trackable, rawId);
-    }
-}
-
-private bool IsSubId(string rawId)
+    private bool IsSubId(string rawId)
 {
     return !string.IsNullOrEmpty(rawId) && rawId.StartsWith("Sub");
 }
@@ -190,13 +218,16 @@ private bool IsSubId(string rawId)
         subTrackers[rawId] = qrTracker;
 
         Vector3 anchorPos = GetQRWorldPosition(trackable);
+        Quaternion anchorRot = trackable.transform.rotation;
 
         SharedAnchorManager.Instance.ForceSetSubAnchor(
             rawId,
             anchorPos,
-            trackable.transform.rotation
+            anchorRot
         );
 
+        lastSubAnchorPositions[rawId] = anchorPos;
+        lastSubAnchorRotations[rawId] = anchorRot;
         Debug.Log($"{rawId} QR code detected and spawned");
     }
 
@@ -322,12 +353,36 @@ private bool IsSubId(string rawId)
             UpdateObjectPoseOnQRCode(trackable, tracker.gameObject);
 
             Vector3 anchorPos = GetQRWorldPosition(trackable);
+            Quaternion anchorRot = trackable.transform.rotation;
 
-            SharedAnchorManager.Instance.ForceSetSubAnchor(
-                subId,
-                anchorPos,
-                trackable.transform.rotation
-            );
+            bool shouldUpdateAnchor = false;
+
+            if (!lastSubAnchorPositions.ContainsKey(subId))
+            {
+                shouldUpdateAnchor = true;
+            }
+            else
+            {
+                float posDiff = Vector3.Distance(lastSubAnchorPositions[subId], anchorPos);
+                float angleDiff = Quaternion.Angle(lastSubAnchorRotations[subId], anchorRot);
+
+                if (posDiff > anchorUpdatePositionThreshold || angleDiff > anchorUpdateAngleThreshold)
+                {
+                    shouldUpdateAnchor = true;
+                }
+            }
+
+            if (shouldUpdateAnchor)
+            {
+                SharedAnchorManager.Instance.ForceSetSubAnchor(
+                    subId,
+                    anchorPos,
+                    anchorRot
+                );
+
+                lastSubAnchorPositions[subId] = anchorPos;
+                lastSubAnchorRotations[subId] = anchorRot;
+            }
         }
     }
 
@@ -351,7 +406,10 @@ private bool IsSubId(string rawId)
             return;
 
         if (!spawnedTrackers.TryGetValue(trackable, out QRTracker tracker))
+        {
+            spawningTrackables.Remove(trackable);
             return;
+        }
 
         if (tracker != null)
         {
@@ -361,10 +419,14 @@ private bool IsSubId(string rawId)
             {
                 subTrackables.Remove(tracker.QRid);
                 subTrackers.Remove(tracker.QRid);
+
+                lastSubAnchorPositions.Remove(tracker.QRid);
+                lastSubAnchorRotations.Remove(tracker.QRid);
             }
         }
 
         spawnedTrackers.Remove(trackable);
+        spawningTrackables.Remove(trackable);
     }
 
 

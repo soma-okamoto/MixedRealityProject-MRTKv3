@@ -31,9 +31,9 @@ public class P_cerrentPublisher : UnityPublisher<Float32MultiArray>
 
         Publish(message);
 
-        Debug.Log(
-            $"[P_currentPublisher] Publish: ID={id}, " +
-            $"pos=({message.data[1]}, {message.data[2]}, {message.data[3]})"
-        );
+        //Debug.Log(
+        //    $"[P_currentPublisher] Publish: ID={id}, " +
+        //    $"pos=({message.data[1]}, {message.data[2]}, {message.data[3]})"
+        //);
     }
 }
