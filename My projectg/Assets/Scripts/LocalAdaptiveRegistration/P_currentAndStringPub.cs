@@ -7,6 +7,8 @@ public class P_currentAndStringPub : MonoBehaviour
     public BottleAreaChecker bottleAreaChecker;
     public P_cerrentPublisher p_currentPublisher;
     public PlaceCommandPublisher placeCommandPublisher;
+    public Hold_commandPublisher holdCommandPublisher;
+    public GameObject rosConnector;
 
 
     [Tooltip("座標変換の基準になるBase")]
@@ -29,6 +31,9 @@ public class P_currentAndStringPub : MonoBehaviour
         if (placeCommandPublisher == null)
             placeCommandPublisher = FindObjectOfType<PlaceCommandPublisher>();
 
+        if (holdCommandPublisher == null)
+            holdCommandPublisher = FindObjectOfType<Hold_commandPublisher>();
+
         if (origin_base == null)
         {
             origin_base = GameObject.Find("origin_base");
@@ -37,6 +42,19 @@ public class P_currentAndStringPub : MonoBehaviour
                 Debug.LogError($" Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");
             }
         }
+        if (rosConnector == null)
+        {
+            rosConnector = GameObject.Find("RosConnector");
+            if (rosConnector == null)
+            {
+                Debug.LogError($" Hierarchy 上に名前 \"RosConnector\" の GameObject が見つかりません。");
+            }
+        }
+    }
+
+    public void HoldStart()
+    {
+        rosConnector.GetComponent<Hold_commandPublisher>().enabled = true;
     }
 
 
@@ -84,6 +102,8 @@ public class P_currentAndStringPub : MonoBehaviour
                 {
                     Debug.LogWarning("[P_current] PlaceCommandPublisher が見つかりません");
                 }
+
+                rosConnector.GetComponent<Hold_commandPublisher>().enabled = false;
 
                 break;
             }
