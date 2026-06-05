@@ -20,6 +20,7 @@ public class StopButton : MonoBehaviour
         rosConnector.GetComponent<P_cerrentPublisher>().enabled = false;
         rosConnector.GetComponent<PlaceCommandPublisher>().enabled = false;
         rosConnector.GetComponent<BottleStatePublisher>().enabled = true;
+        rosConnector.GetComponent<Hold_commandPublisher>().enabled = false;
 
     }
 

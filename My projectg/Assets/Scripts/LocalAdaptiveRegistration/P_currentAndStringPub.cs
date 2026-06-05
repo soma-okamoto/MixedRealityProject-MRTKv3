@@ -1,5 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using MixedReality.Toolkit.Input;
+using MixedReality.Toolkit.UX;
+using Microsoft.MixedReality.OpenXR;
+using MixedReality.Toolkit.SpatialManipulation;
+using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class P_currentAndStringPub : MonoBehaviour
 {
@@ -19,6 +25,8 @@ public class P_currentAndStringPub : MonoBehaviour
     public GameObject currentBottle;
     public Vector3 currentWorldPosition;
     public float[] currentYoubotPosition;
+
+    private ObjectManipulator manipulator;
 
         void Awake()
     {
@@ -50,12 +58,53 @@ public class P_currentAndStringPub : MonoBehaviour
                 Debug.LogError($" Hierarchy 上に名前 \"RosConnector\" の GameObject が見つかりません。");
             }
         }
+
+        manipulator = GetComponent<ObjectManipulator>();
+
+        if (manipulator != null)
+        {
+            manipulator.firstSelectEntered.AddListener(OnGrabStarted);
+            manipulator.lastSelectExited.AddListener(OnGrabEnded);
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] ObjectManipulator が見つかりません");
+        }
+        
     }
 
-    public void HoldStart()
+    private void OnGrabStarted(SelectEnterEventArgs args)
     {
-        rosConnector.GetComponent<Hold_commandPublisher>().enabled = true;
+        // Debug.Log("[P_current] Grab Started");
+
+        if (holdCommandPublisher != null)
+        {
+            holdCommandPublisher.HoldStart();
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] HoldCommandPublisher が見つかりません");
+        }
     }
+
+    private void OnGrabEnded(SelectExitEventArgs args)
+    {
+        // Debug.Log("[P_current] Grab Ended");
+
+        if (holdCommandPublisher != null)
+        {
+            holdCommandPublisher.HoldStop();
+        }
+    }
+        private void OnDestroy()
+    {
+        if (manipulator != null)
+        {
+            manipulator.firstSelectEntered.RemoveListener(OnGrabStarted);
+            manipulator.lastSelectExited.RemoveListener(OnGrabEnded);
+        }
+    }
+
 
 
     public void P_currentSignals()
@@ -84,7 +133,7 @@ public class P_currentAndStringPub : MonoBehaviour
                     $"YouBot=({currentYoubotPosition[0]}, {currentYoubotPosition[1]}, {currentYoubotPosition[2]})"
                 );
 
-                if (p_currentPublisher != null)
+                if (p_currentPublisher != null && p_currentPublisher.isActiveAndEnabled)
                 {
                     p_currentPublisher.PublishCurrent(currentId, currentYoubotPosition);
 
@@ -94,7 +143,7 @@ public class P_currentAndStringPub : MonoBehaviour
                     Debug.LogWarning("[P_current] P_currentPublisher が見つかりません");
                 }
 
-                if (placeCommandPublisher != null)
+                if (placeCommandPublisher != null && placeCommandPublisher.isActiveAndEnabled)
                 {
                     placeCommandPublisher.PublishPlace();
                 }
@@ -103,7 +152,12 @@ public class P_currentAndStringPub : MonoBehaviour
                     Debug.LogWarning("[P_current] PlaceCommandPublisher が見つかりません");
                 }
 
-                rosConnector.GetComponent<Hold_commandPublisher>().enabled = false;
+                // rosConnector.GetComponent<Hold_commandPublisher>().enabled = false;
+                // PlaceしたらHold終了
+                if (holdCommandPublisher != null)
+                {
+                    holdCommandPublisher.HoldStop();
+                }
 
                 break;
             }

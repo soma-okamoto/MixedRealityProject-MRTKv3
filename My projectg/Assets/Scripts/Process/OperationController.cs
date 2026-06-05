@@ -61,6 +61,7 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<BottleStatePublisher>().enabled = true;
         rosConnector.GetComponent<P_cerrentPublisher>().enabled = true;
         rosConnector.GetComponent<PlaceCommandPublisher>().enabled = true;
+        rosConnector.GetComponent<Hold_commandPublisher>().enabled = true;
 
         
 

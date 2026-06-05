@@ -20,6 +20,13 @@ using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 
         public void PublishPlace()
         {
+            if (!isActiveAndEnabled)
+            {
+                Debug.Log("[PlaceCommandPublisher] disabled のため Publish しません");
+                return;
+            }
+
+
             if (message == null)
             {
                 message = new std_msgs.String();

@@ -18,6 +18,12 @@ public class P_cerrentPublisher : UnityPublisher<Float32MultiArray>
 
     public void PublishCurrent(int id, float[] youbotPosition)
     {
+        if (!isActiveAndEnabled)
+        {
+            Debug.Log("[P_currentPublisher] disabled のため Publish しません");
+            return;
+        }
+
         if (youbotPosition == null || youbotPosition.Length < 3)
         {
             Debug.LogWarning("[P_currentPublisher] youbotPosition が不正です");
@@ -35,5 +41,8 @@ public class P_cerrentPublisher : UnityPublisher<Float32MultiArray>
         //    $"[P_currentPublisher] Publish: ID={id}, " +
         //    $"pos=({message.data[1]}, {message.data[2]}, {message.data[3]})"
         //);
+        Debug.Log("P_currentPublisher: Publish");
+
+
     }
 }
