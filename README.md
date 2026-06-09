@@ -18,11 +18,7 @@ Meijo University, Sekiyama Laboratory
 
 ---
 ## Graphical Abstract
-<<<<<<< HEAD
-An overview of **MASK: Mixed reality Adaptive Spatial and Kinematic support**,  
-=======
 An overview of **MASK (Mixed reality Adaptive Spatial and Kinematic support)**,  
->>>>>>> a173bc9005e0a273eb0b49b042b37878922b9640
 which integrates **BaseMove**, **Aim Assist**, and **Spatial Visualization** modules into a unified MR–ROS framework.
 
 ![Visual Abstract](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/NotFX/Images/GA.png?raw=true)
@@ -79,6 +75,3 @@ https://github.com/soma-okamoto/Docker_Youbot_project_gradient.git
 https://github.com/soma-okamoto/Docker_ReachabilityMap.git
 
 https://github.com/soma-okamoto/Docker_youbot_sim.git
-
-
-
