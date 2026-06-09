@@ -163,7 +163,7 @@ namespace Appletea.Dev.PointCloud
                 string filePath = PlyLib.ExportToPly(directoryPath, points);
                 Debug.Log("File Path:" + filePath);
                 Debug.Log("PLY Output Done!");
-                plyPublisher.PublishPointCloudAsPly(points);
+                plyPublisher.PublishPointCloud(points);
                 Debug.Log("File Upload Done!");
             
         }

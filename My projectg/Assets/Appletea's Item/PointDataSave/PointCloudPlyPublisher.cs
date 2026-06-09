@@ -7,16 +7,16 @@ using std_msgs = RosSharp.RosBridgeClient.MessageTypes.Std;
 
 namespace RosSharp.RosBridgeClient
 {
-    public class PointCloudPlyPublisher : UnityPublisher<std_msgs.String>
+    public class PointCloudPlyPublisher : UnityPublisher<std_msgs.Float32MultiArray>
     {
 
         protected override void Start()
         {
-     
+
             base.Start();
         }
 
-        public void PublishPointCloudAsPly(List<Vector3> points)
+        public void PublishPointCloud(List<Vector3> points)
         {
             if (points == null || points.Count == 0)
             {
@@ -24,36 +24,28 @@ namespace RosSharp.RosBridgeClient
                 return;
             }
 
-            string plyText = ConvertPointsToPly(points);
+            float[] data = new float[points.Count * 3];
 
-            std_msgs.String message = new std_msgs.String
+            for (int i = 0; i < points.Count; i++)
             {
-                data = plyText
+                Vector3 p = points[i];
+
+                int index = i * 3;
+
+                // まずはUnity座標をそのまま送る
+                data[index + 0] = p.x;
+                data[index + 1] = p.y;
+                data[index + 2] = p.z;
+            }
+
+            std_msgs.Float32MultiArray message = new std_msgs.Float32MultiArray
+            {
+                data = data
             };
 
             Publish(message);
 
-            Debug.Log($"Published PLY point cloud. points={points.Count}, chars={plyText.Length}");
-        }
-
-        private string ConvertPointsToPly(List<Vector3> points)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("ply");
-            sb.AppendLine("format ascii 1.0");
-            sb.AppendLine($"element vertex {points.Count}");
-            sb.AppendLine("property float x");
-            sb.AppendLine("property float y");
-            sb.AppendLine("property float z");
-            sb.AppendLine("end_header");
-
-            foreach (Vector3 p in points)
-            {
-                sb.AppendLine($"{p.x} {p.y} {p.z}");
-            }
-
-            return sb.ToString();
+            Debug.Log($"Published point cloud array. points={points.Count}, float_count={data.Length}");
         }
     }
 }

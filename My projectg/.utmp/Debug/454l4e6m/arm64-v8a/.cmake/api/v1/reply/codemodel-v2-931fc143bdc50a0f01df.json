@@ -95,14 +95,14 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "game::@d02bb112ea9f9c2ed29f",
-					"jsonFile" : "target-game-Debug-9daf3556a65aeee62f25.json",
+					"jsonFile" : "target-game-Debug-0c4190780c5b360c9023.json",
 					"name" : "game",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "swappywrapper::@7e25bd1f32ce224db4e9",
-					"jsonFile" : "target-swappywrapper-Debug-b7e0640f75e27c403f44.json",
+					"jsonFile" : "target-swappywrapper-Debug-24d5b1fa281d152d8535.json",
 					"name" : "swappywrapper",
 					"projectIndex" : 2
 				}
@@ -113,7 +113,7 @@
 	"paths" : 
 	{
 		"build" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/.utmp/Debug/454l4e6m/arm64-v8a",
-		"source" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp"
+		"source" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 	},
 	"version" : 
 	{

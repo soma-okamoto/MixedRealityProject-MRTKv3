@@ -15349,7 +15349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Topic: /multi_command
   TimeStep: 0
-  EnsureThreadSafety: 0
+  EnsureThreadSafety: 1
   messageData: []
 --- !u!114 &555286865
 MonoBehaviour:
@@ -15516,7 +15516,7 @@ MonoBehaviour:
   SecondsTimeout: 10
   Serializer: 1
   protocol: 1
-  RosBridgeServerUrl: ws://192.168.11.7:9090
+  RosBridgeServerUrl: ws://192.168.44.61:9090
 --- !u!4 &555286875
 Transform:
   m_ObjectHideFlags: 0

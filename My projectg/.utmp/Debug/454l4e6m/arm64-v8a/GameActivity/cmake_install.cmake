@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp/GameActivity
+# Install script for directory: C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
