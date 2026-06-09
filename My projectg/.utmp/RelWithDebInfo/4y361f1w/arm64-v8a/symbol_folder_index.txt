@@ -1,0 +1,1 @@
+C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\4y361f1w\obj\arm64-v8a

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using MixedReality.Toolkit.Input;
 using MixedReality.Toolkit.UX;
-using Microsoft.MixedReality.OpenXR;
+// using Microsoft.MixedReality.OpenXR;
 using MixedReality.Toolkit.SpatialManipulation;
 using UnityEngine.XR.Interaction.Toolkit;
 

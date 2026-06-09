@@ -1,85 +1,88 @@
-
 using UnityEngine;
+// 新しいInput Systemを使うために追加
+using UnityEngine.InputSystem; 
 
 /// <summary>
-/// Game�r���[�ɂ�Scene�r���[�̂悤�ȃJ�����̓������}�E�X����ɂ���Ď�������
+/// GameビューにSceneビューのようなカメラの操作をマウス・キーボードにより実装する
 /// </summary>
-
 public class movecamera : MonoBehaviour
 {
-
-
-
     [SerializeField, Range(0.1f, 10f)]
     private float rotateSpeed = 0.3f;
     public float speed = 3.0f;
 
-    private Vector3 preMousePos;
+    private Vector2 preMousePos;
 
     private void Update()
     {
+        // KeyboardやMouseが接続されていない（null）場合は処理を抜ける
+        if (Keyboard.current == null || Mouse.current == null) return;
+
         MouseUpdate();
         MoveUpdate();
-        return;
     }
+
     private void MoveUpdate()
     {
+        var keyboard = Keyboard.current;
 
-        if (Input.GetKey("w"))
+        if (keyboard.wKey.isPressed)
         {
             transform.position += transform.forward * speed * Time.deltaTime;
         }
-        if (Input.GetKey("s"))
+        if (keyboard.sKey.isPressed)
         {
             transform.position -= transform.forward * speed * Time.deltaTime;
         }
-        if (Input.GetKey("a"))
+        if (keyboard.aKey.isPressed)
         {
             transform.position -= transform.right * speed * Time.deltaTime;
         }
-        if (Input.GetKey("d"))
+        if (keyboard.dKey.isPressed)
         {
             transform.position += transform.right * speed * Time.deltaTime;
         }
 
-        if (Input.GetKey("q"))
+        if (keyboard.qKey.isPressed)
         {
             transform.position += transform.up * speed * Time.deltaTime;
         }
-        if (Input.GetKey("e"))
+        if (keyboard.eKey.isPressed)
         {
             transform.position -= transform.up * speed * Time.deltaTime;
         }
-
     }
-
 
     private void MouseUpdate()
     {
-        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
-        //if (scrollWheel != 0.0f)
-        //    MouseWheel(scrollWheel);
+        var mouse = Mouse.current;
 
-        if (Input.GetMouseButtonDown(0) ||
-           Input.GetMouseButtonDown(1) ||
-           Input.GetMouseButtonDown(2))
-            preMousePos = Input.mousePosition;
+        // スクロールホイールの値取得（必要に応じてコメントアウトを外して実装）
+        // Vector2 scrollWheel = mouse.scroll.ReadValue();
 
-        MouseDrag(Input.mousePosition);
+        // 左右・中ボタンの「押した瞬間」を取得
+        if (mouse.leftButton.wasPressedThisFrame ||
+            mouse.rightButton.wasPressedThisFrame ||
+            mouse.middleButton.wasPressedThisFrame)
+        {
+            preMousePos = mouse.position.ReadValue();
+        }
+
+        MouseDrag(mouse.position.ReadValue());
     }
 
-
-
-    private void MouseDrag(Vector3 mousePos)
+    private void MouseDrag(Vector2 mousePos)
     {
-        Vector3 diff = mousePos - preMousePos;
+        Vector2 diff = mousePos - preMousePos;
 
-        if (diff.magnitude < Vector3.kEpsilon)
+        if (diff.magnitude < Vector2.kEpsilon)
             return;
 
-
-        if (Input.GetMouseButton(1))
+        // 右クリックが「押されている間」
+        if (Mouse.current.rightButton.isPressed)
+        {
             CameraRotate(new Vector2(-diff.y, diff.x) * rotateSpeed);
+        }
 
         preMousePos = mousePos;
     }
@@ -90,6 +93,3 @@ public class movecamera : MonoBehaviour
         transform.RotateAround(transform.position, Vector3.up, angle.y);
     }
 }
-
-
-

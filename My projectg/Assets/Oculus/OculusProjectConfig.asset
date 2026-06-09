@@ -11,11 +11,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05d394ae2a81edd4cbc3c51917e766e3, type: 3}
   m_Name: OculusProjectConfig
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Oculus.VR.Editor::OVRProjectConfig
   targetDeviceTypes: 0400000005000000
   allowOptional3DofHeadTracking: 0
   handTrackingSupport: 1
-  handTrackingFrequency: 1
+  handTrackingFrequency: 0
   handTrackingVersion: 2
   anchorSupport: 1
   sharedAnchorSupport: 0
@@ -33,13 +33,13 @@ MonoBehaviour:
   securityXmlPath: 
   horizonOsSdkEnabled: 0
   minHorizonOsSdkVersion: 68
-  targetHorizonOsSdkVersion: 74
+  targetHorizonOsSdkVersion: 78
   skipUnneededShaders: 0
   enableIL2CPPLTO: 0
   removeGradleManifest: 1
   focusAware: 1
   requiresSystemKeyboard: 0
-  experimentalFeaturesEnabled: 1
+  experimentalFeaturesEnabled: 0
   insightPassthroughEnabled: 0
   _insightPassthroughSupport: 1
   _processorFavor: 0

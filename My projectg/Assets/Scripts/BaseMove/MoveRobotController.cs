@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using MixedReality.Toolkit.SpatialManipulation;
 using MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.OpenXR;
+// using Microsoft.MixedReality.OpenXR;
 using static MixedReality.Toolkit.SpatialManipulation.ObjectManipulator;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Runtime.Serialization;
@@ -19,7 +19,7 @@ public class MoveRobotController : MonoBehaviour
 
     private bool isManipulating = false;
 
-    [SerializeField] private GameObject WayPointObject; // ¶¬‚·‚éWaypointƒIƒuƒWƒFƒNƒg
+    [SerializeField] private GameObject WayPointObject; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Waypointï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
     private float generationDistance = 0.5f;
 
     private Vector3 lastPosition;
@@ -28,7 +28,7 @@ public class MoveRobotController : MonoBehaviour
 
     private List<GameObject> generatedObjects = new List<GameObject>();
 
-    [SerializeField] private GameObject lineRendererPrefab; // LineRenderer‚ÌPrefab
+    [SerializeField] private GameObject lineRendererPrefab; // LineRendererï¿½ï¿½Prefab
     private LineRenderer lineRenderer;
     private LineRenderer lineRenderer_Origin;
 
@@ -58,13 +58,13 @@ public class MoveRobotController : MonoBehaviour
         currentPosition = YoubotObject.transform.position;
         lastPosition = currentPosition;
 
-        // LineRenderer‚ğ‰Šú‰»
+        // LineRendererï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         GameObject lineRendererObj = Instantiate(lineRendererPrefab);
         lineRenderer = lineRendererObj.GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
         //lineRenderer.SetPosition(0, currentPosition);
 
-        // LineRenderer‚ğ‰Šú‰»
+        // LineRendererï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         GameObject lineRendererObj_Origin = Instantiate(lineRendererPrefab);
         lineRenderer_Origin = lineRendererObj_Origin.GetComponent<LineRenderer>();
         lineRenderer_Origin.positionCount = 0;
@@ -76,7 +76,7 @@ public class MoveRobotController : MonoBehaviour
         GenerateObject();
       
         YoubotObject.SetActive(true);
-        // q‚Ì youbot ‚ğŒã‚©‚ç–¾¦“I‚ÉƒAƒNƒeƒBƒu‰»i‚à‚µÅ‰”ñƒAƒNƒeƒBƒu‚É‚µ‚Ä‚½ê‡j
+        // ï¿½qï¿½ï¿½ youbot ï¿½ï¿½ï¿½ã‚©ï¿½ç–¾ï¿½ï¿½ï¿½Iï¿½ÉƒAï¿½Nï¿½eï¿½Bï¿½uï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½Aï¿½Nï¿½eï¿½Bï¿½uï¿½É‚ï¿½ï¿½Ä‚ï¿½ï¿½ê‡ï¿½j
         Transform youbot = YoubotObject.transform.Find("youbot");
         if (youbot != null)
         {
@@ -143,8 +143,8 @@ public class MoveRobotController : MonoBehaviour
     {
 
         Vector3 spawnPosition = YoubotObject.transform.position;
-        Quaternion spawnRotation = YoubotObject.transform.rotation; // ‰Šú‚ÍŒ»İ‚ÌŒü‚«
-                                                                    // WayPoint‚ğ¶¬
+        Quaternion spawnRotation = YoubotObject.transform.rotation; // ï¿½ï¿½ï¿½ï¿½ï¿½ÍŒï¿½ï¿½İ‚ÌŒï¿½ï¿½ï¿½
+                                                                    // WayPointï¿½ğ¶ï¿½
         GameObject newWayPoint = Instantiate(WayPointObject);
         newWayPoint.transform.position = spawnPosition;
         newWayPoint.transform.parent = WayPoints.transform;
@@ -178,7 +178,7 @@ public class MoveRobotController : MonoBehaviour
 
         generatedObjects.Add(newWayPoint);
         generatedWayPointLists_Origin.Add(newWayPoint_Origin);
-        // LineRenderer‚Éƒ|ƒCƒ“ƒg‚ğ’Ç‰Á
+        // LineRendererï¿½Éƒ|ï¿½Cï¿½ï¿½ï¿½gï¿½ï¿½Ç‰ï¿½
         AddLinePoint(YoubotObject.transform.position, newWayPoint_Origin.transform.position);
         newWayPoint.GetComponent<ObjectManipulator>().selectExited.AddListener(EditRouteObject);
         newWayPoint_Origin.GetComponent<ObjectManipulator>().selectExited.AddListener(EditRouteObject);

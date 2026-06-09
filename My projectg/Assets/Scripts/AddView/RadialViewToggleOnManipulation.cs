@@ -4,13 +4,13 @@ using MixedReality.Toolkit.SpatialManipulation;
 
 public class RadialViewToggleOnManipulation : MonoBehaviour
 {
-    public XRBaseInteractable interactable;
+    public UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable interactable;
     public RadialView radialView;
 
     private void Awake()
     {
         if (interactable == null)
-            interactable = GetComponent<XRBaseInteractable>();
+            interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
 
         if (interactable != null)
         {

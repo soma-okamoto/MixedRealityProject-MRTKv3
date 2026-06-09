@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem; // ← 新しいInput Systemを使うために追加
 
 public class DebugButton : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class DebugButton : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        // Keyboardが接続されているか確認し、Gキーが「押された瞬間」を検知
+        if (Keyboard.current != null && Keyboard.current.gKey.wasPressedThisFrame)
         {
             if (qrTracker == null)
             {

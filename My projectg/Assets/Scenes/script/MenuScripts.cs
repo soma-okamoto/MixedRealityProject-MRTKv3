@@ -23,7 +23,7 @@ public class MenuScripts : MonoBehaviour
         for (int i = 0; i < ResetObjects.Length; i++)
         {
             ResetObjects[i].useGravity = false;
-            ResetObjects[i].velocity = Vector3.zero;
+            ResetObjects[i].linearVelocity = Vector3.zero;
             ResetObjects[i].position
                 = Camera.main.transform.position + Camera.main.transform.rotation * _initialPositions[i];
         }

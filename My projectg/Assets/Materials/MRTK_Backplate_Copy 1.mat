@@ -135,3 +135,4 @@ Material:
     - _Top_Left_: {r: 1, g: 0.690196, b: 0.976471, a: 0.5882353}
     - _Top_Right_: {r: 1, g: 0, b: 0.35165358, a: 0.5254902}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

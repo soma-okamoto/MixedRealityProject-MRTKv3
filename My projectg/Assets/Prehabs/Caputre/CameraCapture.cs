@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using MixedReality.Toolkit.SpatialManipulation;
 using MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.OpenXR;
+// using Microsoft.MixedReality.OpenXR;
 using static MixedReality.Toolkit.SpatialManipulation.ObjectManipulator;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Runtime.Serialization;
@@ -14,8 +14,8 @@ using UnityEngine;
 
 public class CameraCapture : MonoBehaviour
 {
-    public ImagePublisher3 imagePublisher3; // ImagePublisher3 ƒXƒNƒŠƒvƒg‚ğQÆ
-    public Renderer displayRenderer; // ‰f‘œ‚ğ•\¦‚·‚éƒIƒuƒWƒFƒNƒg‚Ì Renderer
+    public ImagePublisher3 imagePublisher3; // ImagePublisher3 ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½ï¿½Qï¿½ï¿½
+    public Renderer displayRenderer; // ï¿½fï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ Renderer
 
     private RenderTexture renderTexture;
     private Texture2D capturedTexture;
@@ -23,11 +23,11 @@ public class CameraCapture : MonoBehaviour
 
     void Start()
     {
-        // RenderTexture ‚Ì‰Šú‰»
+        // RenderTexture ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
         renderTexture = new RenderTexture(760, 540, 24, RenderTextureFormat.ARGB32);
         renderTexture.Create();
 
-        // Texture2D ‚Ì‰Šú‰»iƒfƒtƒHƒ‹ƒgƒTƒCƒY‚ğİ’èj
+        // Texture2D ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Tï¿½Cï¿½Yï¿½ï¿½İ’ï¿½j
         capturedTexture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGBA32, false);
 
         StartCoroutine(CaptureImageAndSetTexture());
@@ -35,14 +35,14 @@ public class CameraCapture : MonoBehaviour
 
     private IEnumerator CaptureImageAndSetTexture()
     {
-        var camera = Camera.main;  // © C³‚±‚±I
+        var camera = Camera.main;  // ï¿½ï¿½ ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½I
 
 
 
 
         while (true)
         {
-            yield return new WaitForSeconds(1 / 30f); // 30FPS‚ÅƒLƒƒƒvƒ`ƒƒ
+            yield return new WaitForSeconds(1 / 30f); // 30FPSï¿½ÅƒLï¿½ï¿½ï¿½vï¿½`ï¿½ï¿½
 
             if (!isCapturing)
             {
@@ -54,24 +54,24 @@ public class CameraCapture : MonoBehaviour
     {
         isCapturing = true;
 
-        // RenderTexture ‚Ö‚Ì•`‰æ
+        // RenderTexture ï¿½Ö‚Ì•`ï¿½ï¿½
         camera.targetTexture = renderTexture;
         camera.Render();
         camera.targetTexture = null;
 
-        // GPU ‚©‚ç CPU ‚Ö‚Ìƒf[ƒ^“]‘—
+        // GPU ï¿½ï¿½ï¿½ï¿½ CPU ï¿½Ö‚Ìƒfï¿½[ï¿½^ï¿½]ï¿½ï¿½
         RenderTexture.active = renderTexture;
         capturedTexture.ReadPixels(new Rect(0, 0, renderTexture.width, renderTexture.height), 0, 0);
         capturedTexture.Apply();
         RenderTexture.active = null;
 
-        // ‰æ‘œƒf[ƒ^‚ğ ImagePublisher3 ‚Éİ’è
+        // ï¿½æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½ ImagePublisher3 ï¿½Éİ’ï¿½
         if (imagePublisher3 != null)
         {
             imagePublisher3.texture = capturedTexture;
         }
 
-        // Renderer ‚ÉƒeƒNƒXƒ`ƒƒ‚ğ•\¦
+        // Renderer ï¿½Éƒeï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½
         if (displayRenderer != null)
         {
             displayRenderer.material.mainTexture = capturedTexture;
@@ -79,7 +79,7 @@ public class CameraCapture : MonoBehaviour
 
         isCapturing = false;
 
-        // ƒtƒŒ[ƒ€ƒŒ[ƒg’²®‚Ì‚½‚ß‚ÉƒXƒŠ[ƒv‚ğ’Ç‰Á
+        // ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß‚ÉƒXï¿½ï¿½ï¿½[ï¿½vï¿½ï¿½Ç‰ï¿½
         yield return new WaitForSeconds(1 / 30f);
     }
 
