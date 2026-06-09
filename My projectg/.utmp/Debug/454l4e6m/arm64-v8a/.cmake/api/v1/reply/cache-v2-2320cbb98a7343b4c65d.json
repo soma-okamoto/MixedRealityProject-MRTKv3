@@ -739,7 +739,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
+			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -775,7 +775,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\soma0\\Unity\\QR2\\MixedRealityProject-MRTKv3\\My projectg\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\454l4e6m\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\soma0\\Unity\\QR2\\MixedRealityProject-MRTKv3\\My projectg\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.MASK\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\454l4e6m\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1047,7 +1047,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\soma0\\Unity\\QR2\\MixedRealityProject-MRTKv3\\My projectg\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\build\\intermediates\\cxx\\Debug\\454l4e6m\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\soma0\\Unity\\QR2\\MixedRealityProject-MRTKv3\\My projectg\\Library\\PramData\\AndroidApplicationController\\Cache\\com.DefaultCompany.MASK\\gradle-project\\unityLibrary\\build\\intermediates\\cxx\\Debug\\454l4e6m\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1343,7 +1343,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
+			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp"
 		},
 		{
 			"name" : "game-activity_DIR",
@@ -1403,7 +1403,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/GameActivity"
+			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp/GameActivity"
 		},
 		{
 			"name" : "games-frame-pacing_DIR",
@@ -1463,7 +1463,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing"
+			"value" : "C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/src/main/cpp/FramePacing"
 		}
 	],
 	"kind" : "cache",

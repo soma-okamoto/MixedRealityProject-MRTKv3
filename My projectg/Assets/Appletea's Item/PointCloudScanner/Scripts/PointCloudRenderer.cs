@@ -8,38 +8,42 @@ namespace Appletea.Dev.PointCloud
         private GameObject pointPrefab;
         private List<GameObject> pointPool;
         private int activePointCount = 0;
+        public Transform pointsParent;
 
-        // ‰Šú‰»ƒƒ\ƒbƒh
+        //
         public void Initialize(GameObject pointPrefab, int initialPoolSize)
         {
             this.pointPrefab = pointPrefab;
+            this.pointsParent = pointsParent;
+            
 
-            // ƒv[ƒ‹‚Ì‰Šú‰»
+            // ï¿½vï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
             pointPool = new List<GameObject>(initialPoolSize);
             for (int i = 0; i < initialPoolSize; i++)
             {
-                GameObject point = Instantiate(pointPrefab);
-                point.SetActive(false); // Å‰‚Í–³Œø‰»
+                // GameObject point = Instantiate(pointPrefab);
+                GameObject point = Instantiate(pointPrefab, pointsParent);
+                point.SetActive(false); // ï¿½Åï¿½ï¿½Í–ï¿½ï¿½ï¿½ï¿½ï¿½
                 pointPool.Add(point);
             }
         }
 
-        // “_ŒQ‚ğXV‚·‚éƒƒ\ƒbƒh
+        // ï¿½_ï¿½Qï¿½ï¿½ï¿½Xï¿½Vï¿½ï¿½ï¿½éƒï¿½\ï¿½bï¿½h
         public void UpdatePointCloud(List<Vector3> points)
         {
-            // •K—v‚É‰‚¶‚Äƒv[ƒ‹‚ğŠg’£
+            // ï¿½Kï¿½vï¿½É‰ï¿½ï¿½ï¿½ï¿½Äƒvï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½
             if (points.Count > pointPool.Count)
             {
                 int additionalPoints = points.Count - pointPool.Count;
                 for (int i = 0; i < additionalPoints; i++)
                 {
-                    GameObject point = Instantiate(pointPrefab);
+                    GameObject point = Instantiate(pointPrefab, pointsParent);
                     point.SetActive(false);
                     pointPool.Add(point);
                 }
             }
 
-            // ƒv[ƒ‹‚©‚ç•K—v‚È”‚¾‚¯ƒIƒuƒWƒFƒNƒg‚ğ—LŒø‰»‚µAˆÊ’u‚ğİ’è
+            // ï¿½vï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½Èï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Ê’uï¿½ï¿½İ’ï¿½
             for (int i = 0; i < points.Count; i++)
             {
                 GameObject point = pointPool[i];
@@ -47,13 +51,13 @@ namespace Appletea.Dev.PointCloud
                 point.SetActive(true);
             }
 
-            // ‘O‰ñ‚ÌXV‚Å—LŒø‰»‚µ‚½ƒIƒuƒWƒFƒNƒg‚ğ‚·‚×‚Ä–³Œø‰»
+            // ï¿½Oï¿½ï¿½ÌXï¿½Vï¿½Å—Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½×‚Ä–ï¿½ï¿½ï¿½ï¿½ï¿½
             for (int i = points.Count; i < activePointCount; i++)
             {
                 pointPool[i].SetActive(false);
             }
 
-            // Œ»İ‚Ì—LŒø‚ÈƒIƒuƒWƒFƒNƒg‚Ì”‚ğXV
+            // ï¿½ï¿½ï¿½İ‚Ì—Lï¿½ï¿½ï¿½ÈƒIï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìï¿½ï¿½ï¿½ï¿½Xï¿½V
             activePointCount = points.Count;
         }
     }

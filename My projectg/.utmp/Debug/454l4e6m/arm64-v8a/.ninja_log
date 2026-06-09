@@ -1,12 +1,12 @@
 # ninja log v5
-74	487	8026377322555092	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	5f99b892246d1d78
-490	785	8026377325245950	C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/454l4e6m/obj/arm64-v8a/libswappywrapper.so	803de8e4a7aca140
-41	1859	8026377336149163	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	3ec9b97b9e3d9670
-25	1871	8026377336270034	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	d8e5f82e09900512
-1	1878	8026377336411314	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	b2136a352d54af8
-63	1912	8026377336737480	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	676d7d54a9242258
-9	1941	8026377337050813	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	510909f23fa87e11
-33	2042	8026377338079318	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	5c532dfefd6c5942
-53	2062	8026377338297676	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	b9ae789347476468
-17	2121	8026377338842370	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	e701421389b51b2b
-2121	2242	8026377340076417	C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/454l4e6m/obj/arm64-v8a/libgame.so	1a403c40f9a29a21
+75	504	8027187693607266	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	10ff541aff8cb6a2
+507	837	8027187696633317	C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/build/intermediates/cxx/Debug/454l4e6m/obj/arm64-v8a/libswappywrapper.so	da2fd32349e99aeb
+9	2277	8027187711276794	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	99ce87d998475d5f
+23	2291	8027187711362665	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	a3a14a32c1c1d827
+41	2294	8027187711317216	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	9b73f5ff57eea1a1
+53	2322	8027187711728796	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	479e0d2bcc5f68d7
+16	2352	8027187712021165	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	8ae3f82438990233
+31	2500	8027187713538959	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	39c1f2342405ebd8
+1	2554	8027187714095129	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	2bee042de811ed84
+64	2723	8027187715790347	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	aed9eff4f298c4ac
+2724	2872	8027187717264080	C:/Users/soma0/Unity/QR2/MixedRealityProject-MRTKv3/My projectg/Library/PramData/AndroidApplicationController/Cache/com.DefaultCompany.MASK/gradle-project/unityLibrary/build/intermediates/cxx/Debug/454l4e6m/obj/arm64-v8a/libgame.so	fe4c0d7dde38df2

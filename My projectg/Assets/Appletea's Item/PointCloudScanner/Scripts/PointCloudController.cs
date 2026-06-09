@@ -5,6 +5,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Android;
 using Meta.XR;
+using RosSharp.RosBridgeClient;
 
 namespace Appletea.Dev.PointCloud
 {
@@ -26,6 +27,12 @@ namespace Appletea.Dev.PointCloud
         private EnvironmentRaycastManager depthManager;
         // [SerializeField]
         // private GoogleDriveLib googledrive;
+
+        [SerializeField]
+        private PointCloudPlyPublisher plyPublisher;
+
+
+        
 
         [Space(10)]
         [Header("Chunk Settings")]
@@ -68,6 +75,9 @@ namespace Appletea.Dev.PointCloud
         private ChunkManager pointsData;
         private string directoryPath;
 
+        private Coroutine scanCoroutine;
+        private bool isInitialized = false;
+
         void Start()
         {
             if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
@@ -78,16 +88,43 @@ namespace Appletea.Dev.PointCloud
             directoryPath = Application.persistentDataPath;
             pointsData = new ChunkManager(chunkSize, maxPointsPerChunk);
             pointCloudRenderer.Initialize(pointPrefab, initialPoolSize);
-            Invoke("StartScanRoutine", 1.0f);
+            // Invoke("StartScanRoutine", 1.0f);
+
+            isInitialized = true;
+            StartScanRoutine();
         }
 
         void StartScanRoutine()
         {
-            StartCoroutine(ScanRoutine());
+            // StartCoroutine(ScanRoutine());
+            if (!isActiveAndEnabled) return;
+            if (!isInitialized) return;
+
+            if (scanCoroutine == null)
+            {
+                scanCoroutine = StartCoroutine(ScanRoutine());
+            }
+        }
+
+        void OnEnable()
+        {
+            StartScanRoutine();
+        }
+
+        void OnDisable()
+        {
+            if (scanCoroutine != null)
+            {
+                StopCoroutine(scanCoroutine);
+                scanCoroutine = null;
+            }
+
+            CancelInvoke();
         }
 
         IEnumerator ScanRoutine()
         {
+             yield return new WaitForSeconds(1.0f);
             while (true)
             {
                 ScanAndStorePointCloud(((int)density), pointsData);
@@ -100,10 +137,25 @@ namespace Appletea.Dev.PointCloud
             }
         }
 
-        void Update()
+        // void Update()
+        // {
+        //     if (OVRInput.GetDown(OVRInput.RawButton.Y))
+        //     {
+        //         Debug.Log("PLY Output Sequence...");
+        //         ScanAndStorePointCloud(((int)density), pointsData);
+        //         List<Vector3> points = pointsData.GetAllPoints();
+        //         Debug.Log("Save Path:" + directoryPath);
+        //         string filePath = PlyLib.ExportToPly(directoryPath, points);
+        //         Debug.Log("File Path:" + filePath);
+        //         Debug.Log("PLY Output Done!");
+        //         // googledrive.UploadFileToDrive(filePath);
+        //         Debug.Log("File Upload Done!");
+        //     }
+        // }
+
+        public void ExportPointCloud()
         {
-            if (OVRInput.GetDown(OVRInput.RawButton.Y))
-            {
+     
                 Debug.Log("PLY Output Sequence...");
                 ScanAndStorePointCloud(((int)density), pointsData);
                 List<Vector3> points = pointsData.GetAllPoints();
@@ -111,9 +163,9 @@ namespace Appletea.Dev.PointCloud
                 string filePath = PlyLib.ExportToPly(directoryPath, points);
                 Debug.Log("File Path:" + filePath);
                 Debug.Log("PLY Output Done!");
-                // googledrive.UploadFileToDrive(filePath);
+                plyPublisher.PublishPointCloudAsPly(points);
                 Debug.Log("File Upload Done!");
-            }
+            
         }
 
         List<Vector2> GenerateViewSpaceCoords(int xSize, int zSize)
