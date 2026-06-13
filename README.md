@@ -47,11 +47,17 @@ It visualizes feasible robot base positions in the MR space, enabling users to i
 ## Aim Assist with ManipulationSystem and UserTarget Detection
 Implements **aim-assist control** that dynamically aligns the robot end-effector with the user’s intended target in real time.  
 The **User Target Detection System** estimates the grasp target based on **hand posture** and **gaze direction**, providing a seamless interaction experience between the user and the robot.
-
+<!-- 
 ![TOI](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/TOI.png?raw=true)
 
-![AimAssist Teleoperation](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像6.png?raw=true)
+![AimAssist Teleoperation](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像6.png?raw=true) -->
+<p align="center">
+  <img src="https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/TOI.png?raw=true" alt="TOI" width="60%">
+</p>
 
+<p align="center">
+  <img src="https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像6.png?raw=true" alt="AimAssist Teleoperation" width="60%">
+</p>
 
 ---
 ## Spatical Anchor
