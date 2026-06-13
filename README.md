@@ -63,9 +63,11 @@ The **User Target Detection System** estimates the grasp target based on **hand 
 ## Spatical Anchor
 TO  calibration Robot base object
 QR code detection 
-![QR](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/QR.png?raw=true)
+<!-- ![QR](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/QR.png?raw=true) -->
 
-
+<p align="center">
+  <img src="https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/QR.png?raw=true" alt="QR" width="100%">
+</p>
 
 ## SpacialVisualizationSystem
 A real-time environment visualization module combining **YOLOv5**, **DeepSORT**, and **Point Cloud rendering**.
@@ -73,10 +75,12 @@ A real-time environment visualization module combining **YOLOv5**, **DeepSORT**,
 This system detects and tracks dynamic objects using YOLOv5 + DeepSORT,  
 while simultaneously reconstructing the surrounding environment as a **3D point cloud** within the MR space.  
 By combining **semantic tracking** and **geometric mapping**, it enables intuitive visualization of both **terrain structures** and **object motion** for enhanced situational awareness.
+<!-- 
+![SpatialVisualization](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像7.png?raw=true) -->
 
-![SpatialVisualization](https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像7.png?raw=true)
-
-
+<p align="center">
+  <img src="https://github.com/soma-okamoto/MetaSDKv74-MRTKv3/blob/main/Images/画像7.png?raw=true" alt="A" width="60%">
+</p>
 
 
 ## ⚡ Quick Start
