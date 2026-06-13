@@ -11,6 +11,18 @@ Meijo University, Sekiyama Laboratory
 - Skills: Unity (C#), ROS, Python, Docker, Git, Meta Quest SDK  
 <!-- - [LinkedIn](#) | [Portfolio Site](#) -->
 
+## Development Environment
+
+This project was developed using the following software versions:
+
+| Software / Package | Version |
+|---|---|
+| Unity Editor | 6000.3.17f1 |
+| OpenXR Plugin | 1.16.1 |
+| Meta MR Utility Kit | 78.0.0 |
+| Meta XR Core SDK | 78.0.0 |
+| Unity OpenXR Meta | 2.1.0 |
+
 
 ## 🎥 Demo Video
 ▶️ [Watch on Google Drive](https://drive.google.com/file/d/1aXLi1SnfnAiOzHu7YugYYONfN54CpGNZ/view?usp=sharing)
