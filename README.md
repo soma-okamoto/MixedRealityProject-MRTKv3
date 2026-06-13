@@ -22,7 +22,7 @@ This project was developed using the following software versions:
 | Meta MR Utility Kit | 78.0.0 |
 | Meta XR Core SDK | 78.0.0 |
 | Unity OpenXR Meta | 2.1.0 |
-
+| MRTK3 | 
 
 ## 🎥 Demo Video
 ▶️ [Watch on Google Drive](https://drive.google.com/file/d/1aXLi1SnfnAiOzHu7YugYYONfN54CpGNZ/view?usp=sharing)
