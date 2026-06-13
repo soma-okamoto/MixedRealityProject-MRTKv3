@@ -1,4 +1,4 @@
-Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+Library: D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --platform=Android
 --minimum-os-version=
 --backend=burst-llvm-19
@@ -10,11 +10,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --target-framework=NetFramework
 --float-mode=Fast
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.InferenceEngine.CPUBackend+RoiAlignJob, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null]], Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+RoiAlignJob&, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--d42ee2bc95898300bd4529a7ed8351c6
@@ -87,11 +86,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --float-precision=Standard
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=UnityEngine.XR.Hands.Gestures.XRHandOrientationUtility, Unity.XR.Hands, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::GetHandAxisDirection(Unity.Mathematics.float3&, Unity.Mathematics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|UnityEngine.XR.Hands.Gestures.XRHandAxis, Unity.XR.Hands, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|Unity.Mathematics.quaternion&, Unity.Mathematics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Single, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--0ef4d50576f0f00022da4f79ae773f01
@@ -204,11 +202,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --float-precision=Standard
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.InferenceEngine.BurstJobsCastTensor+Float16BytesAsFloatJob, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.BurstJobsCastTensor+Float16BytesAsFloatJob&, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--555042b7a513cf04aa2b5b588bbf50d4
@@ -322,11 +319,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --target-framework=NetFramework
 --float-mode=Fast
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobParallelForExtensions+ParallelForJobStruct`1[[Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+GlobalAverageVariancePoolJob&, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--910c73bd53072ad0ad2d61c12396dc96
@@ -340,11 +336,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --float-precision=Standard
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.CPUBackend+ConvJob, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null::CanUseDepthwiseConvKernel(Unity.InferenceEngine.CPUBackend+ConvJob*, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null)--39658a002cb60b47c1eee2ef5f799014
@@ -358,11 +353,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --float-precision=Standard
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.InferenceEngine.IParallelForBatchExtensions+ParallelForBatchJobStruct`1[[Unity.InferenceEngine.CPUBackend+PowIntIntJob, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null]], Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null::Execute(Unity.InferenceEngine.CPUBackend+PowIntIntJob&, Unity.InferenceEngine, Version=2.6.1.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--cad9b066c2a26702953c79fbfa9d4f38
@@ -475,11 +469,10 @@ Library: C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Bu
 --float-precision=Standard
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
---debug=Full
---key-folder=C:/Program Files/Unity/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
---decode-folder=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Library\Burst
---output=C:\Users\soma0\Unity\QR2\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--temp-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\Burst
+--key-folder=D:/Hub/Editor/6000.3.17f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Library\Burst
+--output=D:\Unity6\MixedRealityProject-MRTKv3\My projectg\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Jobs.IJobExtensions+JobStruct`1[[UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Jobs.Float4TweenJob, Unity.XR.Interaction.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::Execute(UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.Jobs.Float4TweenJob&, Unity.XR.Interaction.Toolkit, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|System.IntPtr, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089|Unity.Jobs.LowLevel.Unsafe.JobRanges&, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null|System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089)--34aec427743d7d01c0cb7a219c9fbe32

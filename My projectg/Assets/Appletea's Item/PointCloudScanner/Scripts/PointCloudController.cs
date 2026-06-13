@@ -159,10 +159,10 @@ namespace Appletea.Dev.PointCloud
                 Debug.Log("PLY Output Sequence...");
                 ScanAndStorePointCloud(((int)density), pointsData);
                 List<Vector3> points = pointsData.GetAllPoints();
-                Debug.Log("Save Path:" + directoryPath);
-                string filePath = PlyLib.ExportToPly(directoryPath, points);
-                Debug.Log("File Path:" + filePath);
-                Debug.Log("PLY Output Done!");
+                //Debug.Log("Save Path:" + directoryPath);
+                //string filePath = PlyLib.ExportToPly(directoryPath, points);
+                //Debug.Log("File Path:" + filePath);
+                //Debug.Log("PLY Output Done!");
                 plyPublisher.PublishPointCloud(points);
                 Debug.Log("File Upload Done!");
             
