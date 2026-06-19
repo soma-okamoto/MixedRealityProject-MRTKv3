@@ -127,11 +127,11 @@ public class P_currentAndStringPub : MonoBehaviour
 
                 found = true;
 
-                Debug.Log(
-                    $"[P_current] 自分を発見: ID={currentId}, " +
-                    $"World={currentWorldPosition}, " +
-                    $"YouBot=({currentYoubotPosition[0]}, {currentYoubotPosition[1]}, {currentYoubotPosition[2]})"
-                );
+                //Debug.Log(
+                //    $"[P_current] 自分を発見: ID={currentId}, " +
+                //    $"World={currentWorldPosition}, " +
+                //    $"YouBot=({currentYoubotPosition[0]}, {currentYoubotPosition[1]}, {currentYoubotPosition[2]})"
+                //);
 
                 if (p_currentPublisher != null && p_currentPublisher.isActiveAndEnabled)
                 {

@@ -8966,7 +8966,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1312747827}
+  - {fileID: 1993428144}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25771,7 +25771,6 @@ MonoBehaviour:
   keepObjectNames:
   - origin_arm
   - ObjectList
-  - BoundingBoxWithTraditionalHandles(Clone)
 --- !u!114 &936849537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34797,35 +34796,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 194891813171331603, guid: 46de01abc3062aa4a9f7ee71c47ddf82, type: 3}
   m_PrefabInstance: {fileID: 237595451}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1312747827
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &1317150441
 GameObject:
   m_ObjectHideFlags: 0
@@ -48577,6 +48547,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bindingProfile: {fileID: 11400000, guid: c2554c7933796464c965ae0c4acf9561, type: 2}
+--- !u!21 &1993428144
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1995379458
 GameObject:
   m_ObjectHideFlags: 0

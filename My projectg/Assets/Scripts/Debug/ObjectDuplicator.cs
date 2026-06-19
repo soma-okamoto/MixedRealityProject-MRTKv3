@@ -22,6 +22,14 @@ public class ObjectDuplicator : MonoBehaviour
     [Tooltip("複製先の親オブジェクト（空のTransformなど）")]
     public Transform targetParent;
 
+    [Header("複製後に残す対象")]
+    [Tooltip("このタグを持つオブジェクトは複製後も残す")]
+    public List<string> keepTags = new List<string>() { "bottle", "Origin" };
+
+    [Tooltip("名前で残したい任意オブジェクト")]
+    public List<string> keepObjectNames = new List<string>();
+
+
 
     public void DuplicateObject()
     {
@@ -60,19 +68,22 @@ public class ObjectDuplicator : MonoBehaviour
             // Scaleは指定したものを適用（元のスケールを使いたいなら objectToDuplicate.transform.localScale に変更可）
             duplicatedObject.transform.localScale = scale;
 
-            // PointCloudRenderer の subscriber の設定をコピー
-            var originalRenderer = objectToDuplicate.GetComponentInChildren<PointCloudRenderer>();
-            var originalSubscriber = originalRenderer?.subscriber;
+            //// PointCloudRenderer の subscriber の設定をコピー
+            //var originalRenderer = objectToDuplicate.GetComponentInChildren<PointCloudRenderer>();
+            //var originalSubscriber = originalRenderer?.subscriber;
 
-            var duplicatedRenderer = duplicatedObject.GetComponentInChildren<PointCloudRenderer>();
-            if (duplicatedRenderer != null && originalSubscriber != null)
-            {
-                duplicatedRenderer.subscriber = originalSubscriber;
-            }
-            DeactivateWaypointsInHierarchy(duplicatedObject);
+            //var duplicatedRenderer = duplicatedObject.GetComponentInChildren<PointCloudRenderer>();
+            //if (duplicatedRenderer != null && originalSubscriber != null)
+            //{
+            //    duplicatedRenderer.subscriber = originalSubscriber;
+            //}
+            // 2. 必要な子だけ残す
+            RemoveUnwantedChildren(duplicatedObject);
+
+            //DeactivateWaypointsInHierarchy(duplicatedObject);
 
             
-            HandleYoubotActivation(objectToDuplicate, duplicatedObject);
+            //HandleYoubotActivation(objectToDuplicate, duplicatedObject);
         }
         else
         {
@@ -81,15 +92,33 @@ public class ObjectDuplicator : MonoBehaviour
         // ここで使えるようになる
         if (duplicatedObject != null)
         {
-            DeactivateWaypointsInHierarchy(duplicatedObject);
+            //DeactivateWaypointsInHierarchy(duplicatedObject);
             // Instantiate直後に複製したBoundingBoxの中のボトルのタグを変更
             Transform[] allChildren = duplicatedObject.GetComponentsInChildren<Transform>(true);
             foreach (Transform child in allChildren)
             {
                 if (child.CompareTag("bottle"))
                 {
-                    child.tag = "SubBottle"; // タグ変更
-                    //UnityEngine.Debug.Log($"タグ変更: {child.name} → SubBottle");
+                    child.tag = "SubBottle";
+
+                    //KeepOnlyVisualComponentsOnSubBottle(child.gameObject);
+                    BottleAreaState state = child.GetComponent<BottleAreaState>();
+                    BottleIdentity id = child.GetComponent<BottleIdentity>();
+                    P_currentAndStringPub p = child.GetComponent<P_currentAndStringPub>();
+
+                    if (state != null)
+                    {
+                        Destroy(state);
+                    }
+                    if (id != null)
+                    {
+                        Destroy(id);
+                    }
+                    if (p != null)
+                    {
+                        Destroy(p);
+                    }
+
                 }
             }
 
@@ -113,18 +142,22 @@ public class ObjectDuplicator : MonoBehaviour
 
         }
         SetTopMostFirstActive_OthersInactive();
-        ReactivateYoubots();
-        //BottleSync に parentB を渡す
-        var bottleSync = FindObjectOfType<BottleSync>();
-        if (bottleSync != null)
-          {
-                bottleSync.SetParentB(duplicatedObject.transform); // ←親として登録
-           }
 
-        var OriginSync = FindObjectOfType<OriginSync>();
-        if (OriginSync != null)
+
+        if (duplicatedObject != null)
         {
-            OriginSync.SetParentB(duplicatedObject.transform); // ←親として登録
+            // BottleSync に parentB を渡す
+            var bottleSync = FindObjectOfType<BottleSync>();
+            if (bottleSync != null)
+            {
+                bottleSync.SetParentB(duplicatedObject.transform);
+            }
+
+            var originSync = FindObjectOfType<OriginSync>();
+            if (originSync != null)
+            {
+                originSync.SetParentB(duplicatedObject.transform);
+            }
         }
 
 
@@ -196,59 +229,140 @@ public class ObjectDuplicator : MonoBehaviour
         }
         return string.Join("/", path);
     }
-    void DeactivateWaypointsInHierarchy(GameObject root)
+    //void DeactivateWaypointsInHierarchy(GameObject root)
+    //{
+    //    Transform[] children = root.GetComponentsInChildren<Transform>(true); // 非アクティブな子も含めて取得
+    //    foreach (Transform child in children)
+    //    {
+    //        if (child.name == "WayPoints")
+    //        {
+    //            child.gameObject.SetActive(false);
+    //            UnityEngine.Debug.Log($"Waypointsを非アクティブ化: {GetHierarchyPath(child)}");
+    //        }
+    //    }
+    //}
+
+
+    void RemoveUnwantedChildren(GameObject duplicatedRoot)
     {
-        Transform[] children = root.GetComponentsInChildren<Transform>(true); // 非アクティブな子も含めて取得
+        if (duplicatedRoot == null) return;
+
+        Transform[] allChildren = duplicatedRoot.GetComponentsInChildren<Transform>(true);
+        List<GameObject> destroyTargets = new List<GameObject>();
+
+        foreach (Transform child in allChildren)
+        {
+            if (child == duplicatedRoot.transform)
+                continue;
+
+            // 残す対象そのもの
+            // 残す対象の親
+            // 残す対象の子
+            // このどれかなら残す
+            if (ShouldKeepTransform(child, duplicatedRoot.transform))
+                continue;
+
+            destroyTargets.Add(child.gameObject);
+        }
+
+        // 深い階層から削除
+        destroyTargets.Sort((a, b) =>
+        {
+            int depthA = GetHierarchyDepth(a.transform);
+            int depthB = GetHierarchyDepth(b.transform);
+            return depthB.CompareTo(depthA);
+        });
+
+        foreach (GameObject obj in destroyTargets)
+        {
+            if (obj != null)
+            {
+                Destroy(obj);
+            }
+        }
+    }
+
+
+    bool ShouldKeepTransform(Transform target, Transform root)
+    {
+        // 自分自身が残す対象
+        if (IsKeepTarget(target))
+            return true;
+
+        // 親のどこかが残す対象なら、その子も残す
+        Transform p = target.parent;
+        while (p != null && p != root.parent)
+        {
+            if (IsKeepTarget(p))
+                return true;
+
+            if (p == root)
+                break;
+
+            p = p.parent;
+        }
+
+        // 子孫に残す対象があるなら、その親も残す
+        Transform[] children = target.GetComponentsInChildren<Transform>(true);
         foreach (Transform child in children)
         {
-            if (child.name == "WayPoints")
-            {
-                child.gameObject.SetActive(false);
-                UnityEngine.Debug.Log($"Waypointsを非アクティブ化: {GetHierarchyPath(child)}");
-            }
-        }
-    }
-    void HandleYoubotActivation(GameObject original, GameObject duplicated)
-    {
-        // 元オブジェクト内のyoubotを探す
-        var originalYoubot = FindYoubotInHierarchy(original);
-        var duplicatedYoubot = FindYoubotInHierarchy(duplicated);
+            if (child == target) continue;
 
-        if (originalYoubot != null && duplicatedYoubot != null)
-        {
-            if (originalYoubot.activeSelf)
-            {
-                duplicatedYoubot.SetActive(false); // 一時的に無効化
-                duplicatedYoubots.Add(duplicatedYoubot); // 後で有効化するために保存
-                UnityEngine.Debug.Log($"複製先の youbot を非アクティブ化: {GetHierarchyPath(duplicatedYoubot.transform)}");
-            }
+            if (IsKeepTarget(child))
+                return true;
         }
+
+        return false;
     }
 
-    GameObject FindYoubotInHierarchy(GameObject root)
+    bool IsKeepTarget(Transform target)
     {
-        Transform[] children = root.GetComponentsInChildren<Transform>(true);
-        foreach (Transform t in children)
+        if (target == null) return false;
+
+        // タグで残す
+        foreach (string tagName in keepTags)
         {
-            if (t.name == "youbot")
-            {
-                return t.gameObject;
-            }
+            if (string.IsNullOrEmpty(tagName)) continue;
+
+            if (target.CompareTag(tagName))
+                return true;
         }
-        return null;
+
+        // 名前で残す
+        foreach (string objectName in keepObjectNames)
+        {
+            if (string.IsNullOrEmpty(objectName)) continue;
+
+            if (target.name == objectName)
+                return true;
+        }
+
+        return false;
     }
 
-    void ReactivateYoubots()
+    void KeepOnlyVisualComponentsOnSubBottle(GameObject bottle)
     {
-        foreach (var youbot in duplicatedYoubots)
+        if (bottle == null) return;
+
+        Component[] components = bottle.GetComponents<Component>();
+
+        foreach (Component component in components)
         {
-            if (youbot != null)
-            {
-                youbot.SetActive(true);
-                UnityEngine.Debug.Log($"youBot再アクティブ化: {GetHierarchyPath(youbot.transform)}");
-            }
+            if (component == null) continue;
+
+            // Transform は消せないので残す
+            if (component is Transform) continue;
+
+            // 見た目に必要なものは残す
+            if (component is MeshRenderer) continue;
+            if (component is MeshFilter) continue;
+
+            // SkinnedMeshRenderer を使っている場合に備えて残す
+            if (component is SkinnedMeshRenderer) continue;
+
+            // それ以外は削除
+            Destroy(component);
         }
-        duplicatedYoubots.Clear();
     }
 
 

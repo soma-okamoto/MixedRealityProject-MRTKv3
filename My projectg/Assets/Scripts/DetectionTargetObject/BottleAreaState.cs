@@ -44,6 +44,22 @@ public class BottleAreaState : MonoBehaviour
      Color manualColor;
    public GameObject Origin;
 
+
+    [Header("Sync Mode")]
+    [SerializeField] private bool visualOnly = false;
+
+    public void SetVisualOnly(bool value)
+    {
+        visualOnly = value;
+
+        if (visualOnly)
+        {
+            // Sub側ではUIを出さない
+            DestroyUI();
+        }
+    }
+
+
     public void OverrideColor(Color c)
      {
          manualOverride = true;
@@ -102,6 +118,10 @@ public class BottleAreaState : MonoBehaviour
 
     public void Update()
     {
+        //Debug.Log($"{name} BottleAreaState Update visualOnly={visualOnly}");
+
+        //if (visualOnly)
+        //    return;
 
         GameObject globalHit = BottleHitMapper != null ? BottleHitMapper.hitObject : null;
         bool isThisHit = (globalHit == this.gameObject);
@@ -307,6 +327,25 @@ public class BottleAreaState : MonoBehaviour
 
 
     // ─────────────────────────────────────────────────
+
+
+    public Material RuntimeMaterial => mat;
+    public string ColorProperty => colorProp;
+    public bool IsTransparentVisual => isTransparent;
+
+    public Color CurrentColor
+    {
+        get
+        {
+            if (mat == null || string.IsNullOrEmpty(colorProp))
+                return Color.white;
+
+            return mat.GetColor(colorProp);
+        }
+    }
+
+
+
     void SetMaterialTransparent(Material m)
     {
         m.SetFloat("_Surface", 1);

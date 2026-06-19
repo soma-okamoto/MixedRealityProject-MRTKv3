@@ -62,6 +62,19 @@ public class BottleSync : MonoBehaviour
 
             masterToSubMapping[master] = sub;
 
+            //BottleAreaState masterState = master.GetComponent<BottleAreaState>();
+            //BottleAreaState subState = sub.GetComponent<BottleAreaState>();
+
+            //if (masterState != null)
+            //{
+            //    masterState.SetVisualOnly(false);
+            //}
+
+            //if (subState != null)
+            //{
+            //    subState.SetVisualOnly(true);
+            //}
+
             Renderer subRenderer = sub.GetComponent<Renderer>();
             if (subRenderer != null)
             {
@@ -91,27 +104,41 @@ public class BottleSync : MonoBehaviour
 
     void Update()
     {
-        // マスターbottleの色やアウトラインをサブbottleに反映
         foreach (var entry in masterToSubMapping)
         {
             GameObject masterBottle = entry.Key;
             GameObject subBottle = entry.Value;
 
-            if (masterBottle != null && subBottle != null)
+            if (masterBottle == null || subBottle == null)
+                continue;
+
+            // =========================
+            // 位置・回転同期
+            // =========================
+            Transform masterParent = masterBottle.transform.parent;
+
+            Vector3 masterLocalPosition =
+                masterParent.InverseTransformPoint(masterBottle.transform.position);
+
+            Quaternion masterLocalRotation =
+                Quaternion.Inverse(masterParent.rotation) * masterBottle.transform.rotation;
+
+            subBottle.transform.localPosition = masterLocalPosition;
+            subBottle.transform.localRotation = masterLocalRotation;
+
+            // =========================
+            // 色・Material同期
+            // =========================
+            BottleAreaState masterState = masterBottle.GetComponent<BottleAreaState>();
+            Renderer subRenderer = subBottle.GetComponentInChildren<Renderer>();
+
+            if (masterState != null && subRenderer != null)
             {
-                Renderer masterRenderer = masterBottle.GetComponent<Renderer>();
-                Renderer subRenderer = subBottle.GetComponent<Renderer>();
+                Material subMat = subRenderer.material;
 
+                string subColorProp = subMat.HasProperty("_BaseColor") ? "_BaseColor" : "_Color";
 
-
-                // マスターの位置と回転をサブに反映
-                Transform masterParent = masterBottle.transform.parent;
-                Vector3 masterLocalPosition = masterParent.InverseTransformPoint(masterBottle.transform.position);
-                Quaternion masterLocalRotation = Quaternion.Inverse(masterParent.rotation) * masterBottle.transform.rotation;
-
-                // サブの位置と回転を同期
-                subBottle.transform.localPosition = masterLocalPosition;
-                subBottle.transform.localRotation = masterLocalRotation;
+                subMat.SetColor(subColorProp, masterState.CurrentColor);
             }
         }
     }
@@ -182,7 +209,43 @@ public class BottleSync : MonoBehaviour
     }
 
 
+    void CopyMaterialRenderingSettings(Material source, Material target)
+    {
+        if (source == null || target == null) return;
 
+        string[] floatProps =
+        {
+        "_Surface",
+        "_SrcBlend",
+        "_DstBlend",
+        "_ZWrite"
+    };
+
+        foreach (string prop in floatProps)
+        {
+            if (source.HasProperty(prop) && target.HasProperty(prop))
+            {
+                target.SetFloat(prop, source.GetFloat(prop));
+            }
+        }
+
+        target.renderQueue = source.renderQueue;
+
+        if (source.IsKeywordEnabled("_ALPHABLEND_ON"))
+            target.EnableKeyword("_ALPHABLEND_ON");
+        else
+            target.DisableKeyword("_ALPHABLEND_ON");
+
+        if (source.IsKeywordEnabled("_ALPHATEST_ON"))
+            target.EnableKeyword("_ALPHATEST_ON");
+        else
+            target.DisableKeyword("_ALPHATEST_ON");
+
+        if (source.IsKeywordEnabled("_ALPHAPREMULTIPLY_ON"))
+            target.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        else
+            target.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+    }
 
 }
 
