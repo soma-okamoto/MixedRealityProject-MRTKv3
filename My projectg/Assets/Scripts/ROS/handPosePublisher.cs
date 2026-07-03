@@ -44,24 +44,33 @@ namespace RosSharp.RosBridgeClient
             GetGeometryQuaternion(rotation, message.pose.orientation);
 
             Publish(message);
-        
+
         }
 
         //ê≥ñ Ç©ÇÁå©ÇΩÇ∆Ç´
-        private static void GetGeometryPoint(Vector3 position,MessageTypes.Geometry.Point geometryPoint)
+        private static void GetGeometryPoint(Vector3 position, MessageTypes.Geometry.Point geometryPoint)
         {
-            geometryPoint.x = -position.x;
-            geometryPoint.y = position.z;
+            //geometryPoint.x = -position.x;
+            //geometryPoint.y = position.z;
+            //geometryPoint.z = position.y;
+
+            geometryPoint.x = position.z;
+            geometryPoint.y = -position.x;
             geometryPoint.z = position.y;
 
         }
 
         private static void GetGeometryQuaternion(Quaternion quaternion,MessageTypes.Geometry.Quaternion geometryQuaternion)
         {
+            //geometryQuaternion.x = quaternion.z;
+            //geometryQuaternion.y = -(quaternion.x);
+            //geometryQuaternion.z = quaternion.y;
+            //geometryQuaternion.w = -(quaternion.w);
             geometryQuaternion.x = quaternion.z;
-            geometryQuaternion.y = -(quaternion.x);
+            geometryQuaternion.y = -quaternion.x;
             geometryQuaternion.z = quaternion.y;
-            geometryQuaternion.w = -(quaternion.w);
+            geometryQuaternion.w = -quaternion.w;
+
         }
 
 
