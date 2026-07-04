@@ -22,7 +22,10 @@ public class MoveOriginController : MonoBehaviour
         this.transform.rotation = Quaternion.identity;
        
         //ObjectListOrigin.transform.localPosition = new Vector3( - 0.147f, 0.152f + 0.091f, 0);
-        userOrigin.transform.localPosition = new Vector3(messagePosition.x - 0.147f, messagePosition.y + 0.152f, - messagePosition.z);
+
+        // userOrigin.transform.localPosition = new Vector3(messagePosition.x - 0.147f, messagePosition.y + 0.152f, - messagePosition.z);
+        //amir用に
+        userOrigin.transform.localPosition = new Vector3(messagePosition.x, messagePosition.y + 0.31f, -messagePosition.z);
         userOrigin.transform.localRotation = messageRotation;
 
         Debug.Log("MoveOrigin");

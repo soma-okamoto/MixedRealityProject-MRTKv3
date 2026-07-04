@@ -26,15 +26,7 @@ public class ObjectHit : MonoBehaviour
             }
         }
 
-        // GameObject raycasted = null;
-        // if (Physics.Raycast(playerCamera.transform.position,
-        //                     playerCamera.transform.forward,
-        //                     out hitObj, maxRaycastDistance))
-        // {
-        //     raycasted = hitObj.collider.gameObject;
-        // }
 
-        // �A hitObject ������
         hitObject = null;
 
         // �D��1: �͂�ł��ă{�g��������
@@ -43,14 +35,7 @@ public class ObjectHit : MonoBehaviour
         {
             hitObject = grabbed;
         }
-        // // �D��2: Raycast�q�b�g�����ǒ͂�ł��Ȃ��E�{�g��������
-        // else if (grabbed == null
-        //          && raycasted != null
-        //          && raycasted.CompareTag("bottle")
-        //          )
-        // {
-        //     hitObject = raycasted;
-        // }
+
 
 
     }

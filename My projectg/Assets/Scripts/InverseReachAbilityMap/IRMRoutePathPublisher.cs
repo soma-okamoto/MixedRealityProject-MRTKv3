@@ -84,7 +84,9 @@ public class IRMRoutePathPublisher : UnityPublisher<Path>
     private RosSharp.RosBridgeClient.MessageTypes.Geometry.Point GetPosition(UnityEngine.Vector3 pos)
     {
         // ROS�̍��W�n����Unity�̍��W�n�֕ϊ��i�ʏ�AROS�͉E��n�AUnity�͍���n�j
-        return new RosSharp.RosBridgeClient.MessageTypes.Geometry.Point((float)-pos.x, -(float)pos.z, (float)pos.y);
+        // return new RosSharp.RosBridgeClient.MessageTypes.Geometry.Point((float)-pos.x, -(float)pos.z, (float)pos.y);
+         return new RosSharp.RosBridgeClient.MessageTypes.Geometry.Point((float)pos.z, -(float)pos.x, (float)pos.y);
+
     }
 
     private RosSharp.RosBridgeClient.MessageTypes.Geometry.Quaternion GetRotation(UnityEngine.Quaternion orientation)

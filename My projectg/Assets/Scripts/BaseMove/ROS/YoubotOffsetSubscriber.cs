@@ -39,10 +39,17 @@ public class YoubotOffsetSubscriber : UnitySubscriber<Vector3Stamped>
     protected override void ReceiveMessage(Vector3Stamped message)
     {
         // ROS の右手系データを Unity 左手系に変換: x'=-x, y'=z, z'=y
+        // UnityEngine.Vector3 rosUnityOffset = new UnityEngine.Vector3(
+        //     -(float)message.vector.x,
+        //     (float)message.vector.z,
+        //     -(float)message.vector.y
+        // );
+
+                //Amir用に
         UnityEngine.Vector3 rosUnityOffset = new UnityEngine.Vector3(
-            -(float)message.vector.x,
+            -(float)message.vector.y,
             (float)message.vector.z,
-            -(float)message.vector.y
+            (float)message.vector.x
         );
 
       

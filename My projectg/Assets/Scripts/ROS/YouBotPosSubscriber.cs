@@ -32,10 +32,16 @@ namespace RosSharp.RosBridgeClient
 
         private Vector3 GetPosition(MessageTypes.Geometry.PoseStamped message)
         {
+            // return new Vector3(
+            //     (float)-message.pose.position.x,
+            //     (float)message.pose.position.z,
+            //     (float)message.pose.position.y);
+
+            //Amir用に
             return new Vector3(
-                (float)-message.pose.position.x,
+                -(float)message.pose.position.y,
                 (float)message.pose.position.z,
-                (float)message.pose.position.y);
+                (float)message.pose.position.x);
         }
 
         private Quaternion GetRotation(MessageTypes.Geometry.PoseStamped message)

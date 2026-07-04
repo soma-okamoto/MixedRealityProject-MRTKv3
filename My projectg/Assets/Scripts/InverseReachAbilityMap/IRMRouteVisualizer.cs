@@ -104,20 +104,28 @@ public class IRMRouteVisual : MonoBehaviour
         var ps = path.poses[i];
 
 
-            // ROS→Unity 座標変換（地面XZのみ）
-            Vector3 rosPt = new Vector3(
-            -(float)ps.pose.position.x,
-            0f,
-            -(float)ps.pose.position.y
-                        );
+            // // ROS→Unity 座標変換（地面XZのみ）
+            // Vector3 rosPt = new Vector3(
+            // -(float)ps.pose.position.x,
+            // 0f,
+            // -(float)ps.pose.position.y
+            //             );
+
+            //Amir座標変換
+            Vector3 rosPt = new Vector3(-(float)ps.pose.position.y,0f,(float)ps.pose.position.x);
 
 
-            // (1) ROS→Unity のローカル座標に変換（地面XZのみ）
-            Vector3 rosLocal = new Vector3(
-                -(float)ps.pose.position.x,  // ROS の x → Unity の -X
-                0f,                          // 地面に固定
-                -(float)ps.pose.position.y   // ROS の y → Unity の -Z
-            );
+            // // (1) ROS→Unity のローカル座標に変換（地面XZのみ）
+            // Vector3 rosLocal = new Vector3(
+            //     -(float)ps.pose.position.x,  // ROS の x → Unity の -X
+            //     0f,                          // 地面に固定
+            //     -(float)ps.pose.position.y   // ROS の y → Unity の -Z
+            // );
+
+            //Amir用
+            Vector3 rosLocal = new Vector3(-(float)ps.pose.position.y,0f,(float)ps.pose.position.x);
+
+
 
             // (2) 親だけ指定してインスタンス化
             var go = Instantiate(waypointPrefab, waypointsContainer);

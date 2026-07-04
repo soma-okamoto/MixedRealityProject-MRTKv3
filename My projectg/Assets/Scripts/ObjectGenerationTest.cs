@@ -73,11 +73,17 @@ public class ObjectGenerationTest : MonoBehaviour
                     //miny = (messageData[1]/480)* Screen.currentResolution.height;
                     //maxx = (messageData[2]/640)* Screen.currentResolution.width;
                     //maxy = (messageData[3]/480)* Screen.currentResolution.height;
-                    x = -messageData[0];
-                    //y = messageData[2]-0.6f;
-                    y = messageData[2]; //キャリブレーション時使う値
-                    //y = messageData[2] - 0.25f;　//実際の値
-                    z = -messageData[1];
+                    
+                    // x = -messageData[0];
+                    // y = messageData[2]; 
+                    // z = -messageData[1];
+                    x = -messageData[1];
+                    y = messageData[2];
+                    z = messageData[0];
+                    
+
+
+
                     label = messageData[3];
                     id = messageData[4];
                     ObjectName = "Object" + id.ToString();
@@ -124,12 +130,16 @@ public class ObjectGenerationTest : MonoBehaviour
                 }
                 else
                 {
-                    x = -messageData[5 * i + 0];
-                    //y = messageData[5 * i + 2] - 0.6f;
+                    // x = -messageData[5 * i + 0];
+                    // y = messageData[5 * i + 2];
+                    // z = -messageData[5 * i + 1];
+                    x = -messageData[5 * i + 1];
+                    y = messageData[5 * i + 2];
+                    z = messageData[5 * i + 0];
 
-                    y = messageData[5 * i + 2];//キャリブレーション時に使う値
-                    //y = messageData[5 * i + 2] - 0.25f;//実際の値
-                    z = -messageData[5 * i + 1];
+                    
+
+
                     label = messageData[5 * i + 3];
                     id = messageData[5 * i + 4];
 
@@ -233,15 +243,7 @@ public class ObjectGenerationTest : MonoBehaviour
         }
     }
 
-    /*private void OnManipulationStartedHandler(ManipulationEventData arg0)
-    {
-        BBox.GetComponent<ObjectManipulator>().enabled = false;
-    }
-    private void OnManipulationEndedHandler(ManipulationEventData arg0)
-    {
-        BBox.GetComponent<ObjectManipulator>().enabled = true;
 
-    }*/
     public void OnManipulationStartedHandler(SelectEnterEventArgs args)
     {
 
@@ -258,143 +260,3 @@ public class ObjectGenerationTest : MonoBehaviour
 
 }
 
-
-
-/*
-
-using System.Collections;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit; // ← 追加
-using MixedReality.Toolkit.UX;
-
-public class ObjectGenerationTest : MonoBehaviour
-{
-    public Float32MultiSubscriber float32MultiSubscriber;
-    public float[] messageData = new float[5];
-
-    public GameObject bottle;
-    public GameObject Can;
-
-    float label;
-    float x;
-    float y;
-    float z;
-    float id;
-    string ObjectName = "bottle";
-    public float[] idlist;
-    GameObject obj;
-    GameObject obj1;
-    public airTap_distance distance;
-    public string outputdata;
-    public GameObject maincam;
-    Vector3 camVector;
-    public Vector3 ObjectPosition;
-    public IdTracking idTracking;
-
-    [SerializeField] private GameObject Origin;
-    [SerializeField] private GameObject BBox;
-
-    public List<GameObject> before_obj;
-    public List<string> ObjectNameList;
-    public Dictionary<float, Vector3> objectList = new Dictionary<float, Vector3>();
-    public List<GameObject> GenerateObjects;
-
-    void Start() { }
-
-    void Update()
-    {
-        outputdata = distance.bool2string();
-        camVector = Origin.transform.position;
-
-        if (float32MultiSubscriber.messageData.Length == 0) return;
-
-        idlist = new float[float32MultiSubscriber.messageData.Length / 4];
-        messageData = float32MultiSubscriber.messageData;
-
-        for (int i = 0; i < messageData.Length / 5; i++)
-        {
-            x = -messageData[5 * i + 0];
-            y = messageData[5 * i + 2];
-            z = -messageData[5 * i + 1];
-            label = messageData[5 * i + 3];
-            id = messageData[5 * i + 4];
-
-            ObjectName = "Object" + id.ToString();
-
-            if (label == 39)
-            {
-                if (!GameObject.Find(ObjectName))
-                {
-                    GameObject newObj = Instantiate(bottle, camVector, Quaternion.identity);
-                    newObj.name = ObjectName;
-                    newObj.transform.parent = Origin.transform;
-                    newObj.transform.localPosition = new Vector3(x, y, z);
-
-                    before_obj.Add(newObj);
-                    ObjectNameList.Add(newObj.name);
-                    GenerateObjects.Add(newObj);
-
-                    AddGrabEvents(newObj);
-                }
-                else if (outputdata == "open")
-                {
-                    GameObject existingObj = GameObject.Find(ObjectName);
-                    if (existingObj != null)
-                    {
-                        Vector3 world_position = new Vector3(camVector.x + x, camVector.y + y, camVector.z + z);
-                        existingObj.transform.position = world_position;
-                    }
-                }
-            }
-            else if ((label == 0 || label == 1) && !objectList.ContainsKey(id))
-            {
-                if (!GameObject.Find(ObjectName))
-                {
-                    Vector3 world_position = new Vector3(camVector.x + x, camVector.y + y, camVector.z + z);
-
-                    foreach (Vector3 objectPos in objectList.Values)
-                    {
-                        if (Vector3.Distance(objectPos, world_position) <= 0.05f) return;
-                    }
-
-                    GameObject newObj = label == 0 ? Instantiate(Can) : Instantiate(bottle);
-                    newObj.name = ObjectName;
-                    newObj.transform.parent = Origin.transform;
-                    newObj.transform.localPosition = new Vector3(x, y, z);
-
-                    before_obj.Add(newObj);
-                    ObjectNameList.Add(newObj.name);
-                    objectList.Add(id, world_position);
-                    GenerateObjects.Add(newObj);
-
-                    AddGrabEvents(newObj);
-                }
-            }
-        }
-    }
-
-    private void AddGrabEvents(GameObject obj)
-    {
-        var grab = obj.GetComponent<XRGrabInteractable>();
-        if (grab == null)
-        {
-            grab = obj.AddComponent<XRGrabInteractable>();
-        }
-
-        grab.selectEntered.AddListener((args) => OnGrabStarted());
-        grab.selectExited.AddListener((args) => OnGrabEnded());
-    }
-
-    private void OnGrabStarted()
-    {
-        if (BBox != null) BBox.GetComponent<Collider>().enabled = false;
-    }
-
-    private void OnGrabEnded()
-    {
-        if (BBox != null) BBox.GetComponent<Collider>().enabled = true;
-    }
-}
-*/

@@ -44,10 +44,10 @@ public class P_currentAndStringPub : MonoBehaviour
 
         if (origin_base == null)
         {
-            origin_base = GameObject.Find("origin_base");
+            origin_base = GameObject.Find("baseorigin_central");
             if (origin_base == null)
             {
-                Debug.LogError($" Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");
+                Debug.LogError($" Hierarchy 上に名前 \"baseorigin_central\" の GameObject が見つかりません。");
             }
         }
         if (rosConnector == null)
@@ -185,14 +185,22 @@ public class P_currentAndStringPub : MonoBehaviour
         // オフセットを加算
         Vector3 adjusted = relative + axisOffset;
 
-        // Unity → YouBot 座標変換
-        float youbot_x = -adjusted.x;
-        float youbot_y = -adjusted.z;
-        float youbot_z = adjusted.y;
+        // // Unity → YouBot 座標変換
+        // float youbot_x = -adjusted.x;
+        // float youbot_y = -adjusted.z;
+        // float youbot_z = adjusted.y;
 
-        calculated.Add(youbot_x);
-        calculated.Add(youbot_y);
-        calculated.Add(youbot_z);
+        float amir_x = adjusted.z;
+        float amir_y = -adjusted.x;      
+        float amir_z = adjusted.y;
+
+        // calculated.Add(youbot_x);
+        // calculated.Add(youbot_y);
+        // calculated.Add(youbot_z);
+
+        calculated.Add(amir_x);
+        calculated.Add(amir_y); 
+        calculated.Add(amir_z);
 
         return calculated.ToArray();
     }

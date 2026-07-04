@@ -54,8 +54,11 @@ namespace RosSharp.RosBridgeClient
 
         private static void GetGeometryPoint(Vector3 position, MessageTypes.Geometry.Point geometryPoint)
         {
-            geometryPoint.x = -position.x;
-            geometryPoint.y = -position.z;
+            // geometryPoint.x = -position.x;
+            // geometryPoint.y = -position.z;
+            // geometryPoint.z = position.y;
+            geometryPoint.x = position.z;
+            geometryPoint.y = -position.x;
             geometryPoint.z = position.y;
 
         }

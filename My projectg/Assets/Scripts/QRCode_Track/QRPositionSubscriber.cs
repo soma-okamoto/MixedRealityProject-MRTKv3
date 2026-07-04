@@ -55,8 +55,7 @@ namespace RosSharp.RosBridgeClient
             Vector3 upRos = qRos * Vector3.up;
             Vector3 forwardRos = qRos * Vector3.forward;
 
-            // A R A^{-1}
-            // XîΩì]Ç≈ÇÕ A^{-1}=A Ç»ÇÃÇ≈ÅAì¸óÕë§ÇÃXé≤Ç‡îΩì]Ç∑ÇÈ
+
             Vector3 rightUnity = ConvertOpenCVQRToMRUKQR(-rightRos);
             Vector3 upUnity = ConvertOpenCVQRToMRUKQR(upRos);
             Vector3 forwardUnity = ConvertOpenCVQRToMRUKQR(forwardRos);

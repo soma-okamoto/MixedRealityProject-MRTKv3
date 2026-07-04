@@ -95,10 +95,10 @@ public class BottleAreaState : MonoBehaviour
         
         if (Origin == null)
         {
-            Origin = GameObject.Find("origin_base");
+            Origin = GameObject.Find("baseorigin_central");
             if (Origin == null)
             {
-                Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");
+                Debug.LogError($"[BottleAreaState] Hierarchy 上に名前 \"baseorigin_central\" の GameObject が見つかりません。");
             }
         }
 
@@ -311,15 +311,23 @@ public class BottleAreaState : MonoBehaviour
         // 3) オフセットを加算
         Vector3 adjusted = relative + axisOffset;
 
-        // 4) YouBot 向けに軸反転・入れ替え
-        float youbot_x = -adjusted.x;
-        float youbot_y = -adjusted.z;
-        float youbot_z = adjusted.y;
+        // // 4) YouBot 向けに軸反転・入れ替え
+        // float youbot_x = -adjusted.x;
+        // float youbot_y = -adjusted.z;
+        // float youbot_z = adjusted.y;
 
-        // 5) 追加
-        selectCoords.Add(youbot_x);
-        selectCoords.Add(youbot_y);
-        selectCoords.Add(youbot_z);
+        float amir_x=adjusted.z;
+        float amir_y=-adjusted.x;
+        float amir_z=adjusted.y;
+
+        selectCoords.Add(amir_x);
+        selectCoords.Add(amir_y);
+        selectCoords.Add(amir_z);
+
+        // // 5) 追加
+        // selectCoords.Add(youbot_x);
+        // selectCoords.Add(youbot_y);
+        // selectCoords.Add(youbot_z);
         
 
         return selectCoords.ToArray();
