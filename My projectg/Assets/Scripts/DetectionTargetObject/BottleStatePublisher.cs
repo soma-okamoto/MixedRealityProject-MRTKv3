@@ -1,3 +1,5 @@
+
+/*
 using System.Collections.Generic;
 using UnityEngine;
 using RosSharp.RosBridgeClient;
@@ -64,5 +66,123 @@ public class BottleStatePublisher : UnityPublisher<Float32MultiArray>
         // 3) data をセットして Publish
         message.data = data;
         Publish(message);
+    }
+}
+*/
+
+using UnityEngine;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Std;
+
+public class BottleStatePublisher : MonoBehaviour
+{
+    [Header("ROS 2 Topic")]
+    [SerializeField] private string topicName = "/bottle_features";
+
+    [Tooltip("SignalManager をセットしてください")]
+    public BottleSignalManager BottleSignalManager;
+
+    private ROSConnection ros;
+    private Float32MultiArrayMsg message;
+
+    private void Start()
+    {
+        if (BottleSignalManager == null)
+        {
+            Debug.LogError(
+                "[BottleStatePublisher] BottleSignalManager が未設定です。");
+            enabled = false;
+            return;
+        }
+
+        ros = ROSConnection.GetOrCreateInstance();
+
+        // ROS 2: std_msgs/msg/Float32MultiArray
+        ros.RegisterPublisher<Float32MultiArrayMsg>(topicName);
+
+        message = new Float32MultiArrayMsg
+        {
+            layout = new MultiArrayLayoutMsg
+            {
+                dim = new[]
+                {
+                    new MultiArrayDimensionMsg
+                    {
+                        label = "bottles",
+                        size = 0,
+                        stride = 0
+                    },
+                    new MultiArrayDimensionMsg
+                    {
+                        label = "fields",
+                        size = 9,
+                        stride = 9
+                    }
+                },
+                data_offset = 0
+            },
+            data = new float[0]
+        };
+
+        Debug.Log(
+            $"[BottleStatePublisher] ROS-TCP publisher registered: " +
+            $"topic={topicName}, type=std_msgs/Float32MultiArray");
+    }
+
+    private void FixedUpdate()
+    {
+        PublishBottleStates();
+    }
+
+    public void PublishBottleStates()
+    {
+        if (ros == null || message == null || BottleSignalManager == null)
+            return;
+
+        var infos = BottleSignalManager.signals;
+
+        if (infos == null)
+        {
+            Debug.LogWarning(
+                "[BottleStatePublisher] BottleSignalManager.signals が null です。");
+            return;
+        }
+
+        int bottleCount = infos.Count;
+        const int fieldsPerBottle = 9;
+        int totalElements = bottleCount * fieldsPerBottle;
+
+        float[] data = new float[totalElements];
+
+        for (int i = 0; i < bottleCount; i++)
+        {
+            var info = infos[i];
+            int offset = i * fieldsPerBottle;
+
+            // data = [
+            //   bottleID, x, y, z,
+            //   insideFlag, s_touch, s_hand, s_head, s_accel
+            // ]
+            data[offset + 0] = info.bottleID;
+            data[offset + 1] = info.position.x;
+            data[offset + 2] = info.position.y;
+            data[offset + 3] = info.position.z;
+            data[offset + 4] = info.insideFlag;
+            data[offset + 5] = info.s_touch;
+            data[offset + 6] = info.s_hand;
+            data[offset + 7] = info.s_head;
+            data[offset + 8] = info.s_accel;
+        }
+
+        // layout shape: [bottleCount, 9]
+        message.layout.dim[0].size = (uint)bottleCount;
+        message.layout.dim[0].stride = (uint)totalElements;
+
+        message.layout.dim[1].size = fieldsPerBottle;
+        message.layout.dim[1].stride = fieldsPerBottle;
+
+        message.data = data;
+
+        ros.Publish(topicName, message);
     }
 }

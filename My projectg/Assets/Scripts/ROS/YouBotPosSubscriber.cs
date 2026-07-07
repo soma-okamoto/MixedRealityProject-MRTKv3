@@ -1,56 +1,78 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Serialization;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Geometry;
+
 namespace RosSharp.RosBridgeClient
 {
-    public class YouBotPosSubscriber : UnitySubscriber<MessageTypes.Geometry.PoseStamped>
+    public class YouBotPosSubscriber : MonoBehaviour
     {
+        [Header("ROS 2 Topic")]
+        [FormerlySerializedAs("Topic")]
+        public string TopicName = "/YouBot_Position";
+
+        [Header("Latest received pose in Unity coordinates")]
         public Vector3 messagePosition;
         public Quaternion messageRotation;
-        
-        private Transform PublishedTransform;
 
-        private Vector3 position;
-        private Quaternion rotation;
-        private bool isMessageReceived;
-        [SerializeField] private GameObject origin;
-        protected override void Start()
+        private ROSConnection ros;
+
+        private void Start()
         {
-            base.Start();
+            ros = ROSConnection.GetOrCreateInstance();
+
+            // ROS 2: geometry_msgs/msg/PoseStamped
+            ros.Subscribe<PoseStampedMsg>(TopicName, ReceiveMessage);
+
+            Debug.Log(
+                $"[YouBotPosSubscriber] ROS-TCP subscriber registered: " +
+                $"topic={TopicName}, type=geometry_msgs/PoseStamped");
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-
+            // この topic をこのスクリプトだけが Subscribe している前提。
+            if (ros != null)
+            {
+                ros.Unsubscribe(TopicName);
+            }
         }
 
-        protected override void ReceiveMessage(MessageTypes.Geometry.PoseStamped message)
+        private void ReceiveMessage(PoseStampedMsg message)
         {
+            if (message == null)
+            {
+                Debug.LogWarning("[YouBotPosSubscriber] PoseStamped message is null.");
+                return;
+            }
+
             messagePosition = GetPosition(message);
             messageRotation = GetRotation(message);
         }
 
-        private Vector3 GetPosition(MessageTypes.Geometry.PoseStamped message)
+        private static Vector3 GetPosition(PoseStampedMsg message)
         {
-            // return new Vector3(
-            //     (float)-message.pose.position.x,
-            //     (float)message.pose.position.z,
-            //     (float)message.pose.position.y);
-
-            //Amir用に
+            // 旧ROS#版と完全に同一の変換を維持
+            // ROS:   (x, y, z)
+            // Unity: (-y, z, x)
             return new Vector3(
                 -(float)message.pose.position.y,
                 (float)message.pose.position.z,
-                (float)message.pose.position.x);
+                (float)message.pose.position.x
+            );
         }
 
-        private Quaternion GetRotation(MessageTypes.Geometry.PoseStamped message)
+        private static Quaternion GetRotation(PoseStampedMsg message)
         {
+            // 旧ROS#版と完全に同一の変換を維持
             return new Quaternion(
                 (float)message.pose.orientation.z,
                 (float)-message.pose.orientation.x,
                 (float)message.pose.orientation.y,
-                (float)-message.pose.orientation.w);
+                (float)-message.pose.orientation.w
+            );
         }
     }
 }
+

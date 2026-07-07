@@ -12,7 +12,8 @@ public class StopButton : MonoBehaviour
     public void stopButton()
     {
         rosConnector.GetComponent<RosSharp.RosBridgeClient.handPosePublisher>().enabled = false;
-        rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = false;
+        //rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = false;
+        rosConnector.GetComponent<airTapPublisher>().enabled = false;
         rosConnector.GetComponent<Float32MultiSubscriber>().enabled = false;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.CalibrationFloat32Publisher>().enabled = false;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.PointCloudSubscriber>().enabled = false;

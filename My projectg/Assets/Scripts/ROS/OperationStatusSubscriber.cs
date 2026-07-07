@@ -1,21 +1,38 @@
-using RosSharp.RosBridgeClient.MessageTypes.Std;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 
-public class OperationStatusSubscriber : RosSharp.RosBridgeClient.UnitySubscriber<RosSharp.RosBridgeClient.MessageTypes.Std.Bool>
+using UnityEngine;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Std;
+
+public class OperationStatusSubscriber : MonoBehaviour
 {
+    [Header("ROS 2 Topic")]
+    public string TopicName = "/gool_state";
+
+    [Header("Latest received state")]
     public bool messageData;
-    protected override void Start()
+
+    private ROSConnection ros;
+
+    private void Start()
     {
-        base.Start();
+        ros = ROSConnection.GetOrCreateInstance();
+
+        // ROS 2: std_msgs/msg/Bool
+        ros.Subscribe<BoolMsg>(TopicName, ReceiveMessage);
+
+        Debug.Log(
+            $"[OperationStatusSubscriber] ROS-TCP subscriber registered: " +
+            $"topic={TopicName}, type=std_msgs/Bool");
     }
 
-    protected override void ReceiveMessage(RosSharp.RosBridgeClient.MessageTypes.Std.Bool message)
+    private void ReceiveMessage(BoolMsg message)
     {
-        messageData = message.data;
+        if (message == null)
+        {
+            Debug.LogWarning("[OperationStatusSubscriber] Received null Bool message.");
+            return;
+        }
 
+        messageData = message.data;
     }
 }

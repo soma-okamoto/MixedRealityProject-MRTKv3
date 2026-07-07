@@ -1,41 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Std;
 
-namespace RosSharp.RosBridgeClient
+public class airTapPublisher : MonoBehaviour
 {
-    public class airTapPublisher : UnityPublisher<MessageTypes.Std.String>
+    [Header("ROS 2 Topic")]
+    public string TopicName = "/grasp_command";
+
+    [Header("Input")]
+    public airTap_distance distance;
+
+    [Header("Debug")]
+    public string outputdata;
+
+    private ROSConnection ros;
+    private StringMsg grip;
+
+    private void Start()
     {
-        public string FramId = "Unity";
-        private MessageTypes.Std.String grip;
-        public airTap_distance distance;
-        public string outputdata;
-        protected override void Start()
+        if (distance == null)
         {
-            base.Start();
-            InitialiizeMessage();
-
+            Debug.LogError("[airTapPublisher] airTap_distance is not assigned.");
+            enabled = false;
+            return;
         }
 
-        private void FixedUpdate()
-        {
-            outputdata = distance.bool2string();
-            UpdateMessage();
-        }
+        ros = ROSConnection.GetOrCreateInstance();
 
-        private void InitialiizeMessage()
-        {
-            grip = new MessageTypes.Std.String
-            {
-                data = outputdata
-            };
-        }
-        private void UpdateMessage()
-        {
-            grip.data = outputdata;
-            Publish(grip);
-        }
+        // std_msgs/msg/String publisher を一度だけ登録
+        ros.RegisterPublisher<StringMsg>(TopicName);
 
+        grip = new StringMsg(string.Empty);
+
+        Debug.Log(
+            $"[airTapPublisher] ROS-TCP publisher registered: " +
+            $"topic={TopicName}, type=std_msgs/String");
     }
 
+    private void FixedUpdate()
+    {
+        if (ros == null || grip == null || distance == null)
+            return;
+
+        outputdata = distance.bool2string();
+
+        grip.data = outputdata;
+        ros.Publish(TopicName, grip);
+    }
 }
+

@@ -14357,6 +14357,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 555286875}
+  - component: {fileID: 555286902}
   - component: {fileID: 555286874}
   - component: {fileID: 555286864}
   - component: {fileID: 555286873}
@@ -14408,9 +14409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f85d9ff1f287c2a41872a7c0ae003c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /multi_command
-  TimeStep: 0
-  EnsureThreadSafety: 1
+  TopicName: /multi_command
   messageData: []
 --- !u!114 &555286865
 MonoBehaviour:
@@ -14470,9 +14469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381001e16b5ed73428a82eec203f33fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: gool_state
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  TopicName: /gool_state
   messageData: 0
 --- !u!114 &555286869
 MonoBehaviour:
@@ -14486,12 +14483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837e50483cacfdd429c9389431b93d14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /YouBot_Position
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  TopicName: /YouBot_Position
   messagePosition: {x: 0, y: 0, z: 0}
   messageRotation: {x: 0, y: 0, z: 0, w: 0}
-  origin: {fileID: 735956890}
 --- !u!114 &555286870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14504,8 +14498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 028fe25989d3550449af201b22a17cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /grasp_command
-  FramId: Unity
+  TopicName: /grasp_command
   distance: {fileID: 556539726}
   outputdata: 
 --- !u!114 &555286871
@@ -14520,7 +14513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d612ba31f842a4a429b5f19765b408f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /palm_pose
+  TopicName: /palm_pose
   FrameId: Unity
   handTracking: {fileID: 556539728}
 --- !u!114 &555286872
@@ -14530,7 +14523,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555286863}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b088dbbbb88df244593260d63214e1f8, type: 3}
   m_Name: 
@@ -14546,7 +14539,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555286863}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1de5ce8fdc059546809d5f84b03e1bd, type: 3}
   m_Name: 
@@ -14568,7 +14561,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555286863}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77222d514fe393c46bb4c8c311963278, type: 3}
   m_Name: 
@@ -14686,7 +14679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb49eb2c488ebd49bfbd9ca801b7cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /Base_Move
+  topicName: /Base_Move
   objectInfoSetting: {fileID: 977927058}
   FrameId: Unity
   MoveStatus: 0
@@ -14711,7 +14704,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 555286863}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdb2a0045ea3b3242ba7bbf3710f7ca1, type: 3}
   m_Name: 
@@ -14732,9 +14725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c388c99d0a14edc40854701cace0ec4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /youbot/offset
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /youbot/offset
   OriginObject: {fileID: 4447837275697576977}
   BaseMovePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &555286890
@@ -14749,7 +14740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03df8992f3f8a9841b50203ff741396d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /IRM_Select
+  topicName: /IRM_Select
   pendingCoords: []
   lastPublishedData: []
   Aligin: {fileID: 1918987531}
@@ -14765,8 +14756,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a622392863e1f4b9bbc397061e22df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /IRM_Edit_Route
+  topicName: /IRM_Edit_Route
   FrameId: Unity
+  WayPointPoseList: []
   startTransform: {fileID: 1848318713}
   WayPointObjectList: []
   PublishStatus: 0
@@ -14782,9 +14774,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693417c9e059db84999cf0cd519b9f27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /IRM_first_Route
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /IRM_first_Route
+  messagePath:
+    poses: []
   isDirty: 0
 --- !u!114 &555286893
 MonoBehaviour:
@@ -14798,7 +14790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23f980b120d6534f963a66bb05fdd9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /bottle_features
+  topicName: /bottle_features
   BottleSignalManager: {fileID: 1736839310}
 --- !u!114 &555286894
 MonoBehaviour:
@@ -14812,9 +14804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d573d75547e284b9af79e422e295a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /identified_bottle
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /identified_bottle
   bottle_id: -2
 --- !u!114 &555286895
 MonoBehaviour:
@@ -14828,9 +14818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b19080342469b4b9bb2a0484d479c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /identified_bottle_score
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /identified_bottle_score
   bottle_score: 0
 --- !u!114 &555286896
 MonoBehaviour:
@@ -14844,9 +14832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a71b91936bcb27459842e02eec2bf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /phase_name
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /phase_name
   phase_name: 
 --- !u!114 &555286897
 MonoBehaviour:
@@ -14860,9 +14846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac2a00635e7a3749a0d6ca3b918d406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /QRposition
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /QRposition
   messageUnityPosition: {x: 0, y: 0, z: 0}
   messageRosPosition: {x: 0, y: 0, z: 0}
   messageUnityRotation: {x: 0, y: 0, z: 0, w: 0}
@@ -14878,7 +14862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94286552a9b16241ac4eb1a5d180ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /P_current
+  topicName: /P_current
 --- !u!114 &555286899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14891,7 +14875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4dfd8ba27d58444863c0da2ca95973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /place_command
+  topicName: /place_command
   command: Place
 --- !u!114 &555286900
 MonoBehaviour:
@@ -14905,7 +14889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43edcca11f1a534e8b4390ecab7d929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /Hold_command
+  topicName: /Hold_command
   command: Hold
   isHolding: 0
 --- !u!114 &555286901
@@ -14920,7 +14904,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3908e41ca543074a852f2530bfc9ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RosSharp.RosBridgeClient.PointCloudPlyPublisher
-  Topic: /Depth_savedata
+  topicName: /Depth_savedata
+--- !u!114 &555286902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7acef0b79454c9b4dae3f8139bc4ba77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Robotics.ROSTCPConnector::Unity.Robotics.ROSTCPConnector.ROSConnection
+  m_RosIPAddress: 192.168.11.3
+  m_RosPort: 10000
+  m_ConnectOnStart: 1
+  m_KeepaliveTime: 1
+  m_NetworkTimeoutSeconds: 2
+  m_SleepTimeSeconds: 0.01
+  m_ShowHUD: 1
+  m_TFTopics:
+  - /tf
+  listenForTFMessages: 1
 --- !u!1 &556539725
 GameObject:
   m_ObjectHideFlags: 0
@@ -43730,6 +43736,7 @@ GameObject:
   - component: {fileID: 1918987537}
   - component: {fileID: 1918987536}
   - component: {fileID: 1918987535}
+  - component: {fileID: 1918987540}
   - component: {fileID: 1918987534}
   - component: {fileID: 1918987533}
   - component: {fileID: 1918987538}
@@ -43809,7 +43816,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918987531}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77222d514fe393c46bb4c8c311963278, type: 3}
   m_Name: 
@@ -43901,9 +43908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e8dc90fe121cf4e94d762ad1b9c51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Topic: /IRM_Map
-  TimeStep: 0
-  EnsureThreadSafety: 0
+  topicName: /IRM_Map
   pointPrefab: {fileID: 945411935784450388, guid: 8a7f99be8b2219d4c88b3db4facd90c3, type: 3}
   colorByScore:
     serializedVersion: 2
@@ -43958,6 +43963,28 @@ MonoBehaviour:
   startTransform: {fileID: 338035988}
   suggestionMessage: {fileID: 6906978518491241147}
   messageDistance: 2
+--- !u!114 &1918987540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918987531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7acef0b79454c9b4dae3f8139bc4ba77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Robotics.ROSTCPConnector::Unity.Robotics.ROSTCPConnector.ROSConnection
+  m_RosIPAddress: 192.168.11.3
+  m_RosPort: 10000
+  m_ConnectOnStart: 1
+  m_KeepaliveTime: 1
+  m_NetworkTimeoutSeconds: 2
+  m_SleepTimeSeconds: 0.01
+  m_ShowHUD: 1
+  m_TFTopics:
+  - /tf
+  listenForTFMessages: 1
 --- !u!1 &1920303710
 GameObject:
   m_ObjectHideFlags: 0

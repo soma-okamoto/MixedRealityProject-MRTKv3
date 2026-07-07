@@ -54,7 +54,8 @@ public class OperationController : MonoBehaviour
         Debug.Log("=== OPERATION START ===");
 
         rosConnector.GetComponent<RosSharp.RosBridgeClient.handPosePublisher>().enabled = true;
-        rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = true;
+        //rosConnector.GetComponent<RosSharp.RosBridgeClient.airTapPublisher>().enabled = true;
+        rosConnector.GetComponent<airTapPublisher>().enabled = true;
         rosConnector.GetComponent<Float32MultiSubscriber>().enabled = true;
         // rosConnector.GetComponent<RosSharp.RosBridgeClient.ZRotationPublisher>().enabled = true;
         rosConnector.GetComponent<RosSharp.RosBridgeClient.Phase_name_Subscriber>().enabled = true;

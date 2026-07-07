@@ -1,3 +1,5 @@
+
+/*
 using System.Collections.Generic;
 using UnityEngine;
 using MixedReality.Toolkit.SpatialManipulation;
@@ -192,4 +194,276 @@ public class IRMRouteVisual : MonoBehaviour
         publisher.PublishStatus = true;
 
     }
+}
+*/
+using System.Collections.Generic;
+using UnityEngine;
+using MixedReality.Toolkit.SpatialManipulation;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Nav;
+using RosSharp.RosBridgeClient;
+
+public class IRMRouteVisual : MonoBehaviour
+{
+[Header("References")]
+public IRMRouteSubscriber subscriber;
+public IRMRoutePathPublisher publisher;
+public Transform waypointsContainer;
+public GameObject Aligin;
+
+[Header("Prefabs & Transforms")]
+[Tooltip("編集可能ウェイポイント用プレハブ(ObjectManipulator付き)")]
+public GameObject waypointPrefab;
+
+[Tooltip("LineRenderer付きプレハブ")]
+public GameObject lineRendererPrefab;
+
+[Tooltip("経路のスタート地点にしたいオブジェクトのTransform")]
+public Transform startTransform;
+
+[Tooltip("初回表示用案内メッセージ(3D Textなど)")]
+public GameObject suggestionMessage;
+
+[Header("Display Settings")]
+[Tooltip("案内メッセージ表示位置(カメラ前の距離)")]
+public float messageDistance = 2.0f;
+
+private readonly List<GameObject> waypoints = new List<GameObject>();
+private LineRenderer lineRenderer;
+private bool hasVisualized = false;
+
+private void Start()
+{
+    subscriber = subscriber ?? GetComponent<IRMRouteSubscriber>();
+    publisher = publisher ?? GetComponent<IRMRoutePathPublisher>();
+
+    if (subscriber == null)
+    {
+        Debug.LogError("[IRMRouteVisual] IRMRouteSubscriber が見つかりません。");
+        enabled = false;
+        return;
+    }
+
+    if (publisher == null)
+    {
+        Debug.LogError("[IRMRouteVisual] IRMRoutePathPublisher が見つかりません。");
+        enabled = false;
+        return;
+    }
+
+    if (waypointsContainer == null)
+    {
+        Debug.LogError("[IRMRouteVisual] waypointsContainer が未設定です。");
+        enabled = false;
+        return;
+    }
+
+    if (waypointPrefab == null || lineRendererPrefab == null)
+    {
+        Debug.LogError("[IRMRouteVisual] waypointPrefab または lineRendererPrefab が未設定です。");
+        enabled = false;
+        return;
+    }
+
+    GameObject lrObj = Instantiate(lineRendererPrefab, waypointsContainer);
+
+    lrObj.transform.localPosition = Vector3.zero;
+    lrObj.transform.localRotation = Quaternion.identity;
+
+    lineRenderer = lrObj.GetComponent<LineRenderer>();
+
+    if (lineRenderer == null)
+    {
+        Debug.LogError("[IRMRouteVisual] lineRendererPrefab に LineRenderer がありません。");
+        enabled = false;
+        return;
+    }
+
+    lineRenderer.positionCount = 0;
+
+    publisher.WayPointObjectList = new List<GameObject>();
+}
+
+private void Update()
+{
+    if (subscriber.messagePath == null || !subscriber.isDirty)
+        return;
+
+    Visualize(subscriber.messagePath);
+    ShowSuggestionMessage();
+
+    hasVisualized = true;
+    subscriber.isDirty = false;
+}
+
+public void DisvisualWaypoint()
+{
+    foreach (GameObject waypoint in waypoints)
+    {
+        if (waypoint != null)
+        {
+            waypoint.SetActive(false);
+        }
+    }
+
+    if (lineRenderer != null)
+    {
+        lineRenderer.gameObject.SetActive(false);
+    }
+}
+
+private void Visualize(PathMsg path)
+{
+    if (path == null || path.poses == null)
+    {
+        Debug.LogWarning("[IRMRouteVisual] 受信した PathMsg が空です。");
+        return;
+    }
+
+    if (startTransform == null)
+    {
+        Debug.LogError("[IRMRouteVisual] startTransform が未設定です。");
+        return;
+    }
+
+    Clear();
+
+    int waypointCount = path.poses.Length;
+
+    lineRenderer.gameObject.SetActive(true);
+    lineRenderer.positionCount = waypointCount + 1;
+
+    // 経路開始点
+    lineRenderer.SetPosition(0, startTransform.position);
+
+    for (int i = 0; i < waypointCount; i++)
+    {
+        var poseStamped = path.poses[i];
+
+        if (poseStamped == null || poseStamped.pose == null)
+        {
+            Debug.LogWarning($"[IRMRouteVisual] path.poses[{i}] が不正です。");
+            continue;
+        }
+
+        // ROS -> Unity 変換
+        // IRMRoutePathPublisher 側:
+        // ROS = (Unity.z, -Unity.x, Unity.y)
+        //
+        // 逆変換:
+        // Unity = (-ROS.y, ROS.z, ROS.x)
+        //
+        // 元コードと同様に、表示は地面上へ固定するため Unity.y は 0 とする。
+        Vector3 rosLocal = new Vector3(
+            -(float)poseStamped.pose.position.y,
+            0f,
+            (float)poseStamped.pose.position.x
+        );
+
+        GameObject waypoint = Instantiate(waypointPrefab, waypointsContainer);
+
+        waypoint.transform.localPosition = rosLocal;
+        waypoint.transform.localRotation = Quaternion.identity;
+
+        waypoints.Add(waypoint);
+
+        ObjectManipulator manipulator =
+            waypoint.GetComponent<ObjectManipulator>();
+
+        if (manipulator == null)
+        {
+            manipulator = waypoint.AddComponent<ObjectManipulator>();
+        }
+
+        int waypointIndex = i;
+
+        manipulator.lastSelectExited.AddListener(
+            _ => OnWaypointMoved(waypoint, waypointIndex)
+        );
+
+        lineRenderer.SetPosition(i + 1, waypoint.transform.position);
+
+        publisher.WayPointObjectList.Add(waypoint);
+    }
+}
+
+private void OnWaypointMoved(GameObject movedWaypoint, int index)
+{
+    if (lineRenderer == null || movedWaypoint == null)
+        return;
+
+    int lineIndex = index + 1;
+
+    if (lineIndex < lineRenderer.positionCount)
+    {
+        lineRenderer.SetPosition(
+            lineIndex,
+            movedWaypoint.transform.position
+        );
+    }
+}
+
+private void Clear()
+{
+    foreach (GameObject waypoint in waypoints)
+    {
+        if (waypoint != null)
+        {
+            Destroy(waypoint);
+        }
+    }
+
+    waypoints.Clear();
+
+    if (lineRenderer != null)
+    {
+        lineRenderer.positionCount = 0;
+    }
+
+    if (publisher != null && publisher.WayPointObjectList != null)
+    {
+        publisher.WayPointObjectList.Clear();
+    }
+}
+
+private void ShowSuggestionMessage()
+{
+    if (suggestionMessage == null || suggestionMessage.activeSelf)
+        return;
+
+    Camera mainCamera = Camera.main;
+
+    if (mainCamera == null)
+        return;
+
+    suggestionMessage.transform.position =
+        mainCamera.transform.position +
+        mainCamera.transform.forward * messageDistance;
+
+    suggestionMessage.transform.rotation =
+        Quaternion.LookRotation(mainCamera.transform.forward);
+
+    suggestionMessage.SetActive(true);
+}
+
+public void PublishEditedRoute()
+{
+    if (Aligin != null)
+    {
+        AlignToTarget alignToTarget =
+            Aligin.GetComponent<AlignToTarget>();
+
+        if (alignToTarget != null)
+        {
+            alignToTarget.enabled = false;
+        }
+    }
+
+    if (publisher != null)
+    {
+        publisher.PublishStatus = true;
+    }
+}
+
+
 }

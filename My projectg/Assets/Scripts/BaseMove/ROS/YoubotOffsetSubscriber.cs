@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using RosSharp.RosBridgeClient;
 using RosSharp.RosBridgeClient.MessageTypes.Geometry;
 using System.Diagnostics;
@@ -10,8 +11,7 @@ using System.Runtime.InteropServices;
 /// </summary>
 public class YoubotOffsetSubscriber : UnitySubscriber<Vector3Stamped>
 {
-    /*[Tooltip("購読する ROS トピック名 (例: /youbot/offset)")]
-    public string Topic = "/youbot/offset";*/
+  
 
     [Tooltip("移動量を適用する Origin オブジェクト")]
     public GameObject OriginObject;
@@ -57,5 +57,116 @@ public class YoubotOffsetSubscriber : UnitySubscriber<Vector3Stamped>
         BaseMovePosition = rosUnityOffset;
         
     }
+
+}
+*/
+using UnityEngine;
+using Unity.Robotics.ROSTCPConnector;
+using RosMessageTypes.Geometry;
+
+public class YoubotOffsetSubscriber : MonoBehaviour
+{
+[Header("ROS 2 Topic")]
+[SerializeField] private string topicName = "/youbot/offset";
+
+[Tooltip("移動量を適用する Origin オブジェクト")]
+public GameObject OriginObject;
+
+[Header("Debug")]
+public Vector3 BaseMovePosition;
+
+private ROSConnection ros;
+
+// Unity上で最初に設定されていたOriginObjectのローカル位置
+private Vector3 unityStartLocalPos;
+
+// 最初に受信したROS offsetを基準値として保持
+private Vector3 rosUnityOffset0;
+private bool isRosInit;
+
+private Vector3 latestRosUnityOffset;
+private bool hasNewOffset;
+
+private void Start()
+{
+    if (OriginObject == null)
+    {
+        Debug.LogError("[YoubotOffsetSubscriber] OriginObject が未設定です。");
+        enabled = false;
+        return;
+    }
+
+    unityStartLocalPos = OriginObject.transform.localPosition;
+
+    ros = ROSConnection.GetOrCreateInstance();
+
+    // ROS 2: geometry_msgs/msg/Vector3Stamped
+    ros.Subscribe<Vector3StampedMsg>(topicName, ReceiveMessage);
+
+    Debug.Log(
+        $"[YoubotOffsetSubscriber] ROS-TCP subscriber registered: " +
+        $"topic={topicName}, type=geometry_msgs/Vector3Stamped");
+}
+
+private void Update()
+{
+    if (!hasNewOffset || OriginObject == null)
+        return;
+
+    hasNewOffset = false;
+
+    // 初回受信値を原点として扱う
+    if (!isRosInit)
+    {
+        rosUnityOffset0 = latestRosUnityOffset;
+        isRosInit = true;
+
+        OriginObject.transform.localPosition = unityStartLocalPos;
+        return;
+    }
+
+    // 初回値からの相対移動量
+    Vector3 relativeOffset = latestRosUnityOffset - rosUnityOffset0;
+
+    // OriginObjectを初期ローカル位置から移動
+    OriginObject.transform.localPosition =
+        unityStartLocalPos + relativeOffset;
+}
+
+private void ReceiveMessage(Vector3StampedMsg message)
+{
+    if (message == null || message.vector == null)
+    {
+        Debug.LogWarning(
+            "[YoubotOffsetSubscriber] Received null Vector3Stamped message.");
+        return;
+    }
+
+    // 元コードのAMIR用変換を維持
+    // ROS:   (x, y, z)
+    // Unity: (-y, z, x)
+    Vector3 rosUnityOffset = new Vector3(
+        -(float)message.vector.y,
+        (float)message.vector.z,
+        (float)message.vector.x
+    );
+
+    BaseMovePosition = rosUnityOffset;
+    latestRosUnityOffset = rosUnityOffset;
+    hasNewOffset = true;
+}
+
+public void ResetOffsetReference()
+{
+    isRosInit = false;
+
+    if (OriginObject != null)
+    {
+        unityStartLocalPos = OriginObject.transform.localPosition;
+    }
+
+    Debug.Log("[YoubotOffsetSubscriber] Offset reference reset.");
+}
+
 
 }
