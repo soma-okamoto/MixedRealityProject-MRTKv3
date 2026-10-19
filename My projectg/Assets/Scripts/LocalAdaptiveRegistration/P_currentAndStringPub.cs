@@ -14,6 +14,12 @@ public class P_currentAndStringPub : MonoBehaviour
     public P_cerrentPublisher p_currentPublisher;
     public PlaceCommandPublisher placeCommandPublisher;
     public Hold_commandPublisher holdCommandPublisher;
+    public ColorImageTriggerPublisher colorImageTriggerPublisher;
+    public ColorCameraInfoPublisher colorCameraInfoPublisher;
+    public DepthImageTriggerPublisher depthImageTriggerPublisher;
+    public DepthCameraInfoPublisher depthCameraInfoPublisher;
+    public ColorDepthTransformPublisher colorDepthTransformPublisher;
+
     public GameObject rosConnector;
 
 
@@ -41,6 +47,19 @@ public class P_currentAndStringPub : MonoBehaviour
 
         if (holdCommandPublisher == null)
             holdCommandPublisher = FindObjectOfType<Hold_commandPublisher>();
+
+        if (colorImageTriggerPublisher == null)
+            colorImageTriggerPublisher = FindObjectOfType<ColorImageTriggerPublisher>();
+
+        if (colorCameraInfoPublisher == null)
+            colorCameraInfoPublisher = FindObjectOfType<ColorCameraInfoPublisher>();
+
+        if (depthImageTriggerPublisher == null)
+            depthImageTriggerPublisher = FindObjectOfType<DepthImageTriggerPublisher>();
+        if (depthCameraInfoPublisher == null)
+            depthCameraInfoPublisher = FindObjectOfType<DepthCameraInfoPublisher>();
+        if (colorDepthTransformPublisher == null)
+            colorDepthTransformPublisher = FindObjectOfType<ColorDepthTransformPublisher>();
 
         if (origin_base == null)
         {
@@ -146,6 +165,62 @@ public class P_currentAndStringPub : MonoBehaviour
                 if (placeCommandPublisher != null && placeCommandPublisher.isActiveAndEnabled)
                 {
                     placeCommandPublisher.PublishPlace();
+
+                    // ROS側のYOLO処理開始トリガー(Place)を送った直後に、
+                    // Color画像を数フレームだけ取得・配信する。
+                    if (colorImageTriggerPublisher != null &&
+                        colorImageTriggerPublisher.isActiveAndEnabled)
+                    {
+                        colorImageTriggerPublisher.CaptureAndPublish();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[P_current] ColorImageTriggerPublisher が見つかりません");
+                    }
+
+                    if (colorCameraInfoPublisher != null &&
+                        colorCameraInfoPublisher.isActiveAndEnabled)
+                    {
+                        colorCameraInfoPublisher.PublishCameraInfo();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[P_current] ColorCameraInfoPublisher is missing or disabled.");
+                    }
+
+                    if (depthImageTriggerPublisher != null &&
+                        depthImageTriggerPublisher.isActiveAndEnabled)
+                    {
+                        depthImageTriggerPublisher.CaptureAndPublish();
+                    }
+                    else
+                    {
+                        Debug.LogWarning(
+                            $"[P_current] DepthImageTriggerPublisher が未設定または無効です。" +
+                            $" referenceNull={depthImageTriggerPublisher == null}, " +
+                            $" active={depthImageTriggerPublisher != null && depthImageTriggerPublisher.isActiveAndEnabled}");
+                    }
+
+                    if (depthCameraInfoPublisher != null &&
+                        depthCameraInfoPublisher.isActiveAndEnabled)
+                    {
+                        depthCameraInfoPublisher.PublishCameraInfo();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[P_current] DepthCameraInfoPublisher is missing or disabled.");
+                    }
+
+                    if (colorDepthTransformPublisher != null &&
+                        colorDepthTransformPublisher.isActiveAndEnabled)
+                    {
+                        colorDepthTransformPublisher.PublishTransform();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[P_current] ColorDepthTransformPublisher is missing or disabled.");
+                    }
+
                 }
                 else
                 {

@@ -62,6 +62,14 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<P_cerrentPublisher>().enabled = true;
         rosConnector.GetComponent<PlaceCommandPublisher>().enabled = true;
         rosConnector.GetComponent<Hold_commandPublisher>().enabled = true;
+        rosConnector.GetComponent<ColorImageTriggerPublisher>().enabled = true;
+        rosConnector.GetComponent<ColorCameraInfoPublisher>().enabled = true;
+        rosConnector.GetComponent<DepthImageTriggerPublisher>().enabled = true;
+        rosConnector.GetComponent<DepthCameraInfoPublisher>().enabled = true;
+        rosConnector.GetComponent<ColorDepthTransformPublisher>().enabled = true;
+        rosConnector.GetComponent<MetaColorPoseQrPublisher>().enabled = true;
+
+
 
         
 
