@@ -27,7 +27,7 @@ using RosSharp.RosBridgeClient.MessageTypes.Std;
         private int outputWidth = 640;
 
         [SerializeField]
-        private int outputHeight = 480;
+        private int outputHeight = 640;
 
         [Header("Triggered capture")]
         [SerializeField]

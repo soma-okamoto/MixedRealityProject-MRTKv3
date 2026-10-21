@@ -15208,7 +15208,7 @@ MonoBehaviour:
   webCamTextureManager: {fileID: 1718971334}
   frameId: quest_color_left_optical
   outputWidth: 640
-  outputHeight: 480
+  outputHeight: 640
   framesPerRequest: 3
   intervalSeconds: 0.1
   flipVertical: 1
@@ -15228,7 +15228,7 @@ MonoBehaviour:
   depthLinearizationShader: {fileID: 4800000, guid: 95f039293f1d4c64fbe78ea832ecb4ea, type: 3}
   frameId: quest_depth_left_optical
   outputWidth: 640
-  outputHeight: 480
+  outputHeight: 640
   framesPerRequest: 3
   intervalSeconds: 0.1
   environmentDepthManager: {fileID: 87477665}
@@ -15249,7 +15249,7 @@ MonoBehaviour:
   cameraEye: 0
   frameId: quest_color_left_optical
   outputWidth: 640
-  outputHeight: 480
+  outputHeight: 640
   distortionModel: plumb_bob
 --- !u!114 &555286905
 MonoBehaviour:
@@ -15267,7 +15267,7 @@ MonoBehaviour:
   environmentDepthManager: {fileID: 87477665}
   frameId: quest_depth_left_optical
   outputWidth: 640
-  outputHeight: 480
+  outputHeight: 640
   distortionModel: plumb_bob
   waitTimeoutSeconds: 20
 --- !u!114 &555286906

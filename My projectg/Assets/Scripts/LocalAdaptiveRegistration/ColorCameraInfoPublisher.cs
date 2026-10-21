@@ -26,7 +26,7 @@ public class ColorCameraInfoPublisher : UnityPublisher<sensor_msgs.CameraInfo>
     private int outputWidth = 640;
 
     [SerializeField]
-    private int outputHeight = 480;
+    private int outputHeight = 640;
 
     [SerializeField]
     private string distortionModel = "plumb_bob";
