@@ -1670,7 +1670,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &50369311
 Transform:
   m_ObjectHideFlags: 0
@@ -4955,7 +4955,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &183048195
 Transform:
   m_ObjectHideFlags: 0
@@ -8789,7 +8789,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 473089089}
+  - {fileID: 519008200}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12367,35 +12367,6 @@ Transform:
   - {fileID: 1189762168}
   m_Father: {fileID: 2123584743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &473089089
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &484850484
 GameObject:
   m_ObjectHideFlags: 0
@@ -12909,6 +12880,35 @@ Transform:
   - {fileID: 1618911425}
   m_Father: {fileID: 1194790974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &519008200
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &524648245
 GameObject:
   m_ObjectHideFlags: 0
@@ -14632,6 +14632,7 @@ GameObject:
   - component: {fileID: 555286905}
   - component: {fileID: 555286906}
   - component: {fileID: 555286907}
+  - component: {fileID: 555286908}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -15212,6 +15213,7 @@ MonoBehaviour:
   framesPerRequest: 3
   intervalSeconds: 0.1
   flipVertical: 1
+  metaColorPoseQrPublisher: {fileID: 0}
 --- !u!114 &555286903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15302,6 +15304,23 @@ MonoBehaviour:
   Topic: /meta_color_pose_qr
   qrFrameId: qr_main
   colorFrameId: quest_color_left_optical
+--- !u!114 &555286908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3215ae6cb6805514eb21f49a6c4e71c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CorrectedBottlePositionSubscriber
+  Topic: /P_place
+  TimeStep: 0
+  EnsureThreadSafety: 0
+  defaultTopic: /P_place
+  defaultObjectList: {fileID: 646328162}
 --- !u!1001 &555887933
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23882,7 +23901,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &936849531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34645,7 +34664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1423676559
 Transform:
   m_ObjectHideFlags: 0
@@ -37907,7 +37926,7 @@ GameObject:
   - component: {fileID: 1595732918}
   - component: {fileID: 1595732919}
   m_Layer: 0
-  m_Name: DetectObjectManager
+  m_Name: TOI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38125,7 +38144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1604990866
 Transform:
   m_ObjectHideFlags: 0
@@ -45503,7 +45522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2009451443
 Transform:
   m_ObjectHideFlags: 0
@@ -46795,7 +46814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2142391841
 Transform:
   m_ObjectHideFlags: 0
@@ -62954,11 +62973,12 @@ SceneRoots:
   - {fileID: 372573367}
   - {fileID: 1896846446}
   - {fileID: 264591367}
-  - {fileID: 936849532}
   - {fileID: 1595732918}
   - {fileID: 1322752567}
-  - {fileID: 976219393}
+  - {fileID: 737198996}
   - {fileID: 50369311}
+  - {fileID: 976219393}
+  - {fileID: 936849532}
   - {fileID: 1770369285}
   - {fileID: 1824541339}
   - {fileID: 274688872}
@@ -62966,4 +62986,3 @@ SceneRoots:
   - {fileID: 508999148}
   - {fileID: 1798514035}
   - {fileID: 1423676559}
-  - {fileID: 737198996}

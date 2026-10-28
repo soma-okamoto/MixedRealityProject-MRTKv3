@@ -19,12 +19,13 @@ public class P_currentAndStringPub : MonoBehaviour
     public DepthImageTriggerPublisher depthImageTriggerPublisher;
     public DepthCameraInfoPublisher depthCameraInfoPublisher;
     public ColorDepthTransformPublisher colorDepthTransformPublisher;
+    public CorrectedBottlePositionSubscriber correctedBottlePositionSubscriber;
 
     public GameObject rosConnector;
 
 
-    [Tooltip("座標変換の基準になるBase")]
-    public GameObject origin_base;
+    [Tooltip("ボトルの相対座標変換の基準になるObjectList")]
+    public GameObject objectList;
 
     [Header("Debug")]
     public int currentId = -1;
@@ -61,12 +62,15 @@ public class P_currentAndStringPub : MonoBehaviour
         if (colorDepthTransformPublisher == null)
             colorDepthTransformPublisher = FindObjectOfType<ColorDepthTransformPublisher>();
 
-        if (origin_base == null)
+        if (correctedBottlePositionSubscriber == null)
+            correctedBottlePositionSubscriber = FindObjectOfType<CorrectedBottlePositionSubscriber>();
+
+        if (objectList == null)
         {
-            origin_base = GameObject.Find("origin_base");
-            if (origin_base == null)
+            objectList = GameObject.Find("ObjectList");
+            if (objectList == null)
             {
-                Debug.LogError($" Hierarchy 上に名前 \"Origin\" の GameObject が見つかりません。");
+                Debug.LogError("[P_current] Hierarchy上にObjectListが見つかりません。");
             }
         }
         if (rosConnector == null)
@@ -145,6 +149,22 @@ public class P_currentAndStringPub : MonoBehaviour
                 currentYoubotPosition = CalculatePosition(info.position);
 
                 found = true;
+
+                // Register this bottle before publishing P_current and PLACE.
+                // The next ROS PoseStamped is then applied only to this bottle.
+                if (correctedBottlePositionSubscriber != null &&
+                    correctedBottlePositionSubscriber.isActiveAndEnabled)
+                {
+                    correctedBottlePositionSubscriber.ArmForBottle(
+                        currentId,
+                        currentBottle,
+                        objectList != null ? objectList.transform : null);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        "[P_current] CorrectedBottlePositionSubscriber が見つからないか無効です。");
+                }
 
                 //Debug.Log(
                 //    $"[P_current] 自分を発見: ID={currentId}, " +
@@ -248,14 +268,17 @@ public class P_currentAndStringPub : MonoBehaviour
     {
         var calculated = new List<float>();
 
+        if (objectList == null)
+        {
+            Debug.LogError("[P_current] ObjectListが未設定です。");
+            return calculated.ToArray();
+        }
+
         // YouBot 向けに追加したいオフセット
         Vector3 axisOffset = new Vector3(0.0f, 0.0f, 0.0f);
 
-        // Origin のワールド座標
-        Vector3 originWorld = origin_base.transform.position;
-
-        // ワールド差分で相対位置を計算
-        Vector3 relative = bottleWorld - originWorld;
+        // ボトルの親であるObjectListのローカル座標で相対位置を計算
+        Vector3 relative = objectList.transform.InverseTransformPoint(bottleWorld);
 
         // オフセットを加算
         Vector3 adjusted = relative + axisOffset;

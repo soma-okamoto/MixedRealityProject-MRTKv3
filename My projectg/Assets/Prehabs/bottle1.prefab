@@ -505,7 +505,7 @@ MonoBehaviour:
   placeCommandPublisher: {fileID: 0}
   holdCommandPublisher: {fileID: 0}
   rosConnector: {fileID: 0}
-  origin_base: {fileID: 0}
+  objectList: {fileID: 0}
   currentId: -1
   currentBottle: {fileID: 0}
   currentWorldPosition: {x: 0, y: 0, z: 0}
