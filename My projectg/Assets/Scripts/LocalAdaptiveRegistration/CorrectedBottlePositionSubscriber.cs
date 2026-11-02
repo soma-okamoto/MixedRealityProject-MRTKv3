@@ -1,16 +1,15 @@
+using System.Collections.Generic;
 using RosSharp.RosBridgeClient;
-using geometry_msgs = RosSharp.RosBridgeClient.MessageTypes.Geometry;
+using place_estimation = RosSharp.RosBridgeClient.MessageTypes.PlaceEstimation;
 using UnityEngine;
 
 /// <summary>
 /// Receives the final bottle position calculated by ROS.
-/// The next PoseStamped received after ArmForBottle is applied only to that bottle.
+/// Registered bottle IDs select the target; results are applied on the main thread.
 /// </summary>
-public class CorrectedBottlePositionSubscriber : UnitySubscriber<geometry_msgs.PoseStamped>
+public class CorrectedBottlePositionSubscriber : UnitySubscriber<place_estimation.BottleDistribution>
 {
-    [Header("ROS result")]
-    [SerializeField]
-    private string defaultTopic = "/P_place";
+    private const string ResultTopic = "/P_place_with_id";
 
     [Header("Coordinate conversion")]
     [Tooltip("Unity ObjectList used as the parent/reference for bottle coordinates.")]
@@ -18,30 +17,48 @@ public class CorrectedBottlePositionSubscriber : UnitySubscriber<geometry_msgs.P
     private Transform defaultObjectList;
 
     private readonly object messageLock = new object();
+    private readonly Queue<ReceivedPosition> receivedPositions = new Queue<ReceivedPosition>();
+    // This dictionary and all Unity object references are accessed only on the main thread.
+    private readonly Dictionary<int, BottleTarget> registeredBottles = new Dictionary<int, BottleTarget>();
 
-    private GameObject pendingBottle;
-    private Transform pendingObjectList;
-    private int pendingBottleId = -1;
-    private bool waitingForResult;
-    private bool resultReady;
-    private Vector3 pendingRosPosition;
-    private string pendingFrameId;
+    private sealed class BottleTarget
+    {
+        public GameObject Bottle;
+        public Transform ObjectList;
+    }
+
+    private struct ReceivedPosition
+    {
+        public int BottleId;
+        public float X;
+        public float Y;
+        public float Z;
+        public string FrameId;
+        public bool HasPosition;
+    }
 
     protected override void Start()
     {
-        if (string.IsNullOrWhiteSpace(Topic))
-            Topic = defaultTopic;
+        // Migrate saved components which still point at the old, ID-less result.
+        if (string.IsNullOrWhiteSpace(Topic) || Topic == "/P_place")
+            Topic = ResultTopic;
 
         base.Start();
         Debug.Log($"[CorrectedBottlePosition] Subscriber started. topic={Topic}");
     }
 
     /// <summary>
-    /// Arms this subscriber for one PLACE request.
-    /// Call before publishing P_current and PLACE.
+    /// Registers the same bottle ID that is sent in /P_current.data[0].
+    /// Call on the main thread before publishing P_current and PLACE.
     /// </summary>
     public bool ArmForBottle(int bottleId, GameObject bottle, Transform objectListTransform = null)
     {
+        if (bottleId < 0)
+        {
+            Debug.LogWarning($"[CorrectedBottlePosition] Cannot register uninitialized bottleId={bottleId}.");
+            return false;
+        }
+
         if (bottle == null)
         {
             Debug.LogWarning("[CorrectedBottlePosition] Cannot arm: bottle is null.");
@@ -55,93 +72,112 @@ public class CorrectedBottlePositionSubscriber : UnitySubscriber<geometry_msgs.P
             return false;
         }
 
-        lock (messageLock)
+        if (registeredBottles.TryGetValue(bottleId, out var existing) &&
+            !ReferenceEquals(existing.Bottle, bottle))
         {
-            pendingBottleId = bottleId;
-            pendingBottle = bottle;
-            pendingObjectList = objectList;
-            waitingForResult = true;
-            resultReady = false;
-            pendingRosPosition = Vector3.zero;
-            pendingFrameId = string.Empty;
+            Debug.LogError(
+                $"[CorrectedBottlePosition] Duplicate bottleId={bottleId}. " +
+                $"Another bottle is already registered; {bottle.name} was not registered.");
+            return false;
         }
 
+        registeredBottles[bottleId] = new BottleTarget { Bottle = bottle, ObjectList = objectList };
+
         Debug.Log(
-            $"[CorrectedBottlePosition] Waiting for ROS result. " +
+            $"[CorrectedBottlePosition] Registered ROS result target. " +
             $"bottleId={bottleId}, bottle={bottle.name}, objectList={objectList.name}");
         return true;
     }
 
+    /// <summary>Clears all registered targets and queued results on the main thread.</summary>
     public void CancelPendingResult()
     {
+        registeredBottles.Clear();
         lock (messageLock)
         {
-            waitingForResult = false;
-            resultReady = false;
-            pendingBottle = null;
-            pendingObjectList = null;
-            pendingBottleId = -1;
+            receivedPositions.Clear();
         }
     }
 
-    protected override void ReceiveMessage(geometry_msgs.PoseStamped message)
+    protected override void ReceiveMessage(place_estimation.BottleDistribution message)
     {
-        var rosPosition = new Vector3(
-            (float)message.pose.position.x,
-            (float)message.pose.position.y,
-            (float)message.pose.position.z);
+        if (message == null)
+            return;
+
+        // Copy message data only. ROS callbacks must not access Unity objects.
+        var received = new ReceivedPosition
+        {
+            BottleId = message.bottle_id,
+            X = message.position != null ? (float)message.position.x : 0f,
+            Y = message.position != null ? (float)message.position.y : 0f,
+            Z = message.position != null ? (float)message.position.z : 0f,
+            FrameId = message.header != null ? message.header.frame_id : string.Empty,
+            HasPosition = message.position != null
+        };
 
         lock (messageLock)
         {
-            // Ignore unsolicited or stale results.
-            if (!waitingForResult)
-                return;
-
-            pendingRosPosition = rosPosition;
-            pendingFrameId = message.header != null ? message.header.frame_id : string.Empty;
-            resultReady = true;
+            receivedPositions.Enqueue(received);
         }
     }
 
     private void Update()
     {
-        GameObject bottle;
-        Transform objectList;
-        Vector3 rosPosition;
-        string frameId;
-        int bottleId;
-
+        int count;
         lock (messageLock)
+            count = receivedPositions.Count;
+
+        // Process this frame's queue in order, without overwriting another ID's result.
+        for (var i = 0; i < count; i++)
         {
-            if (!resultReady)
-                return;
+            ReceivedPosition received;
+            lock (messageLock)
+            {
+                if (receivedPositions.Count == 0)
+                    break;
+                received = receivedPositions.Dequeue();
+            }
 
-            bottle = pendingBottle;
-            objectList = pendingObjectList;
-            rosPosition = pendingRosPosition;
-            frameId = pendingFrameId;
-            bottleId = pendingBottleId;
-
-            resultReady = false;
-            waitingForResult = false;
-            pendingBottle = null;
-            pendingObjectList = null;
-            pendingBottleId = -1;
+            ApplyPosition(received);
         }
+    }
+
+    private void ApplyPosition(ReceivedPosition received)
+    {
+        var bottleId = received.BottleId;
+        if (bottleId < 0 || !registeredBottles.TryGetValue(bottleId, out var target))
+        {
+            Debug.LogWarning($"[CorrectedBottlePosition] Ignored unregistered bottleId={bottleId}.");
+            return;
+        }
+
+        if (!received.HasPosition ||
+            float.IsNaN(received.X) || float.IsInfinity(received.X) ||
+            float.IsNaN(received.Y) || float.IsInfinity(received.Y) ||
+            float.IsNaN(received.Z) || float.IsInfinity(received.Z))
+        {
+            Debug.LogWarning($"[CorrectedBottlePosition] Ignored invalid position for bottleId={bottleId}.");
+            return;
+        }
+
+        var bottle = target.Bottle;
+        var objectList = target.ObjectList;
+        var rosPosition = new Vector3(received.X, received.Y, received.Z);
+        var frameId = received.FrameId;
 
         if (bottle == null || objectList == null)
         {
             Debug.LogWarning(
                 "[CorrectedBottlePosition] ROS result received, but the target " +
-                "bottle or ObjectList no longer exists.");
+                $"bottle or ObjectList no longer exists. bottleId={bottleId}");
             return;
         }
 
         // Existing conversion used by P_current and YouBotPosSubscriber:
-        // ROS robot (x, y, z) -> Unity local (-x, z, y).
+        // ROS robot (x, y, z) -> Unity local (-x, -z, y).
         var unityLocalPosition = new Vector3(
             -rosPosition.x,
-            rosPosition.z,
+            -rosPosition.z,
             rosPosition.y);
 
         var unityWorldPosition = objectList.TransformPoint(unityLocalPosition);

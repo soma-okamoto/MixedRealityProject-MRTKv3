@@ -145,13 +145,19 @@ public class P_currentAndStringPub : MonoBehaviour
             {
                 currentId = info.id;
                 currentBottle = info.bottle;
+                if (currentId < 0)
+                {
+                    Debug.LogWarning("[P_current] Bottle ID is not initialized; PLACE was not published.");
+                    return;
+                }
+
                 currentWorldPosition = info.position;
                 currentYoubotPosition = CalculatePosition(info.position);
 
                 found = true;
 
                 // Register this bottle before publishing P_current and PLACE.
-                // The next ROS PoseStamped is then applied only to this bottle.
+                // ROS results select this bottle using the same ID as /P_current.data[0].
                 if (correctedBottlePositionSubscriber != null &&
                     correctedBottlePositionSubscriber.isActiveAndEnabled)
                 {

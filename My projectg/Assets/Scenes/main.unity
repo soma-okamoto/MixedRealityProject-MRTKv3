@@ -15316,10 +15316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3215ae6cb6805514eb21f49a6c4e71c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CorrectedBottlePositionSubscriber
-  Topic: /P_place
+  Topic: /P_place_with_id
   TimeStep: 0
   EnsureThreadSafety: 0
-  defaultTopic: /P_place
   defaultObjectList: {fileID: 646328162}
 --- !u!1001 &555887933
 PrefabInstance:

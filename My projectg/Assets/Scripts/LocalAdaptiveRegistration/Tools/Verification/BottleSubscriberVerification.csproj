@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>STANDALONE_BOTTLE_TEST</DefineConstants>
+    <RestoreIgnoreFailedSources>true</RestoreIgnoreFailedSources>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="StandaloneHarness.cs" />
+    <Compile Include="../../CorrectedBottlePositionSubscriber.cs" />
+    <Compile Include="../../RosMessages/Generated/PlaceEstimation/msg/BottleDistribution.cs" />
+    <Compile Include="../../../../ROS# Project Team/ROS#/Runtime/Libraries/RosBridgeClient/BaseMessages/Message.cs" />
+    <Compile Include="../../../../ROS# Project Team/ROS#/Runtime/Libraries/RosBridgeClient/MessageTypes/ROS1/Std/msg/Header.cs" />
+    <Compile Include="../../../../ROS# Project Team/ROS#/Runtime/Libraries/RosBridgeClient/MessageTypes/ROS1/Std/msg/Time.cs" />
+    <Compile Include="../../../../ROS# Project Team/ROS#/Runtime/Libraries/RosBridgeClient/MessageTypes/ROS1/Geometry/msg/Point.cs" />
+  </ItemGroup>
+</Project>
