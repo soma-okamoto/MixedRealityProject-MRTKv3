@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RosSharp.RosBridgeClient.MessageTypes.PlaceEstimation;
 using RosSharp.RosBridgeClient.MessageTypes.Geometry;
+using RosSharp.RosBridgeClient.MessageTypes.Std;
 using UnityEngine;
 using Numerics = System.Numerics;
 
@@ -27,7 +28,20 @@ namespace UnityEngine
     public class Object
     {
         public bool Destroyed;
-        public string name { get { TestThread.Check(); return "TestObject"; } }
+        private string objectName = "TestObject";
+        public string name
+        {
+            get { TestThread.Check(); return objectName; }
+            set { TestThread.Check(); objectName = value; }
+        }
+        public static GameObject Instantiate(GameObject prefab, Transform parent)
+        {
+            TestThread.Check();
+            var clone = new GameObject();
+            clone.transform.parent = parent;
+            return clone;
+        }
+        public static void Destroy(Object target) { TestThread.Check(); target.Destroyed = true; }
         public static bool operator ==(Object a, Object b)
         {
             TestThread.Check();
@@ -53,6 +67,8 @@ namespace UnityEngine
 
     public class Transform : Object
     {
+        public Transform parent;
+        public void SetParent(Transform value, bool worldPositionStays) { TestThread.Check(); parent = value; }
         private Vector3 currentPosition;
         public int PositionWrites;
         public Numerics.Quaternion rotation = Numerics.Quaternion.Identity;
@@ -74,6 +90,8 @@ namespace UnityEngine
 
     public class GameObject : Object
     {
+        public bool activeSelf = true;
+        public void SetActive(bool value) { TestThread.Check(); activeSelf = value; }
         private readonly Transform targetTransform = new Transform();
         public Transform transform { get { TestThread.Check(); return targetTransform; } }
     }
@@ -106,6 +124,19 @@ internal sealed class ProbeSubscriber : CorrectedBottlePositionSubscriber
     public void Deliver(BottleDistribution message) { ReceiveMessage(message); }
     public void Tick() { UpdateMethod.Invoke(this, null); }
     public void StartForTest() { Start(); }
+}
+
+internal sealed class MetaDebugProbe : P_metaPositionDebugSubscriber
+{
+    private static readonly MethodInfo UpdateMethod = typeof(P_metaPositionDebugSubscriber)
+        .GetMethod("Update", BindingFlags.NonPublic | BindingFlags.Instance);
+    public List<GameObject> Markers => (List<GameObject>)typeof(P_metaPositionDebugSubscriber)
+        .GetField("markers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(this);
+    public void Deliver(float[] data) { ReceiveMessage(new Float32MultiArray { data = data }); }
+    public void Tick() { UpdateMethod.Invoke(this, null); }
+    public void StartForTest() { Start(); }
+    public void DestroyForTest() { typeof(P_metaPositionDebugSubscriber)
+        .GetMethod("OnDestroy", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, null); }
 }
 
 internal static class Program
@@ -251,6 +282,69 @@ internal static class Program
             probe.Tick(); Position(bottle, -1, -3, 2);
             probe.Deliver(Result(7, 10)); probe.CancelPendingResult(); probe.Tick();
             probe.Deliver(Result(7, 20)); probe.Tick(); Position(bottle, -1, -3, 2);
+        });
+        Test("P_meta debug: extracts two XYZ records, never covariance", () =>
+        {
+            var probe = new MetaDebugProbe { OperationOrigin = new GameObject(), TestObject = new GameObject() };
+            probe.StartForTest();
+            Require(probe.Topic == "/P_meta", "Wrong debug topic.");
+            var data = new float[] { 1, 2, 3, 101, 102, 103, 104, 105, 106, 107, 108, 109,
+                                    4, 5, 6, 201, 202, 203, 204, 205, 206, 207, 208, 209 };
+            Task.Run(() => probe.Deliver(data)).GetAwaiter().GetResult();
+            data[0] = 999;
+            Require(probe.Markers.Count == 0, "Callback touched Unity objects.");
+            probe.Tick();
+            Require(probe.CandidateCount == 2 && probe.messageData.Length == 6 && probe.messageData[0] == 1 &&
+                probe.messageData[3] == 4, "XYZ extraction or message snapshot failed.");
+            Position(probe.Markers[0], -1, 3, -2);
+            Position(probe.Markers[1], -4, 6, -5);
+        });
+
+        Test("P_meta debug: origin rotation/scale and marker reuse", () =>
+        {
+            var origin = new GameObject();
+            origin.transform.position = new Vector3(10, 20, 30);
+            origin.transform.localScale = new Vector3(2, 3, 4);
+            origin.transform.rotation = Numerics.Quaternion.CreateFromAxisAngle(Numerics.Vector3.UnitZ, (float)Math.PI / 2);
+            var probe = new MetaDebugProbe { OperationOrigin = origin, TestObject = new GameObject() };
+            var data = new float[24];
+            data[0] = 1; data[1] = 2; data[2] = 3;
+            data[12] = 4; data[13] = 5; data[14] = 6;
+            probe.Deliver(data); probe.Tick();
+            Position(probe.Markers[0], 1, 18, 22);
+            var original = probe.Markers[0];
+            var single = new float[12]; single[0] = 1; single[1] = 2; single[2] = 3;
+            probe.Deliver(single); probe.Tick();
+            Require(ReferenceEquals(original, probe.Markers[0]) && probe.Markers[0].activeSelf &&
+                !probe.Markers[1].activeSelf, "Markers were not reused/hidden.");
+            probe.Deliver(new float[0]); probe.Tick();
+            Require(probe.CandidateCount == 0 && !probe.Markers[0].activeSelf, "Empty detections left a visible marker.");
+            probe.DestroyForTest();
+            Require(original.Destroyed && !probe.TestObject.Destroyed, "Cleanup destroyed the prefab or leaked markers.");
+        });
+
+        Test("P_meta debug: invalid payloads and non-finite XYZ", () =>
+        {
+            var probe = new MetaDebugProbe { OperationOrigin = new GameObject(), TestObject = new GameObject() };
+            var before = Debug.Warnings.Count;
+            probe.Deliver(new float[3]); probe.Tick();
+            probe.Deliver(null); probe.Tick();
+            var data = new float[24]; data[0] = float.NaN;
+            data[12] = 4; data[13] = 5; data[14] = 6;
+            probe.Deliver(data); probe.Tick();
+            Require(Debug.Warnings.Count == before + 3 && probe.CandidateCount == 1, "Invalid data was not rejected.");
+            Position(probe.Markers[0], -4, 6, -5);
+        });
+
+        Test("P_meta debug: latest observation replaces pending display, missing origin is logged", () =>
+        {
+            var probe = new MetaDebugProbe { TestObject = new GameObject() };
+            var data = new float[12]; data[0] = 1;
+            var latest = new float[12]; latest[0] = 2;
+            probe.Deliver(data); probe.Deliver(latest);
+            var before = Debug.Warnings.Count; probe.Tick();
+            Require(probe.messageData[0] == 2 && Debug.Warnings.Count == before + 1 && probe.Markers.Count == 0,
+                "Latest snapshot or missing-origin handling failed.");
         });
         Console.WriteLine("Passed " + passed + " standalone checks (Unity/ROS integration not exercised).");
     }

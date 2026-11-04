@@ -4447,6 +4447,35 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 177428141}
   m_Mesh: {fileID: 4300000, guid: fbc47027e54e49848fdfd6d5e20510e7, type: 3}
+--- !u!21 &177685565
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &181421713
 GameObject:
   m_ObjectHideFlags: 0
@@ -8789,7 +8818,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 519008200}
+  - {fileID: 177685565}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12880,35 +12909,6 @@ Transform:
   - {fileID: 1618911425}
   m_Father: {fileID: 1194790974}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &519008200
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &524648245
 GameObject:
   m_ObjectHideFlags: 0
@@ -14633,6 +14633,7 @@ GameObject:
   - component: {fileID: 555286906}
   - component: {fileID: 555286907}
   - component: {fileID: 555286908}
+  - component: {fileID: 555286909}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -15320,6 +15321,25 @@ MonoBehaviour:
   TimeStep: 0
   EnsureThreadSafety: 0
   defaultObjectList: {fileID: 646328162}
+--- !u!114 &555286909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7cc998325eab044297afc974c618c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::P_metaPositionDebugSubscriber
+  Topic: /P_meta
+  TimeStep: 0
+  EnsureThreadSafety: 0
+  OperationOrigin: {fileID: 1848318712}
+  TestObject: {fileID: 226844516679695261, guid: dcd90bd638bcc9145b3d4129e175fe72, type: 3}
+  logPositions: 1
+  messageData: []
 --- !u!1001 &555887933
 PrefabInstance:
   m_ObjectHideFlags: 0
