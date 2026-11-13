@@ -69,8 +69,8 @@ MonoBehaviour:
     y: 0
     width: 499
     height: 972
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -300,8 +300,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "UnityEditor.MainToolbarWindow\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1
-    y: 51
+    x: 0
+    y: 0
     width: 1918
     height: 36
   m_SerializedDataModeController:
@@ -566,8 +566,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1
-    y: 758
+    x: 0
+    y: 695
     width: 1418
     height: 275
   m_SerializedDataModeController:
@@ -619,19 +619,15 @@ MonoBehaviour:
       m_Data: 87160
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 87004
-    - m_Data: 87006
-    - m_Data: 87008
-    - m_Data: 87010
-    - m_Data: 87012
-    - m_Data: 87014
-    - m_Data: 87016
-    - m_Data: 87018
-    - m_Data: 87020
-    - m_Data: 87190
-    - m_Data: 87232
-    - m_Data: 1000000000
-    - m_Data: 2147483647
+    - m_Data: 87032
+    - m_Data: 87034
+    - m_Data: 87036
+    - m_Data: 87038
+    - m_Data: 87040
+    - m_Data: 87042
+    - m_Data: 87044
+    - m_Data: 87046
+    - m_Data: 87048
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -664,15 +660,15 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 87004
-    - m_Data: 87006
-    - m_Data: 87008
-    - m_Data: 87010
-    - m_Data: 87012
-    - m_Data: 87014
-    - m_Data: 87016
-    - m_Data: 87018
-    - m_Data: 87020
+    - m_Data: 87032
+    - m_Data: 87034
+    - m_Data: 87036
+    - m_Data: 87038
+    - m_Data: 87040
+    - m_Data: 87042
+    - m_Data: 87044
+    - m_Data: 87046
+    - m_Data: 87048
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -706,8 +702,8 @@ MonoBehaviour:
     - m_Data: 74324
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: P_metaPositionDebugSubscriber
-      m_OriginalName: P_metaPositionDebugSubscriber
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
@@ -715,10 +711,10 @@ MonoBehaviour:
         width: 0
         height: 0
       m_UserData:
-        m_Data: 92112
+        m_Data: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 5}
@@ -755,7 +751,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1420
-    y: 87
+    y: 24
     width: 498
     height: 946
   m_SerializedDataModeController:
@@ -805,8 +801,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Hierarchy\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1
-    y: 87
+    x: 0
+    y: 24
     width: 408
     height: 645
   m_SerializedDataModeController:
@@ -877,7 +873,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 410
-    y: 87
+    y: 24
     width: 1008
     height: 645
   m_SerializedDataModeController:
@@ -1486,11 +1482,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.17726657, y: 0.00885478, z: -0.0015856964, w: -0.9841596}
     speed: 2
-    m_Value: {x: -0.17578359, y: 0.00885682, z: -0.001572352, w: -0.9843878}
+    m_Value: {x: -0.17726657, y: 0.00885478, z: -0.0015856964, w: -0.9841596}
   m_Size:
     m_Target: 1.7325584
     speed: 2
-    m_Value: 1.8141973
+    m_Value: 1.7325584
   m_Ortho:
     m_Target: 0
     speed: 2

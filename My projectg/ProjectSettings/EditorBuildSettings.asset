@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/QRCode_Track.unity
     guid: a1a1037562450dd48808a469fa69bffd
   - enabled: 1
