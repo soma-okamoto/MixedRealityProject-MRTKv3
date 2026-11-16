@@ -36,11 +36,30 @@ namespace RosSharp.RosBridgeClient
 
         private void Subscribe()
         {
+            // RosConnector creates RosSocket on its own worker thread.  The old
+            // implementation waited one second and then dereferenced RosSocket
+            // even when the connection was still being established.  That race
+            // could terminate this thread before the subscription was sent.
+            var timeoutSeconds = rosConnector.SecondsTimeout > 0
+                ? rosConnector.SecondsTimeout
+                : SecondsTimeout;
 
-            if (!rosConnector.IsConnected.WaitOne(SecondsTimeout * 1000))
-                Debug.LogWarning("Failed to subscribe: RosConnector not connected");
+            if (!rosConnector.IsConnected.WaitOne(timeoutSeconds * 1000))
+            {
+                Debug.LogWarning(
+                    $"Failed to subscribe to '{Topic}': RosConnector was not connected " +
+                    $"within {timeoutSeconds} seconds.");
+                return;
+            }
+
+            if (rosConnector.RosSocket == null)
+            {
+                Debug.LogError($"Failed to subscribe to '{Topic}': RosSocket is null.");
+                return;
+            }
 
             rosConnector.RosSocket.Subscribe<T>(Topic, ReceiveMessage, (int)(TimeStep * 1000), ensureThreadSafety: EnsureThreadSafety); // the rate(in ms in between messages) at which to throttle the topics
+            Debug.Log($"Subscribed to ROS topic '{Topic}' ({typeof(T).Name}).");
         }
 
         protected abstract void ReceiveMessage(T message);

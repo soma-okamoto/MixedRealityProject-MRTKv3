@@ -81,6 +81,21 @@ public class OperationController : MonoBehaviour
                 "CorrectedBottlePositionSubscriber が RosConnector にアタッチされていません。");
         }
 
+        var placePositionDebugSubscriber =
+            rosConnector.GetComponent<P_placePositionDebugSubscriber>();
+        if (placePositionDebugSubscriber != null)
+        {
+            placePositionDebugSubscriber.enabled = true;
+            Debug.Log(
+                $"[OperationController] P_place debug subscriber enabled. " +
+                $"topic={placePositionDebugSubscriber.Topic}");
+        }
+        else
+        {
+            Debug.LogWarning(
+                "P_placePositionDebugSubscriber が RosConnector にアタッチされていません。");
+        }
+
 
 
         

@@ -34,7 +34,7 @@ using UnityEngine.Android;
 
         [Header("Triggered capture")]
         [SerializeField]
-        private int framesPerRequest = 3;
+        private int framesPerRequest = 15;
 
         [SerializeField]
         private float intervalSeconds = 0.1f;

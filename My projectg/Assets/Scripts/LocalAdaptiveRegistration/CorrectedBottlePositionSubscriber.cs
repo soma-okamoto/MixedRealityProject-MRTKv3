@@ -138,6 +138,10 @@ public class CorrectedBottlePositionSubscriber : UnitySubscriber<place_estimatio
                 received = receivedPositions.Dequeue();
             }
 
+            Debug.Log(
+                $"[CorrectedBottlePosition] Received ROS result. " +
+                $"bottleId={received.BottleId}, frame_id={received.FrameId}, " +
+                $"ros=({received.X:F4}, {received.Y:F4}, {received.Z:F4})");
             ApplyPosition(received);
         }
     }
@@ -173,12 +177,13 @@ public class CorrectedBottlePositionSubscriber : UnitySubscriber<place_estimatio
             return;
         }
 
-        // Existing conversion used by P_current and YouBotPosSubscriber:
-        // ROS robot (x, y, z) -> Unity local (-x, -z, y).
+        // Keep the same ROS -> Unity mapping as the P_meta/P_yolo/P_place
+        // debug subscribers and P_current's inverse conversion:
+        // ROS robot (x, y, z) -> Unity local (-x, z, -y).
         var unityLocalPosition = new Vector3(
             -rosPosition.x,
-            -rosPosition.z,
-            rosPosition.y);
+            rosPosition.z,
+            -rosPosition.y);
 
         var unityWorldPosition = objectList.TransformPoint(unityLocalPosition);
         bottle.transform.position = unityWorldPosition;

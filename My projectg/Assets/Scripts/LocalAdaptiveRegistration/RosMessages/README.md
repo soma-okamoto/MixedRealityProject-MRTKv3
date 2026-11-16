@@ -27,7 +27,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "Assets/Scripts/LocalAdaptiv
 - 登録は1回の受信後も保持される。`CancelPendingResult` は登録と受信キューを全消去する。
 - `header.seq` は対象選択に使用しない。request_id／シーケンスIDは追加していない。
 
-既存の座標変換 `(-ROS.x, -ROS.z, ROS.y)` と `ObjectList.TransformPoint` を維持し、
+既存の座標変換 `(-ROS.x, ROS.z, -ROS.y)` と `ObjectList.TransformPoint` を維持し、
 ボトルの位置だけを更新する。mainシーンの購読先も変更済み。
 旧 `/P_place` の購読は行わず、以前の設定が残ったコンポーネントも起動時に新トピックへ移行する。
 

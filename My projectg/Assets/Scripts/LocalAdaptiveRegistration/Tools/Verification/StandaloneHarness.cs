@@ -195,7 +195,7 @@ internal static class Program
             Task.Run(() => probe.Deliver(Result(7))).GetAwaiter().GetResult();
             Position(a, 0, 0, 0); // Callback must only queue data.
             probe.Tick();
-            Position(a, -1, -3, 2); Position(b, 0, 0, 0);
+            Position(a, -1, 3, -2); Position(b, 0, 0, 0);
         });
 
         Test("7 -> 12 -> 7 registration retains both IDs and queues all results", () =>
@@ -208,7 +208,7 @@ internal static class Program
             probe.Deliver(Result(12, 4, 5, 6));
             probe.Deliver(Result(7, 7, 8, 9));
             probe.Tick();
-            Position(a, -7, -9, 8); Position(b, -4, -6, 5);
+            Position(a, -7, 9, -8); Position(b, -4, 6, -5);
             Require(a.transform.PositionWrites == 2 && b.transform.PositionWrites == 1, "Result overwritten or lost.");
         });
 
@@ -231,7 +231,7 @@ internal static class Program
             Require(!probe.ArmForBottle(7, b, origin), "Duplicate ID must be rejected.");
             Require(Debug.Errors.Count == before + 1, "Duplicate must be reported.");
             probe.Deliver(Result(7)); probe.Tick();
-            Position(a, -1, -3, 2); Position(b, 0, 0, 0);
+            Position(a, -1, 3, -2); Position(b, 0, 0, 0);
         });
 
         Test("Destroyed bottle or ObjectList never redirects a result", () =>
@@ -256,7 +256,7 @@ internal static class Program
             var rotation = Numerics.Quaternion.CreateFromAxisAngle(Numerics.Vector3.UnitX, 0.4f);
             bottle.transform.rotation = rotation;
             probe.ArmForBottle(7, bottle, origin); probe.Deliver(Result(7)); probe.Tick();
-            Position(bottle, 19, 18, 38);
+            Position(bottle, 1, 18, 22);
             Require(bottle.transform.rotation == rotation, "Bottle rotation was overwritten.");
         });
 
@@ -270,7 +270,7 @@ internal static class Program
             Require(a.transform.PositionWrites == 0 && b.transform.PositionWrites == 0, "Callback moved a bottle.");
             probe.Tick();
             Require(a.transform.PositionWrites == 200 && b.transform.PositionWrites == 200, "Queued results lost.");
-            Position(a, -199, -3, 2); Position(b, -199, -5, 4);
+            Position(a, -199, 3, -2); Position(b, -199, 5, -4);
         });
 
         Test("Queued values are snapshots; cancellation clears targets and queue", () =>
@@ -279,9 +279,9 @@ internal static class Program
             probe.ArmForBottle(7, bottle, new Transform());
             var message = Result(7); probe.Deliver(message);
             message.bottle_id = 99; message.position.x = 999;
-            probe.Tick(); Position(bottle, -1, -3, 2);
+            probe.Tick(); Position(bottle, -1, 3, -2);
             probe.Deliver(Result(7, 10)); probe.CancelPendingResult(); probe.Tick();
-            probe.Deliver(Result(7, 20)); probe.Tick(); Position(bottle, -1, -3, 2);
+            probe.Deliver(Result(7, 20)); probe.Tick(); Position(bottle, -1, 3, -2);
         });
         Test("P_meta debug: extracts two XYZ records, never covariance", () =>
         {

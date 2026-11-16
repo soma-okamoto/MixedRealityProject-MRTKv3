@@ -8789,7 +8789,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1930222667}
+  - {fileID: 1432384449}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14605,6 +14605,8 @@ GameObject:
   - component: {fileID: 555286907}
   - component: {fileID: 555286908}
   - component: {fileID: 555286909}
+  - component: {fileID: 555286911}
+  - component: {fileID: 555286910}
   m_Layer: 0
   m_Name: RosConnector
   m_TagString: Untagged
@@ -15182,7 +15184,7 @@ MonoBehaviour:
   frameId: quest_color_left_optical
   outputWidth: 640
   outputHeight: 640
-  framesPerRequest: 3
+  framesPerRequest: 15
   intervalSeconds: 0.1
   flipVertical: 1
   metaColorPoseQrPublisher: {fileID: 0}
@@ -15203,7 +15205,7 @@ MonoBehaviour:
   frameId: quest_depth_left_optical
   outputWidth: 640
   outputHeight: 640
-  framesPerRequest: 3
+  framesPerRequest: 15
   intervalSeconds: 0.1
   environmentDepthManager: {fileID: 87477665}
   depthWaitTimeoutSeconds: 20
@@ -15307,8 +15309,46 @@ MonoBehaviour:
   Topic: /P_meta
   TimeStep: 0
   EnsureThreadSafety: 0
-  OperationOrigin: {fileID: 338035987}
-  TestObject: {fileID: 226844516679695261, guid: dcd90bd638bcc9145b3d4129e175fe72, type: 3}
+  OperationOrigin: {fileID: 646328161}
+  TestObject: {fileID: 6001227256948718491, guid: dcd90bd638bcc9145b3d4129e175fe72, type: 3}
+  logPositions: 1
+  messageData: []
+--- !u!114 &555286910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3a8f167a4c4f2a9a11b2e7c8d90f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::P_placePositionDebugSubscriber
+  Topic: /P_place_with_id
+  TimeStep: 0
+  EnsureThreadSafety: 0
+  OperationOrigin: {fileID: 646328161}
+  TestObject: {fileID: 5152563481624307561, guid: ad1edd1d599a7804cbf7ffb2bb217163, type: 3}
+  logPositions: 1
+  showBottleId: 1
+--- !u!114 &555286911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555286863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0769929a7d1a97b4ab3c709de6409b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::P_yoloPositionDebugSubscriber
+  Topic: /P_yolo
+  TimeStep: 0
+  EnsureThreadSafety: 0
+  OperationOrigin: {fileID: 646328161}
+  TestObject: {fileID: 6193029091220877781, guid: 61c250dc9ffd9924db2d3e67630efd58, type: 3}
   logPositions: 1
   messageData: []
 --- !u!1001 &555887933
@@ -34783,6 +34823,35 @@ Transform:
   - {fileID: 1338842731}
   m_Father: {fileID: 514705856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1432384449
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit/VertexColor
+  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1441620011
 GameObject:
   m_ObjectHideFlags: 0
@@ -44905,35 +44974,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 381969322861459379, guid: 6d114d8c9f4193b45b685f408022743e, type: 3}
   m_PrefabInstance: {fileID: 1928247402}
   m_PrefabAsset: {fileID: 0}
---- !u!21 &1930222667
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit/VertexColor
-  m_Shader: {fileID: 4800000, guid: d2fafd88cf56225449a274844451c981, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &1935024394
 GameObject:
   m_ObjectHideFlags: 0
