@@ -69,6 +69,8 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<ColorDepthTransformPublisher>().enabled = true;
         rosConnector.GetComponent<MetaColorPoseQrPublisher>().enabled = true;
 
+        
+
         var correctedBottlePositionSubscriber =
             rosConnector.GetComponent<CorrectedBottlePositionSubscriber>();
         if (correctedBottlePositionSubscriber != null)
