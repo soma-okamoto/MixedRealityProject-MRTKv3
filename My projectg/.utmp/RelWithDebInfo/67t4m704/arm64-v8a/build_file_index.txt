@@ -1,0 +1,3 @@
+C:\Users\dars_\Unity\MixedRealityProject-MRTKv3\My projectg\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\dars_\Unity\MixedRealityProject-MRTKv3\My projectg\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\FramePacing\CMakeLists.txt
+C:\Users\dars_\Unity\MixedRealityProject-MRTKv3\My projectg\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

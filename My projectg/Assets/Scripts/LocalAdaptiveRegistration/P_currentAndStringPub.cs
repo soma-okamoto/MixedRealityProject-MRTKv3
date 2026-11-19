@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MixedReality.Toolkit.Input;
@@ -27,6 +28,15 @@ public class P_currentAndStringPub : MonoBehaviour
     [Tooltip("ボトルの相対座標変換の基準になるObjectList")]
     public GameObject objectList;
 
+    [Header("Meta capture")]
+    [Tooltip("チェック時のみ、離してから指定秒数後にMeta画像取得・カメラ情報・座標変換を実行します。")]
+    [SerializeField]
+    private bool enableMetaCapture = false;
+
+    [Tooltip("離してからMeta計測を開始するまでの実時間（秒）")]
+    [SerializeField, Min(0f)]
+    private float metaCaptureDelaySeconds = 2.5f;
+
     [Header("Debug")]
     public int currentId = -1;
     public GameObject currentBottle;
@@ -34,6 +44,7 @@ public class P_currentAndStringPub : MonoBehaviour
     public float[] currentYoubotPosition;
 
     private ObjectManipulator manipulator;
+    private Coroutine pendingMetaCapture;
 
         void Awake()
     {
@@ -98,6 +109,7 @@ public class P_currentAndStringPub : MonoBehaviour
 
     private void OnGrabStarted(SelectEnterEventArgs args)
     {
+        CancelPendingMetaCapture();
         // Debug.Log("[P_current] Grab Started");
 
         if (holdCommandPublisher != null)
@@ -192,60 +204,9 @@ public class P_currentAndStringPub : MonoBehaviour
                 {
                     placeCommandPublisher.PublishPlace();
 
-                    // ROS側のYOLO処理開始トリガー(Place)を送った直後に、
-                    // Color画像を数フレームだけ取得・配信する。
-                    if (colorImageTriggerPublisher != null &&
-                        colorImageTriggerPublisher.isActiveAndEnabled)
-                    {
-                        colorImageTriggerPublisher.CaptureAndPublish();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[P_current] ColorImageTriggerPublisher が見つかりません");
-                    }
-
-                    if (colorCameraInfoPublisher != null &&
-                        colorCameraInfoPublisher.isActiveAndEnabled)
-                    {
-                        colorCameraInfoPublisher.PublishCameraInfo();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[P_current] ColorCameraInfoPublisher is missing or disabled.");
-                    }
-
-                    if (depthImageTriggerPublisher != null &&
-                        depthImageTriggerPublisher.isActiveAndEnabled)
-                    {
-                        depthImageTriggerPublisher.CaptureAndPublish();
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"[P_current] DepthImageTriggerPublisher が未設定または無効です。" +
-                            $" referenceNull={depthImageTriggerPublisher == null}, " +
-                            $" active={depthImageTriggerPublisher != null && depthImageTriggerPublisher.isActiveAndEnabled}");
-                    }
-
-                    if (depthCameraInfoPublisher != null &&
-                        depthCameraInfoPublisher.isActiveAndEnabled)
-                    {
-                        depthCameraInfoPublisher.PublishCameraInfo();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[P_current] DepthCameraInfoPublisher is missing or disabled.");
-                    }
-
-                    if (colorDepthTransformPublisher != null &&
-                        colorDepthTransformPublisher.isActiveAndEnabled)
-                    {
-                        colorDepthTransformPublisher.PublishTransform();
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[P_current] ColorDepthTransformPublisher is missing or disabled.");
-                    }
+                    CancelPendingMetaCapture();
+                    if (enableMetaCapture && isActiveAndEnabled)
+                        pendingMetaCapture = StartCoroutine(CaptureMetaAfterDelay());
 
                 }
                 else
@@ -268,6 +229,83 @@ public class P_currentAndStringPub : MonoBehaviour
         {
             Debug.LogWarning($"[P_current] {gameObject.name} は bottleInfos 内に見つかりませんでした");
         }
+    }
+
+    private IEnumerator CaptureMetaAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(Mathf.Max(0f, metaCaptureDelaySeconds));
+        pendingMetaCapture = null;
+
+        if (!enableMetaCapture || !isActiveAndEnabled)
+            yield break;
+
+        // Capture images and matching camera metadata after the release delay.
+        if (colorImageTriggerPublisher != null &&
+            colorImageTriggerPublisher.isActiveAndEnabled)
+        {
+            colorImageTriggerPublisher.CaptureAndPublish();
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] ColorImageTriggerPublisher が見つかりません");
+        }
+
+        if (colorCameraInfoPublisher != null &&
+            colorCameraInfoPublisher.isActiveAndEnabled)
+        {
+            colorCameraInfoPublisher.PublishCameraInfo();
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] ColorCameraInfoPublisher is missing or disabled.");
+        }
+
+        if (depthImageTriggerPublisher != null &&
+            depthImageTriggerPublisher.isActiveAndEnabled)
+        {
+            depthImageTriggerPublisher.CaptureAndPublish();
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"[P_current] DepthImageTriggerPublisher が未設定または無効です。" +
+                $" referenceNull={depthImageTriggerPublisher == null}, " +
+                $" active={depthImageTriggerPublisher != null && depthImageTriggerPublisher.isActiveAndEnabled}");
+        }
+
+        if (depthCameraInfoPublisher != null &&
+            depthCameraInfoPublisher.isActiveAndEnabled)
+        {
+            depthCameraInfoPublisher.PublishCameraInfo();
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] DepthCameraInfoPublisher is missing or disabled.");
+        }
+
+        if (colorDepthTransformPublisher != null &&
+            colorDepthTransformPublisher.isActiveAndEnabled)
+        {
+            colorDepthTransformPublisher.PublishTransform();
+        }
+        else
+        {
+            Debug.LogWarning("[P_current] ColorDepthTransformPublisher is missing or disabled.");
+        }
+    }
+
+    private void CancelPendingMetaCapture()
+    {
+        if (pendingMetaCapture == null)
+            return;
+
+        StopCoroutine(pendingMetaCapture);
+        pendingMetaCapture = null;
+    }
+
+    private void OnDisable()
+    {
+        CancelPendingMetaCapture();
     }
 
     private float[] CalculatePosition(Vector3 bottleWorld)

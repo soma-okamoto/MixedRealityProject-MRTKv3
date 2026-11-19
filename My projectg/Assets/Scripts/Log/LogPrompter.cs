@@ -1,30 +1,33 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using TMPro;
 
-
 namespace LayoutPlan.Script
 {
-    /// <summary>
-    /// Debug.LogをTextMeshProに表示
-    /// </summary>
+    /// <summary>Displays a bounded, batched history of Unity logs.</summary>
     public class LogPrompter : SingletonMonoBehaviour<LogPrompter>
     {
-        private TMP_Text _tmpText = null;
+        private const int MaxMessages = 30;
+        private const int MaxCharacters = 6000;
+        private const int MaxMessageCharacters = 1000;
+        private const float RefreshIntervalSeconds = 0.2f;
+
+        private TMP_Text _tmpText;
         public TMP_Text TmpText
         {
             get
             {
-                if (_tmpText == null)
-                    _tmpText = this.GetComponent<TextMeshProUGUI>();
-                if (_tmpText == null)
-                    _tmpText = this.GetComponent<TextMeshPro>(); // TextMeshProUGUIじゃなかったらTextMeshPro
+                if (_tmpText == null) _tmpText = GetComponent<TextMeshProUGUI>();
+                if (_tmpText == null) _tmpText = GetComponent<TextMeshPro>();
                 return _tmpText;
             }
         }
 
-        private StringBuilder _builder = new StringBuilder();
+        private readonly Queue<string> _pendingLogs = new Queue<string>();
+        private readonly Queue<string> _visibleLogs = new Queue<string>();
+        private readonly StringBuilder _builder = new StringBuilder();
 
         [SerializeField, Tooltip("テキストの先頭に時刻を表示する")]
         private bool _useTimeStamp = true;
@@ -35,25 +38,33 @@ namespace LayoutPlan.Script
         [SerializeField, Tooltip("特定の文字列を含むログは表示しない")]
         private string[] _ignorePhrases = new string[] { };
 
+        private int _visibleCharacters;
+        private float _nextRefreshTime;
+        private bool _updatingText;
+
         private void Awake()
         {
             if (TmpText == null)
             {
-                this.enabled = false;
+                enabled = false;
                 throw new NullReferenceException("No text component found.");
             }
 
+            TmpText.overflowMode = TextOverflowModes.Overflow;
+            if (_coloredByLogType) TmpText.richText = true;
+            TmpText.text = string.Empty;
+        }
+
+        private void OnEnable()
+        {
             Application.logMessageReceived -= HandleLog;
             Application.logMessageReceived += HandleLog;
+        }
 
-            _builder = new StringBuilder();
-
-            TmpText.overflowMode = TextOverflowModes.Overflow;
-
-            if (_coloredByLogType)
-                TmpText.richText = true;
-
-            TmpText.text = string.Empty;
+        private void OnDisable()
+        {
+            Application.logMessageReceived -= HandleLog;
+            _pendingLogs.Clear();
         }
 
         private void OnDestroy()
@@ -63,127 +74,73 @@ namespace LayoutPlan.Script
 
         private void HandleLog(string logText, string stackTrace, LogType logType)
         {
-            _builder.Clear();
+            // This executes inside Debug.Log. Never update TMP or force its mesh
+            // here: that stalls the caller and can generate more logs.
+            if (_updatingText || !isActiveAndEnabled)
+                return;
+            if (_coloredByLogType && (logType == LogType.Warning || logType == LogType.Assert))
+                return;
+            // The original missing-glyph warning remains in the Console.
+            if (logType == LogType.Warning &&
+                logText.StartsWith("The character with Unicode value ", StringComparison.Ordinal))
+                return;
 
-            // 除外文字列を含むか確認
-            if (0 < _ignorePhrases.Length)
+            if (_ignorePhrases != null)
             {
-                for (int i = 0; i < _ignorePhrases.Length; i++)
+                foreach (var phrase in _ignorePhrases)
                 {
-                    if (_ignorePhrases[i] != string.Empty && logText.IndexOf(_ignorePhrases[i]) != -1)
-                    {
+                    if (!string.IsNullOrEmpty(phrase) && logText.IndexOf(phrase, StringComparison.Ordinal) >= 0)
                         return;
-                    }
                 }
             }
 
-            // タイムスタンプの付加
+            if (logText.Length > MaxMessageCharacters)
+                logText = logText.Substring(0, MaxMessageCharacters) + "...";
+
+            _builder.Clear();
             if (_useTimeStamp)
             {
-                _builder.Append($"[{DateTime.Now.ToLongTimeString()}:{DateTime.Now.Millisecond:D3}] ");
+                var now = DateTime.Now;
+                _builder.Append($"[{now.ToLongTimeString()}:{now.Millisecond:D3}] ");
             }
+            if (_coloredByLogType && (logType == LogType.Error || logType == LogType.Exception))
+                _builder.Append("<color=red>").Append(logText).Append("</color>");
+            else
+                _builder.Append(logText);
+            _builder.AppendLine();
 
-            // 色付け
-            if (_coloredByLogType)
-            {
-                switch (logType)
-                {
-                    case LogType.Assert:
-                    case LogType.Warning:
-                        logText = GetColoredString(logText, "yellow");
-                        return;   // Warning は、出力しない。
-                        break;
-                    case LogType.Error:
-                    case LogType.Exception:
-                        logText = GetColoredString(logText, "red");
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            _builder.AppendLine(logText);
-            TmpText.text += _builder.ToString();
-
-            // Textの範囲内に収める
-            if (TmpText.overflowMode == TextOverflowModes.Overflow)
-            {
-                AdjustText(TmpText);
-            }
+            if (_pendingLogs.Count >= MaxMessages) _pendingLogs.Dequeue();
+            _pendingLogs.Enqueue(_builder.ToString());
         }
 
-        /// <summary>
-        /// 色付き文字列に変換
-        /// </summary>
-        /// <param name="src"></param>
-        /// <param name="colorString"></param>
-        /// <returns></returns>
-        private string GetColoredString(string src, string colorString)
+        private void LateUpdate()
         {
-            return $"<color={colorString}>{src}</color>";
-        }
-
-        /// <summary>
-        /// Textの範囲内に文字列を収める
-        /// </summary>
-        /// <param name="tmpText"></param>
-        private void AdjustText(TMP_Text tmpText)
-        {
-            tmpText.ForceMeshUpdate();
-
-            if (tmpText.firstOverflowCharacterIndex == -1)
-            {
+            if (_pendingLogs.Count == 0 || Time.unscaledTime < _nextRefreshTime || TmpText == null)
                 return;
-            }
 
-            // はみ出した行インデックス
-            int overflowLineIdx = -1;
-            for (int i = 0; i < tmpText.textInfo.lineCount; i++)
+            _nextRefreshTime = Time.unscaledTime + RefreshIntervalSeconds;
+            while (_pendingLogs.Count > 0)
             {
-                if (tmpText.firstOverflowCharacterIndex == tmpText.textInfo.lineInfo[i].firstCharacterIndex)
-                {
-                    overflowLineIdx = i;
-                    break;
-                }
+                var entry = _pendingLogs.Dequeue();
+                _visibleLogs.Enqueue(entry);
+                _visibleCharacters += entry.Length;
+                while (_visibleLogs.Count > MaxMessages || _visibleCharacters > MaxCharacters)
+                    _visibleCharacters -= _visibleLogs.Dequeue().Length;
             }
-            if (overflowLineIdx == -1)
+
+            _builder.Clear();
+            foreach (var entry in _visibleLogs) _builder.Append(entry);
+
+            _updatingText = true;
+            try
             {
-                return;
+                // Let Unity generate the text mesh in the normal render loop.
+                TmpText.text = _builder.ToString();
             }
-
-            // はみ出したログ数
-            int overflowLogCount = 0;
-            for (int i = overflowLineIdx; i < tmpText.textInfo.lineCount; i++)
+            finally
             {
-                for (int j = tmpText.textInfo.lineInfo[i].firstCharacterIndex; j <= tmpText.textInfo.lineInfo[i].lastCharacterIndex; j++)
-                {
-                    var c = tmpText.textInfo.characterInfo[j].character;
-                    if (c == '\n')
-                    {
-                        overflowLogCount++;
-                        break;
-                    }
-
-                    if (i == tmpText.textInfo.lineCount - 1 && j == tmpText.textInfo.lineInfo[i].lastCharacterIndex)
-                    {
-                        overflowLogCount++;
-                        break;
-                    }
-                }
+                _updatingText = false;
             }
-
-            // 削除したい文字列の長さ
-            int deleteLength = 0;
-            int foundIdx = 0;
-            for (int i = 0; i < overflowLogCount; i++)
-            {
-                foundIdx = tmpText.text.IndexOf('\n', foundIdx + 1);
-            }
-            deleteLength = foundIdx + 1; // 末尾の改行コードも消す
-
-
-            // 削除
-            tmpText.text = tmpText.text.Remove(0, deleteLength);
         }
     }
 }

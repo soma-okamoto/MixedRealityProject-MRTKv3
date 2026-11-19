@@ -475,6 +475,7 @@ MonoBehaviour:
   isHitted: 0
   otherAlpha: 0.8
   Origin: {fileID: 0}
+  visualOnly: 0
 --- !u!114 &4690756006604527433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,8 +505,16 @@ MonoBehaviour:
   p_currentPublisher: {fileID: 0}
   placeCommandPublisher: {fileID: 0}
   holdCommandPublisher: {fileID: 0}
+  colorImageTriggerPublisher: {fileID: 0}
+  colorCameraInfoPublisher: {fileID: 0}
+  depthImageTriggerPublisher: {fileID: 0}
+  depthCameraInfoPublisher: {fileID: 0}
+  colorDepthTransformPublisher: {fileID: 0}
+  correctedBottlePositionSubscriber: {fileID: 0}
   rosConnector: {fileID: 0}
   objectList: {fileID: 0}
+  enableMetaCapture: 1
+  metaCaptureDelaySeconds: 2.5
   currentId: -1
   currentBottle: {fileID: 0}
   currentWorldPosition: {x: 0, y: 0, z: 0}

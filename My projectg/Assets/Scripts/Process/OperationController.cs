@@ -11,6 +11,9 @@ using MixedReality.Toolkit.SpatialManipulation;
 public class OperationController : MonoBehaviour
 {
     [SerializeField] private GameObject rosConnector;
+    [SerializeField] private GameObject rosConnector2;
+
+
     //s[SerializeField] private GameObject mark;
     [SerializeField] private ObjectGenerationTest objectGenerationTest;
     //[SerializeField] private TextMeshPro OperationUI;
@@ -62,12 +65,12 @@ public class OperationController : MonoBehaviour
         rosConnector.GetComponent<P_cerrentPublisher>().enabled = true;
         rosConnector.GetComponent<PlaceCommandPublisher>().enabled = true;
         rosConnector.GetComponent<Hold_commandPublisher>().enabled = true;
-        rosConnector.GetComponent<ColorImageTriggerPublisher>().enabled = true;
-        rosConnector.GetComponent<ColorCameraInfoPublisher>().enabled = true;
-        rosConnector.GetComponent<DepthImageTriggerPublisher>().enabled = true;
-        rosConnector.GetComponent<DepthCameraInfoPublisher>().enabled = true;
-        rosConnector.GetComponent<ColorDepthTransformPublisher>().enabled = true;
-        rosConnector.GetComponent<MetaColorPoseQrPublisher>().enabled = true;
+        rosConnector2.GetComponent<ColorImageTriggerPublisher>().enabled = true;
+        rosConnector2.GetComponent<ColorCameraInfoPublisher>().enabled = true;
+        rosConnector2.GetComponent<DepthImageTriggerPublisher>().enabled = true;
+        rosConnector2.GetComponent<DepthCameraInfoPublisher>().enabled = true;
+        rosConnector2.GetComponent<ColorDepthTransformPublisher>().enabled = true;
+        rosConnector2.GetComponent<MetaColorPoseQrPublisher>().enabled = true;
 
         
 
